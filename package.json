@@ -13,9 +13,12 @@
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "date-fns": "^3.6.0",
+    "i18next": "^23.14.0",
+    "i18next-browser-languagedetector": "^8.0.0",
     "postcss": "^8.4.42",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.0.1",
     "react-router-dom": "^6.26.1",
     "tailwindcss": "^3.4.10"
   },

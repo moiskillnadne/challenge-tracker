@@ -1,0 +1,16 @@
+{
+  "translation": {
+    "days": {
+      "monday": "ПН",
+      "tuesday": "ВТ",
+      "wednesday": "СР",
+      "thursday": "ЧТ",
+      "friday": "ПТ",
+      "saturday": "СБ",
+      "sunday": "ВС"
+    },
+    "goal": "цель",
+    "daysLeft": "осталось дней",
+    "dailySport": "спорт"
+  }
+}

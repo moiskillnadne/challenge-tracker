@@ -2,12 +2,15 @@ import { getDay, getDaysInMonth, startOfMonth } from 'date-fns';
 
 import { CalendarDayItem } from './CalendarDayItem';
 import { CalendarHeaderItem } from './CalendarHeaderItem';
+import { useTranslation } from 'react-i18next';
 type Props = {
   streak: number[];
   onDayClick: (day: number) => void;
 };
 
 export const Calendar = ({ streak, onDayClick }: Props) => {
+  const { t } = useTranslation();
+
   const now = new Date();
 
   const daysInMonth = getDaysInMonth(now);
@@ -32,13 +35,13 @@ export const Calendar = ({ streak, onDayClick }: Props) => {
   return (
     <div className="py-[28px]">
       <div className="grid grid-cols-7 gap-2">
-        <CalendarHeaderItem label="ПН" />
-        <CalendarHeaderItem label="ВТ" />
-        <CalendarHeaderItem label="СР" />
-        <CalendarHeaderItem label="ЧТ" />
-        <CalendarHeaderItem label="ПТ" />
-        <CalendarHeaderItem label="СБ" />
-        <CalendarHeaderItem label="ВС" />
+        <CalendarHeaderItem label={t('days.monday')} />
+        <CalendarHeaderItem label={t('days.tuesday')} />
+        <CalendarHeaderItem label={t('days.wednesday')} />
+        <CalendarHeaderItem label={t('days.thursday')} />
+        <CalendarHeaderItem label={t('days.friday')} />
+        <CalendarHeaderItem label={t('days.saturday')} />
+        <CalendarHeaderItem label={t('days.sunday')} />
       </div>
 
       <div className="grid grid-cols-7 gap-2 my-[24px]">
