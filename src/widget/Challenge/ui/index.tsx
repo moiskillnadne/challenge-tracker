@@ -29,7 +29,7 @@ export const ChallengeWidget = () => {
 
   return (
     <div className="w-screen h-screen bg-black flex justify-center overflow-y-scroll">
-      <div className="w-[500px]">
+      <div className="w-[500px] px-[16px]">
         <div className="flex justify-center items-center py-[28px] px-[24px]">
           <img className="w-[400px]" src={Logo} alt="" />
         </div>
