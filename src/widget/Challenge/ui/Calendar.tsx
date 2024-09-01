@@ -24,7 +24,7 @@ export const Calendar = () => {
   const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1);
 
   return (
-    <div className="py-[50px]">
+    <div className="py-[28px]">
       <div className="grid grid-cols-7 gap-2">
         <CalendarHeaderItem label="ПН" />
         <CalendarHeaderItem label="ВТ" />

@@ -4,11 +4,11 @@ type Props = {
 
 export const CalendarHeaderItem = ({ label }: Props) => {
   return (
-    <div className="relative flex items-center justify-center w-[70px] h-[70px] rounded-full text-white text-center font-bold text-[16px]">
+    <div className="relative flex items-center justify-center w-[60px] h-[60px] rounded-full text-white text-center font-bold text-[14px]">
       {label}
-      <div className="absolute inset-0 rounded-full border-[6px] border-pink-500"></div>
-      <div className="absolute inset-[5px] rounded-full border-[7px] border-lime-400"></div>
-      <div className="absolute inset-[11px] rounded-full border-[6px] border-cyan-400 z-3"></div>
+      <div className="absolute inset-0 rounded-full border-[4px] border-red"></div>
+      <div className="absolute inset-[4px] rounded-full border-[5px] border-green"></div>
+      <div className="absolute inset-[8px] rounded-full border-[4px] border-blue z-3"></div>
     </div>
   );
 };

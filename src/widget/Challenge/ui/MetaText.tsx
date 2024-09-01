@@ -6,8 +6,8 @@ type Props = {
 export const MetaText = ({ leftLabel, rightLabel }: Props) => {
   return (
     <div className="text-[20px]">
-      <span className="text-lime-400">{leftLabel}</span>
-      <span className="text-pink-500">{rightLabel}</span>
+      <span className="text-green">{leftLabel}</span>
+      <span className="text-red">{rightLabel}</span>
     </div>
   );
 };
