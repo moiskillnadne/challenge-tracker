@@ -1,28 +1,53 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import js from '@eslint/js';
+import globals from 'globals';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import ts from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import prettier from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
+import airbnb from 'eslint-config-airbnb';
 
-export default tseslint.config(
-  { ignores: ['dist'] },
+export default [
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    ignores: ['dist', 'node_modules'],
+  },
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+      },
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
     },
     plugins: {
+      react,
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      '@typescript-eslint': ts,
+      prettier,
     },
     rules: {
+      ...js.configs.recommended.rules,
+      ...ts.configs.recommended.rules,
+      ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      ...airbnb.rules,
+      'prettier/prettier': 'warn', // Prettier as ESLint
+      'react/react-in-jsx-scope': 'off',
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
   },
-)
+  // Disable ESLint rules that have conflicts with Prettier
+  prettierConfig,
+];
