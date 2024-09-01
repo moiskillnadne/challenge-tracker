@@ -1,14 +1,13 @@
-import { getDay, getDaysInMonth, startOfMonth, getDate } from 'date-fns';
+import { getDay, getDaysInMonth, startOfMonth } from 'date-fns';
 
 import { CalendarDayItem } from './CalendarDayItem';
 import { CalendarHeaderItem } from './CalendarHeaderItem';
-import { Dispatch, SetStateAction } from 'react';
 type Props = {
   streak: number[];
-  setStreak: Dispatch<SetStateAction<number[]>>;
+  onDayClick: (day: number) => void;
 };
 
-export const Calendar = ({ streak, setStreak }: Props) => {
+export const Calendar = ({ streak, onDayClick }: Props) => {
   const now = new Date();
 
   const daysInMonth = getDaysInMonth(now);
@@ -29,20 +28,6 @@ export const Calendar = ({ streak, setStreak }: Props) => {
 
   const offset = Array.from({ length: daysOffset[firstDayOfMonth] }, (_, index) => index + 1);
   const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1);
-
-  const onDayClick = (day: number) => {
-    const todayDate = getDate(new Date());
-
-    const isDayAlreadyChecked = streak.includes(day);
-
-    if (todayDate === day && !isDayAlreadyChecked) {
-      setStreak((prev) => [...prev, day]);
-    }
-
-    if (todayDate === day && isDayAlreadyChecked) {
-      setStreak((prev) => prev.filter((item) => item !== day));
-    }
-  };
 
   return (
     <div className="py-[28px]">

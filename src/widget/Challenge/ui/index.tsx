@@ -1,13 +1,31 @@
-import { useState } from 'react';
+import { useCallback } from 'react';
 import Logo from '../../../assets/logo1.png';
 import { Calendar } from './Calendar';
 import { MetaText } from './MetaText';
-import { getDaysInMonth } from 'date-fns';
+import { getDate, getDaysInMonth } from 'date-fns';
+import { useStreakState } from '../lib/useStreakState';
 
 export const ChallengeWidget = () => {
-  const [streak, setStreak] = useState<number[]>([]);
+  const { streak, addDayInStreak, removeDayInStreak } = useStreakState();
 
   const daysLeft = getDaysInMonth(new Date()) - streak.length;
+
+  const onDayClick = useCallback(
+    (day: number) => {
+      const todayDate = getDate(new Date());
+
+      const isDayAlreadyChecked = streak.includes(day);
+
+      if (todayDate === day && !isDayAlreadyChecked) {
+        addDayInStreak(day);
+      }
+
+      if (todayDate === day && isDayAlreadyChecked) {
+        removeDayInStreak(day);
+      }
+    },
+    [streak, addDayInStreak, removeDayInStreak],
+  );
 
   return (
     <div className="w-screen h-screen bg-black flex justify-center overflow-y-scroll">
@@ -21,7 +39,7 @@ export const ChallengeWidget = () => {
           <MetaText leftLabel="days left: " rightLabel={String(daysLeft)} />
         </div>
 
-        <Calendar streak={streak} setStreak={setStreak} />
+        <Calendar streak={streak} onDayClick={onDayClick} />
       </div>
     </div>
   );
