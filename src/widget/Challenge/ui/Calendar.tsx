@@ -33,7 +33,7 @@ export const Calendar = ({ streak, onDayClick }: Props) => {
   const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1);
 
   return (
-    <div className="py-[28px]">
+    <div className="py-[24px]">
       <div className="grid grid-cols-7 gap-2">
         <CalendarHeaderItem label={t('days.monday')} />
         <CalendarHeaderItem label={t('days.tuesday')} />

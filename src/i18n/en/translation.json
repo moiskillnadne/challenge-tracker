@@ -11,6 +11,9 @@
     },
     "goal": "goal",
     "daysLeft": "days left",
-    "dailySport": "daily sport"
+    "dailySport": "daily sport",
+    "youStillHave": "you still have",
+    "toCompleteChallenge": "to complete your daily challenge!",
+    "youCanRestFor": "you can rest for"
   }
 }

@@ -11,6 +11,9 @@
     },
     "goal": "цель",
     "daysLeft": "осталось дней",
-    "dailySport": "спорт"
+    "dailySport": "спорт",
+    "youStillHave": "у вас еще есть",
+    "toCompleteChallenge": "для выполнения вашего ежедневного вызова!",
+    "youCanRestFor": "вы можете отдыхать еще"
   }
 }

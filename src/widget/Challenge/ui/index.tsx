@@ -1,22 +1,23 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Logo from '../../../assets/logo1.png';
 import { Calendar } from './Calendar';
 import { MetaText } from './MetaText';
-import { getDate, getDaysInMonth, subDays } from 'date-fns';
+import { differenceInSeconds, endOfDay, getDate, getDaysInMonth, subDays } from 'date-fns';
 import { useStreakState } from '../lib/useStreakState';
 import { useTranslation } from 'react-i18next';
 import { SupportableLanguage } from '../../../app/system/constant';
+import { Timer } from './Timer';
 
 export const ChallengeWidget = () => {
   const { i18n, t } = useTranslation();
   const [language, setLanguage] = useState<SupportableLanguage>(
     (i18n.language as SupportableLanguage) || SupportableLanguage.RU,
   );
+
+  const [timeLeft, setTimeLeft] = useState<number>(0);
   const { streak, addDayInStreak, removeDayInStreak } = useStreakState();
 
   const daysLeft = getDaysInMonth(new Date()) - streak.length;
-
-  console.log(i18n.language)
 
   const onDayClick = useCallback(
     (day: number) => {
@@ -47,6 +48,33 @@ export const ChallengeWidget = () => {
     await i18n.changeLanguage(lng)
   }, [language]);
 
+    // Format time left as HH:MM:SS
+    const formatTimeLeft = (seconds: number) => {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+  
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    };
+
+      // Calculate seconds remaining until the end of the day
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const endOfDayTime = endOfDay(now);
+      return differenceInSeconds(endOfDayTime, now);
+    };
+
+    useEffect(() => {
+      setTimeLeft(calculateTimeLeft());
+  
+      const interval = setInterval(() => {
+        setTimeLeft(calculateTimeLeft());
+      }, 1000);
+  
+      // Clear interval on component unmount
+      return () => clearInterval(interval);
+    }, []);
+
   return (
     <div className="w-screen h-screen bg-black flex justify-center overflow-y-scroll">
       <button
@@ -57,7 +85,7 @@ export const ChallengeWidget = () => {
       </button>
 
       <div className="w-[500px] px-[16px]">
-        <div className="flex justify-center items-center py-[28px] px-[24px]">
+        <div className="flex justify-center items-center py-[22px] px-[24px]">
           <img className="w-[400px]" src={Logo} alt="" />
         </div>
 
@@ -67,6 +95,8 @@ export const ChallengeWidget = () => {
         </div>
 
         <Calendar streak={streak} onDayClick={onDayClick} />
+
+        <Timer time={formatTimeLeft(timeLeft)} isTodayCompleted={streak.includes(getDate(new Date()))}/>
       </div>
     </div>
   );
