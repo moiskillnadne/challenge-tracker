@@ -1,13 +1,13 @@
 {
   "translation": {
     "days": {
-      "monday": "MON",
-      "tuesday": "TUE",
-      "wednesday": "WED",
-      "thursday": "THU",
-      "friday": "FRI",
-      "saturday": "SAT",
-      "sunday": "SUN"
+      "monday": "MO",
+      "tuesday": "TU",
+      "wednesday": "WE",
+      "thursday": "TH",
+      "friday": "FR",
+      "saturday": "SA",
+      "sunday": "SU"
     },
     "goal": "goal",
     "daysLeft": "days left",

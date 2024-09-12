@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import Logo from '../../../assets/logo1.png';
 import { Calendar } from './Calendar';
 import { MetaText } from './MetaText';
-import { getDate, getDaysInMonth } from 'date-fns';
+import { getDate, getDaysInMonth, subDays } from 'date-fns';
 import { useStreakState } from '../lib/useStreakState';
 import { useTranslation } from 'react-i18next';
 import { SupportableLanguage } from '../../../app/system/constant';
@@ -16,17 +16,23 @@ export const ChallengeWidget = () => {
 
   const daysLeft = getDaysInMonth(new Date()) - streak.length;
 
+  console.log(i18n.language)
+
   const onDayClick = useCallback(
     (day: number) => {
-      const todayDate = getDate(new Date());
+      const now = new Date();
+      const todayDate = getDate(now);
+      const yesterdayDate = getDate(subDays(now, 1))
 
       const isDayAlreadyChecked = streak.includes(day);
 
-      if (todayDate === day && !isDayAlreadyChecked) {
+      const isTodayOrYesterday = day === todayDate || day === yesterdayDate;
+
+      if (isTodayOrYesterday && !isDayAlreadyChecked) {
         addDayInStreak(day);
       }
 
-      if (todayDate === day && isDayAlreadyChecked) {
+      if (isTodayOrYesterday && isDayAlreadyChecked) {
         removeDayInStreak(day);
       }
     },
@@ -34,10 +40,11 @@ export const ChallengeWidget = () => {
   );
 
   const onLanguageChange = useCallback(async () => {
-    setLanguage((prev) =>
-      prev === SupportableLanguage.EN ? SupportableLanguage.RU : SupportableLanguage.EN,
-    );
-    await i18n.changeLanguage(language);
+    const lng = language === SupportableLanguage.RU ? SupportableLanguage.EN : SupportableLanguage.RU;
+
+    setLanguage(lng)
+
+    await i18n.changeLanguage(lng)
   }, [language]);
 
   return (
