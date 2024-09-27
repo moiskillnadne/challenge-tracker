@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Logo from '../../../assets/logo1.png';
 import { Calendar } from './Calendar';
 import { MetaText } from './MetaText';
-import { differenceInSeconds, endOfDay, getDate, getDaysInMonth, subDays } from 'date-fns';
+import { differenceInSeconds, endOfDay, getDate, getDaysInMonth } from 'date-fns';
 import { useStreakState } from '../lib/useStreakState';
 import { useTranslation } from 'react-i18next';
 import { SupportableLanguage } from '../../../app/system/constant';
@@ -21,19 +21,13 @@ export const ChallengeWidget = () => {
 
   const onDayClick = useCallback(
     (day: number) => {
-      const now = new Date();
-      const todayDate = getDate(now);
-      const yesterdayDate = getDate(subDays(now, 1))
-
       const isDayAlreadyChecked = streak.includes(day);
 
-      const isTodayOrYesterday = day === todayDate || day === yesterdayDate;
-
-      if (isTodayOrYesterday && !isDayAlreadyChecked) {
+      if (!isDayAlreadyChecked) {
         addDayInStreak(day);
       }
 
-      if (isTodayOrYesterday && isDayAlreadyChecked) {
+      if (isDayAlreadyChecked) {
         removeDayInStreak(day);
       }
     },
@@ -41,39 +35,40 @@ export const ChallengeWidget = () => {
   );
 
   const onLanguageChange = useCallback(async () => {
-    const lng = language === SupportableLanguage.RU ? SupportableLanguage.EN : SupportableLanguage.RU;
+    const lng =
+      language === SupportableLanguage.RU ? SupportableLanguage.EN : SupportableLanguage.RU;
 
-    setLanguage(lng)
+    setLanguage(lng);
 
-    await i18n.changeLanguage(lng)
+    await i18n.changeLanguage(lng);
   }, [language]);
 
-    // Format time left as HH:MM:SS
-    const formatTimeLeft = (seconds: number) => {
-      const hours = Math.floor(seconds / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const secs = seconds % 60;
-  
-      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    };
+  // Format time left as HH:MM:SS
+  const formatTimeLeft = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
 
-      // Calculate seconds remaining until the end of the day
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const endOfDayTime = endOfDay(now);
-      return differenceInSeconds(endOfDayTime, now);
-    };
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
 
-    useEffect(() => {
+  // Calculate seconds remaining until the end of the day
+  const calculateTimeLeft = () => {
+    const now = new Date();
+    const endOfDayTime = endOfDay(now);
+    return differenceInSeconds(endOfDayTime, now);
+  };
+
+  useEffect(() => {
+    setTimeLeft(calculateTimeLeft());
+
+    const interval = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
-  
-      const interval = setInterval(() => {
-        setTimeLeft(calculateTimeLeft());
-      }, 1000);
-  
-      // Clear interval on component unmount
-      return () => clearInterval(interval);
-    }, []);
+    }, 1000);
+
+    // Clear interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="w-screen h-screen bg-black flex justify-center overflow-y-scroll">
@@ -96,7 +91,10 @@ export const ChallengeWidget = () => {
 
         <Calendar streak={streak} onDayClick={onDayClick} />
 
-        <Timer time={formatTimeLeft(timeLeft)} isTodayCompleted={streak.includes(getDate(new Date()))}/>
+        <Timer
+          time={formatTimeLeft(timeLeft)}
+          isTodayCompleted={streak.includes(getDate(new Date()))}
+        />
       </div>
     </div>
   );

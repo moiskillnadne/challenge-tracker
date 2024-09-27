@@ -1,4 +1,3 @@
-import js from '@eslint/js';
 import globals from 'globals';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -34,10 +33,8 @@ export default [
       prettier,
     },
     rules: {
-      ...js.configs.recommended.rules,
       ...ts.configs.recommended.rules,
       ...react.configs.recommended.rules,
-      ...reactHooks.configs.recommended.rules,
       ...airbnb.rules,
       'prettier/prettier': 'warn', // Prettier as ESLint
       'react/react-in-jsx-scope': 'off',
