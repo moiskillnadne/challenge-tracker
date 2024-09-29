@@ -7,9 +7,12 @@ import { useStreakState } from '../lib/useStreakState';
 import { useTranslation } from 'react-i18next';
 import { SupportableLanguage } from '../../../app/system/constant';
 import { Timer } from './Timer';
+import { useNavigate } from 'react-router-dom';
 
 export const ChallengeWidget = () => {
   const { i18n, t } = useTranslation();
+  const navigator = useNavigate();
+
   const [language, setLanguage] = useState<SupportableLanguage>(
     (i18n.language as SupportableLanguage) || SupportableLanguage.RU,
   );
@@ -59,6 +62,10 @@ export const ChallengeWidget = () => {
     return differenceInSeconds(endOfDayTime, now);
   };
 
+  const onLoginClick = () => {
+    return navigator('/login');
+  };
+
   useEffect(() => {
     setTimeLeft(calculateTimeLeft());
 
@@ -73,7 +80,14 @@ export const ChallengeWidget = () => {
   return (
     <div className="w-100 h-100 flex justify-center overflow-y-scroll">
       <button
-        className="absolute top-0 right-0 text-white font-bold text-[26px] p-[16px] cursor-pointer"
+        className="absolute top-0 left-0 text-white font-bold text-[26px] m-[16px] cursor-pointer"
+        onClick={onLoginClick}
+      >
+        {t('login')}
+      </button>
+
+      <button
+        className="absolute top-0 right-0 text-white font-bold text-[26px] m-[16px] cursor-pointer"
         onClick={onLanguageChange}
       >
         {language.toUpperCase()}
