@@ -1,4 +1,4 @@
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ApplicationRouter from '../pages';
 import i18nManager from './system/i18n.manager';
 
