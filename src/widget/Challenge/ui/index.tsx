@@ -71,7 +71,7 @@ export const ChallengeWidget = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen bg-black flex justify-center overflow-y-scroll">
+    <div className="w-100 h-100 flex justify-center overflow-y-scroll">
       <button
         className="absolute top-0 right-0 text-white font-bold text-[26px] p-[16px] cursor-pointer"
         onClick={onLanguageChange}
