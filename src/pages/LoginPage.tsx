@@ -1,9 +1,10 @@
 import { Page } from '../shared/ui';
+import { LoginWidget } from '../widget/Login';
 
 export const LoginPage = () => {
   return (
     <Page>
-      <div>test</div>
+      <LoginWidget />
     </Page>
   );
 };

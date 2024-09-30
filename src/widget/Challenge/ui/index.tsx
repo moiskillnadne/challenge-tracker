@@ -4,18 +4,13 @@ import { Calendar } from './Calendar';
 import { MetaText } from './MetaText';
 import { differenceInSeconds, endOfDay, getDate, getDaysInMonth } from 'date-fns';
 import { useStreakState } from '../lib/useStreakState';
-import { useTranslation } from 'react-i18next';
-import { SupportableLanguage } from '../../../app/system/constant';
 import { Timer } from './Timer';
 import { useNavigate } from 'react-router-dom';
+import { LanguageSwitcher, useCustomTranslation } from '../../../feature/translation';
 
 export const ChallengeWidget = () => {
-  const { i18n, t } = useTranslation();
   const navigator = useNavigate();
-
-  const [language, setLanguage] = useState<SupportableLanguage>(
-    (i18n.language as SupportableLanguage) || SupportableLanguage.RU,
-  );
+  const { t } = useCustomTranslation();
 
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const { streak, addDayInStreak, removeDayInStreak } = useStreakState();
@@ -36,15 +31,6 @@ export const ChallengeWidget = () => {
     },
     [streak, addDayInStreak, removeDayInStreak],
   );
-
-  const onLanguageChange = useCallback(async () => {
-    const lng =
-      language === SupportableLanguage.RU ? SupportableLanguage.EN : SupportableLanguage.RU;
-
-    setLanguage(lng);
-
-    await i18n.changeLanguage(lng);
-  }, [language]);
 
   // Format time left as HH:MM:SS
   const formatTimeLeft = (seconds: number) => {
@@ -78,7 +64,7 @@ export const ChallengeWidget = () => {
   }, []);
 
   return (
-    <div className="w-100 h-100 flex justify-center overflow-y-scroll">
+    <div className="w-full h-full flex justify-center overflow-y-scroll">
       <button
         className="absolute top-0 left-0 text-white font-bold text-[26px] m-[16px] cursor-pointer"
         onClick={onLoginClick}
@@ -86,12 +72,9 @@ export const ChallengeWidget = () => {
         {t('login')}
       </button>
 
-      <button
-        className="absolute top-0 right-0 text-white font-bold text-[26px] m-[16px] cursor-pointer"
-        onClick={onLanguageChange}
-      >
-        {language.toUpperCase()}
-      </button>
+      <div className="absolute top-0 right-0">
+        <LanguageSwitcher />
+      </div>
 
       <div className="w-[500px] px-[16px]">
         <div className="flex justify-center items-center py-[18px] px-[24px]">
