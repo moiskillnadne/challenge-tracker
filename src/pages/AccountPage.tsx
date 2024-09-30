@@ -9,7 +9,9 @@ export const AccountPage = () => {
     <Page>
       {query.isLoading && <div className="text-white">Loading...</div>}
 
-      {query.data?.data && <div className="text-white">Hello, ${query.data.data.email}</div>}
+      {query.data?.data.details?.user && (
+        <div className="text-white">Hello, {query.data.data.details.user.email}</div>
+      )}
     </Page>
   );
 };

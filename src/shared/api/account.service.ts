@@ -1,5 +1,13 @@
 import { api } from './api';
 
+type SuccessResponse<T> = {
+  isSuccess: boolean;
+  message: string;
+  statusCode: number;
+  type: string;
+  details: T;
+};
+
 type User = {
   id: string;
   createdAt: string;
@@ -10,7 +18,7 @@ type User = {
 function createAccountService() {
   return {
     getAccountInfo: () => {
-      return api.get<User>('/protected/user');
+      return api.get<SuccessResponse<Record<'user', User>>>('/protected/user');
     },
   };
 }
