@@ -4,6 +4,7 @@ import { LanguageSwitcher, useCustomTranslation } from '../../../feature/transla
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '../../../shared/api/auth.service';
 import { RightArrow } from '../../../shared/ui';
+import { useNavigate } from 'react-router-dom';
 
 const emailSchema = z.string().email();
 
@@ -11,6 +12,8 @@ const codeSchema = z.string().regex(/^\d{6}$/, { message: 'Код должен �
 
 export const LoginWidget = () => {
   const { t } = useCustomTranslation();
+
+  const navigate = useNavigate();
 
   const codeInputVisibility = new Map([
     [true, '40px'],
@@ -34,6 +37,8 @@ export const LoginWidget = () => {
     mutationFn: authService.confirmLogin,
     onSuccess: (data) => {
       console.info('[CodeMutation:onSuccess]', data);
+
+      return navigate('/account');
     },
     onError: (err) => {
       console.info(`[CodeMutation:onError]: ${JSON.stringify(err)}`);

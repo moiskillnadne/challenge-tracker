@@ -15,7 +15,7 @@ function createAuthService() {
       return api.post('/auth/login', payload);
     },
     confirmLogin: (payload: ConfirmLogin) => {
-      return api.post('auth/confirm-login', payload);
+      return api.post('/auth/confirm-login', payload);
     },
   };
 }

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ChallengePage from './ChallengePage';
 import { LoginPage } from './LoginPage';
+import { AccountPage } from './AccountPage';
 
 const router = createBrowserRouter([
   {
@@ -8,8 +9,12 @@ const router = createBrowserRouter([
     element: <ChallengePage />,
   },
   {
-    path: 'login',
+    path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/account',
+    element: <AccountPage />,
   },
 ]);
 
