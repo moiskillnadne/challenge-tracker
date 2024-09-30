@@ -7,10 +7,12 @@ import { RightArrow } from '../../../shared/ui';
 
 const emailSchema = z.string().email();
 
+const codeSchema = z.string().regex(/^\d{6}$/, { message: 'Код должен содержать ровно 6 цифр' });
+
 export const LoginWidget = () => {
   const { t } = useCustomTranslation();
 
-  const inputHeightMap = new Map([
+  const codeInputVisibility = new Map([
     [true, '40px'],
     [false, '0px'],
   ]);
@@ -21,32 +23,30 @@ export const LoginWidget = () => {
   const loginMutation = useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      console.log('Login success');
-      console.log(data);
+      console.info('[LoginMutation:onSuccess]', data);
     },
     onError: (err) => {
-      console.log('Login error');
-      console.error(err);
+      console.error(`[LoginMutation:onError] ${JSON.stringify(err)}`);
     },
   });
 
   const codeMutation = useMutation({
     mutationFn: authService.confirmLogin,
     onSuccess: (data) => {
-      console.log('Login success');
-      console.log(data);
+      console.info('[CodeMutation:onSuccess]', data);
     },
     onError: (err) => {
-      console.log('Login error');
-      console.error(err);
+      console.info(`[CodeMutation:onError]: ${JSON.stringify(err)}`);
     },
   });
+
+  const isEmailSent = loginMutation.isSuccess && !!loginMutation.data;
 
   console.log(`IsLoading: ${loginMutation.isPending}`);
   console.log(`isSuccess: ${loginMutation.isSuccess}`);
   console.log('data', loginMutation.data);
 
-  const login = () => {
+  const sendCodeForLogin = () => {
     const safeParse = emailSchema.safeParse(email);
 
     if (safeParse.error) {
@@ -58,6 +58,26 @@ export const LoginWidget = () => {
     loginMutation.mutate({
       email: safeParse.data,
     });
+  };
+
+  const confirmLogin = () => {
+    if (!isEmailSent) {
+      throw new Error('Email should be sent first');
+    }
+
+    const emailSafeParse = emailSchema.safeParse(email);
+
+    if (emailSafeParse.error) {
+      throw new Error(JSON.stringify(emailSafeParse.error));
+    }
+
+    const codeSafeParse = codeSchema.safeParse(code);
+
+    if (codeSafeParse.error) {
+      throw new Error(JSON.stringify(codeSafeParse.error));
+    }
+
+    codeMutation.mutate({ email, code });
   };
 
   return (
@@ -78,25 +98,30 @@ export const LoginWidget = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <input
-          type="text"
-          name="code"
-          id="input-code"
-          placeholder="code"
-          className={`bg-transparent focus:outline-none duration-300 h-[${inputHeightMap.get(loginMutation.isSuccess)}] placeholder-white/50 border-b-2 border-black hover:border-white/20 focus:border-white/50 text-white w-[300px]`}
-          onChange={(e) => setCode(e.target.value)}
-        />
+        <div
+          className="overflow-hidden duration-300"
+          style={{ height: `${codeInputVisibility.get(loginMutation.isSuccess)}` }}
+        >
+          <input
+            type="text"
+            name="code"
+            id="input-code"
+            placeholder="code"
+            className={`bg-transparent focus:outline-none duration-300 h-[40px] placeholder-white/50 border-b-2 border-black hover:border-white/20 focus:border-white/50 text-white w-[300px]`}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </div>
 
         <div className="h-[40px] flex gap-[6px]">
           <button
             className="duration-300 bg-blue-500 text-white/50 rounded-full h-full hover:text-white/75"
-            onClick={login}
+            onClick={isEmailSent ? confirmLogin : sendCodeForLogin}
           >
-            {loginMutation.isPending ? (
+            {loginMutation.isPending || codeMutation.isPending ? (
               <div className="animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-white/50 border-t-white"></div>
             ) : (
               <span className="flex items-center">
-                <p className="w-[150px]">{t('sendCode')}</p>{' '}
+                <p className="w-[150px]">{isEmailSent ? t('login') : t('sendCode')}</p>{' '}
                 <div className="w-[32px] h-[32px]">
                   <RightArrow />
                 </div>
@@ -107,7 +132,9 @@ export const LoginWidget = () => {
       </div>
 
       <div className="w-[350px] px-[12px]">
-        <p className="text-white/75 text-center">{t('enterEmailForCode')}</p>
+        <p className="text-white/75 text-center">
+          {isEmailSent ? t('enterCodeFromEmail') : t('enterEmailForCode')}
+        </p>
       </div>
     </div>
   );
