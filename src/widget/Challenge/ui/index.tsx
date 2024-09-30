@@ -7,10 +7,16 @@ import { useStreakState } from '../lib/useStreakState';
 import { Timer } from './Timer';
 import { useNavigate } from 'react-router-dom';
 import { LanguageSwitcher, useCustomTranslation } from '../../../feature/translation';
+import { useQuery } from '@tanstack/react-query';
+import { accountService } from '../../../shared/api/account.service';
 
 export const ChallengeWidget = () => {
   const navigator = useNavigate();
   const { t } = useCustomTranslation();
+
+  const query = useQuery({ queryKey: ['/protected/me'], queryFn: accountService.getAccountInfo });
+
+  const isAuthenticated = query.data?.data.details.user.email;
 
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const { streak, addDayInStreak, removeDayInStreak } = useStreakState();
@@ -52,6 +58,10 @@ export const ChallengeWidget = () => {
     return navigator('/login');
   };
 
+  const onAccountClick = () => {
+    return navigator('/account');
+  };
+
   useEffect(() => {
     setTimeLeft(calculateTimeLeft());
 
@@ -67,9 +77,9 @@ export const ChallengeWidget = () => {
     <div className="w-full h-full flex justify-center overflow-y-scroll">
       <button
         className="absolute top-0 left-0 text-white font-bold text-[26px] m-[16px] cursor-pointer"
-        onClick={onLoginClick}
+        onClick={isAuthenticated ? onAccountClick : onLoginClick}
       >
-        {t('login')}
+        {isAuthenticated ? t('account') : t('login')}
       </button>
 
       <div className="absolute top-0 right-0">

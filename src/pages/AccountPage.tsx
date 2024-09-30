@@ -1,17 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
 import { Page } from '../shared/ui';
-import { accountService } from '../shared/api/account.service';
+import { AccountWidget } from '../widget/Account';
 
 export const AccountPage = () => {
-  const query = useQuery({ queryKey: ['/protected/me'], queryFn: accountService.getAccountInfo });
-
   return (
     <Page>
-      {query.isLoading && <div className="text-white">Loading...</div>}
-
-      {query.data?.data.details?.user && (
-        <div className="text-white">Hello, {query.data.data.details.user.email}</div>
-      )}
+      <AccountWidget />
     </Page>
   );
 };
