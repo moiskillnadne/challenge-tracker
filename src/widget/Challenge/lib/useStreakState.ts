@@ -1,29 +1,51 @@
-import { useCallback, useState } from 'react';
-import LocalStorage from '../../../shared/lib/LocalStorage';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { challengeService } from '../../../shared/api/challenge.service';
+import { queryClient } from '../../../app/App';
+import { useCallback } from 'react';
+import { convertDate } from './convertDate';
 
-export const useStreakState = () => {
-  const storageKey = 'streak';
+type Props = {
+  challengeId: string;
+};
 
-  const [streak, setStreak] = useState<number[]>(LocalStorage.getItem<number[]>(storageKey) ?? []);
-
-  const addDayInStreak = useCallback(
-    (day: number) => {
-      LocalStorage.setItem(storageKey, [...streak, day]);
-      setStreak((prev) => [...prev, day]);
+export const useStreakState = ({ challengeId }: Props) => {
+  const challengeQuery = useQuery({
+    queryKey: ['/challenge/base-info', challengeId],
+    queryFn: () => challengeService.getChallengeById(challengeId),
+    select(data) {
+      return data.data.details;
     },
-    [streak, setStreak],
-  );
+  });
 
-  const removeDayInStreak = useCallback(
-    (day: number) => {
-      LocalStorage.setItem(
-        storageKey,
-        streak.filter((item) => item !== day),
-      );
-      setStreak((prev) => prev.filter((item) => item !== day));
+  const progressQuery = useQuery({
+    queryKey: ['/challenge/progress', challengeId],
+    queryFn: () => challengeService.getChallengeProgressById(challengeId),
+    select(data) {
+      return data.data.details;
     },
-    [streak, setStreak],
-  );
+  });
 
-  return { streak, addDayInStreak, removeDayInStreak };
+  const progressMutation = useMutation({
+    mutationFn: challengeService.checkin,
+    onSettled: async () => {
+      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] });
+    },
+    async onSuccess() {
+      progressQuery.refetch();
+      challengeQuery.refetch();
+    },
+  });
+
+  const addDayInStreak = useCallback((day: number) => {
+    progressMutation.mutate({ userChallengeId: challengeId, checkpointDate: convertDate(day) });
+  }, []);
+
+  return {
+    isLoading: challengeQuery.isLoading || progressQuery.isLoading,
+
+    challenge: challengeQuery.data?.challenge ?? null,
+    challengeProgress: progressQuery.data?.challengeProgress ?? null,
+
+    addDayInStreak,
+  };
 };
