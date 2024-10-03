@@ -1,6 +1,7 @@
-import { useCallback } from 'react';
-import { useMutation, useQuery, QueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { challengeService } from '../../../shared/api/challenge.service';
+import { queryClient } from '../../../app/App';
+import { useCallback } from 'react';
 import { convertDate } from './convertDate';
 
 type Props = {
@@ -26,12 +27,12 @@ export const useStreakState = ({ challengeId }: Props) => {
 
   const progressMutation = useMutation({
     mutationFn: challengeService.checkin,
-    onSuccess() {
-      const client = new QueryClient();
-
-      client.invalidateQueries({
-        queryKey: ['/challenge/progress', challengeId],
-      });
+    onSettled: async () => {
+      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] });
+    },
+    async onSuccess() {
+      progressQuery.refetch();
+      challengeQuery.refetch();
     },
   });
 
@@ -40,10 +41,11 @@ export const useStreakState = ({ challengeId }: Props) => {
   }, []);
 
   return {
-    addDayInStreak,
     isLoading: challengeQuery.isLoading || progressQuery.isLoading,
 
     challenge: challengeQuery.data?.challenge ?? null,
     challengeProgress: progressQuery.data?.challengeProgress ?? null,
+
+    addDayInStreak,
   };
 };

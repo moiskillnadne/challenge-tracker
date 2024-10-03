@@ -23,25 +23,30 @@ export const ChallengeManager = () => {
   return (
     <div className="w-full px-[12px]">
       <div className="flex justify-center mb-[16px]">
-        <button className="duration-300 text-white font-bold text-[26px] cursor-pointer border-2 rounded border-white/50 px-[16px] hover:border-white">
+        <button
+          className="duration-300 text-white font-bold text-[26px] cursor-pointer border-2 rounded border-white/50 px-[16px] hover:border-white"
+          onClick={() => navigate('/create-challenge')}
+        >
           {t('createNewChallenge')}
         </button>
       </div>
 
-      {query.data?.challenges &&
-        query.data?.challenges
-          .map((item) => mapChallengeToItem(item))
-          .map((item) => (
-            <ChallengeGridItem
-              key={item.id}
-              goal={item.goal}
-              isActive={item.isActive}
-              daysLeft={item.daysLeft}
-              onClick={() => {
-                return navigate(`/challenge/${item.id}`);
-              }}
-            />
-          ))}
+      <div className="flex gap-[8px]">
+        {query.data?.challenges &&
+          query.data?.challenges
+            .map((item) => mapChallengeToItem(item))
+            .map((item) => (
+              <ChallengeGridItem
+                key={item.id}
+                goal={item.goal}
+                isActive={item.isActive}
+                daysLeft={item.daysLeft}
+                onClick={() => {
+                  return navigate(`/challenge/${item.id}`);
+                }}
+              />
+            ))}
+      </div>
     </div>
   );
 };

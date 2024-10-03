@@ -1,47 +1,16 @@
-import { useCallback, useMemo } from 'react';
 import Logo from '../../../assets/logo1.png';
-import { Calendar } from './Calendar';
-import { MetaText } from './MetaText';
 import { useStreakState } from '../lib/useStreakState';
-import { Timer } from './Timer';
-import { useCustomTranslation } from '../../../feature/translation';
-import { mapChallengeToItem } from '../../Account/lib/mappers';
-import { convertDate } from '../lib/convertDate';
 import { Loader } from '../../../shared/ui/Loader';
+import { CalendarManager } from './CalendarManager';
 
 type Props = {
   challengeId: string;
 };
 
 export const ChallengeWidget = ({ challengeId }: Props) => {
-  const { t } = useCustomTranslation();
-
-  const { challenge, challengeProgress, addDayInStreak, isLoading } = useStreakState({
+  const { challenge, challengeProgress, isLoading, addDayInStreak } = useStreakState({
     challengeId,
   });
-
-  const challengeInfo = challenge ? mapChallengeToItem(challenge) : null;
-
-  const daysLeft = challengeInfo?.daysLeft ?? 99999;
-
-  const streak = useMemo(() => {
-    return challengeProgress?.map((el) => el.checkpointDate) ?? null;
-  }, [challengeProgress]);
-
-  const onDayClick = useCallback(
-    (day: number) => {
-      if (streak === null) {
-        throw new Error(`[ChallengeWidget:onDayClick] Streak is null`);
-      }
-
-      const isDayAlreadyChecked = streak.includes(convertDate(day));
-
-      if (!isDayAlreadyChecked) {
-        addDayInStreak(day);
-      }
-    },
-    [addDayInStreak],
-  );
 
   if (isLoading) {
     return <Loader />;
@@ -54,18 +23,13 @@ export const ChallengeWidget = ({ challengeId }: Props) => {
           <img className="w-[400px]" src={Logo} alt="" />
         </div>
 
-        <div className="flex justify-between items-center">
-          <MetaText leftLabel={`${t('goal')}: `} rightLabel={t('dailySport')} />
-          <MetaText leftLabel={`${t('daysLeft')}: `} rightLabel={String(daysLeft)} />
-        </div>
-
-        <Calendar
-          streak={streak ?? []}
-          onDayClick={onDayClick}
-          isCompleted={!challengeInfo?.isActive}
-        />
-
-        {challengeInfo?.isActive ?? <Timer streak={streak ?? []} />}
+        {!!challenge && !!challengeProgress && (
+          <CalendarManager
+            challenge={challenge}
+            progress={challengeProgress}
+            addDayInStreak={addDayInStreak}
+          />
+        )}
       </div>
     </div>
   );

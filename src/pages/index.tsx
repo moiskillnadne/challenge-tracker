@@ -3,6 +3,7 @@ import ChallengePage from './ChallengePage';
 import { LoginPage } from './LoginPage';
 import { AccountPage } from './AccountPage';
 import ProtectedRoute from '../feature/ProtectedRoute';
+import { ChallengeBuilderPage } from './ChallengeBuilderPage';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: '/challenge/:challengeId',
     element: <ProtectedRoute element={<ChallengePage />} />,
+  },
+  {
+    path: '/create-challenge',
+    element: <ProtectedRoute element={<ChallengeBuilderPage />} />,
   },
 ]);
 

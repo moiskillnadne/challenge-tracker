@@ -4,7 +4,7 @@ import i18nManager from './system/i18n.manager';
 
 void i18nManager.initialize();
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 function App() {
   return (
