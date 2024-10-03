@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import Logo from '../../../assets/logo1.png';
 import { Calendar } from './Calendar';
 import { MetaText } from './MetaText';
-import { differenceInSeconds, endOfDay, getDate, getDaysInMonth } from 'date-fns';
+import { getDaysInMonth } from 'date-fns';
 import { useStreakState } from '../lib/useStreakState';
 import { Timer } from './Timer';
 import { useCustomTranslation } from '../../../feature/translation';
@@ -10,7 +10,6 @@ import { useCustomTranslation } from '../../../feature/translation';
 export const ChallengeWidget = () => {
   const { t } = useCustomTranslation();
 
-  const [timeLeft, setTimeLeft] = useState<number>(0);
   const { streak, addDayInStreak, removeDayInStreak } = useStreakState();
 
   const daysLeft = getDaysInMonth(new Date()) - streak.length;
@@ -30,33 +29,6 @@ export const ChallengeWidget = () => {
     [streak, addDayInStreak, removeDayInStreak],
   );
 
-  // Format time left as HH:MM:SS
-  const formatTimeLeft = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
-
-  // Calculate seconds remaining until the end of the day
-  const calculateTimeLeft = () => {
-    const now = new Date();
-    const endOfDayTime = endOfDay(now);
-    return differenceInSeconds(endOfDayTime, now);
-  };
-
-  useEffect(() => {
-    setTimeLeft(calculateTimeLeft());
-
-    const interval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
-
-    // Clear interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="flex justify-center overflow-y-scroll">
       <div className="w-[500px] px-[16px]">
@@ -71,10 +43,7 @@ export const ChallengeWidget = () => {
 
         <Calendar streak={streak} onDayClick={onDayClick} />
 
-        <Timer
-          time={formatTimeLeft(timeLeft)}
-          isTodayCompleted={streak.includes(getDate(new Date()))}
-        />
+        <Timer streak={streak} />
       </div>
     </div>
   );

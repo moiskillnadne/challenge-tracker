@@ -3,6 +3,7 @@ import { getDay, getDaysInMonth, startOfMonth } from 'date-fns';
 import { CalendarDayItem } from './CalendarDayItem';
 import { CalendarHeaderItem } from './CalendarHeaderItem';
 import { useTranslation } from 'react-i18next';
+
 type Props = {
   streak: number[];
   onDayClick: (day: number) => void;
@@ -16,8 +17,6 @@ export const Calendar = ({ streak, onDayClick }: Props) => {
   const daysInMonth = getDaysInMonth(now);
 
   const firstDayOfMonth = getDay(startOfMonth(now));
-
-  console.log();
 
   const daysOffset: Record<number, number> = {
     0: 6,

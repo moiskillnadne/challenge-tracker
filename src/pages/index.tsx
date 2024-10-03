@@ -16,6 +16,10 @@ const router = createBrowserRouter([
     path: '/account',
     element: <AccountPage />,
   },
+  {
+    path: '/challenge/:challengeId',
+    element: <ChallengePage />,
+  },
 ]);
 
 const ApplicationRouter = () => {
