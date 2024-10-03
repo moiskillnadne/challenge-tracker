@@ -5,18 +5,10 @@ import { MetaText } from './MetaText';
 import { differenceInSeconds, endOfDay, getDate, getDaysInMonth } from 'date-fns';
 import { useStreakState } from '../lib/useStreakState';
 import { Timer } from './Timer';
-import { useNavigate } from 'react-router-dom';
-import { LanguageSwitcher, useCustomTranslation } from '../../../feature/translation';
-import { useQuery } from '@tanstack/react-query';
-import { accountService } from '../../../shared/api/account.service';
+import { useCustomTranslation } from '../../../feature/translation';
 
 export const ChallengeWidget = () => {
-  const navigator = useNavigate();
   const { t } = useCustomTranslation();
-
-  const query = useQuery({ queryKey: ['/protected/me'], queryFn: accountService.getAccountInfo });
-
-  const isAuthenticated = query.data?.data.details.user.email;
 
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const { streak, addDayInStreak, removeDayInStreak } = useStreakState();
@@ -54,14 +46,6 @@ export const ChallengeWidget = () => {
     return differenceInSeconds(endOfDayTime, now);
   };
 
-  const onLoginClick = () => {
-    return navigator('/login');
-  };
-
-  const onAccountClick = () => {
-    return navigator('/account');
-  };
-
   useEffect(() => {
     setTimeLeft(calculateTimeLeft());
 
@@ -74,18 +58,7 @@ export const ChallengeWidget = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex justify-center overflow-y-scroll">
-      <button
-        className="absolute top-0 left-0 text-white font-bold text-[26px] m-[16px] cursor-pointer"
-        onClick={isAuthenticated ? onAccountClick : onLoginClick}
-      >
-        {isAuthenticated ? t('account') : t('login')}
-      </button>
-
-      <div className="absolute top-0 right-0">
-        <LanguageSwitcher />
-      </div>
-
+    <div className="flex justify-center overflow-y-scroll">
       <div className="w-[500px] px-[16px]">
         <div className="flex justify-center items-center py-[18px] px-[24px]">
           <img className="w-[400px]" src={Logo} alt="" />
