@@ -1,9 +1,10 @@
 import { differenceInSeconds, endOfDay, getDate } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { convertDate } from '../lib/convertDate';
 
 type Props = {
-  streak: number[];
+  streak: string[];
 };
 
 export const Timer = ({ streak }: Props) => {
@@ -32,7 +33,7 @@ export const Timer = ({ streak }: Props) => {
     return differenceInSeconds(endOfDayTime, now);
   };
 
-  const isTodayCompleted = streak.includes(getDate(new Date()));
+  const isTodayCompleted = streak.includes(convertDate(getDate(new Date())));
 
   useEffect(() => {
     setTimeLeft(calculateTimeLeft());

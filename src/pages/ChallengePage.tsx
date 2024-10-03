@@ -21,7 +21,7 @@ const ChallengePage = () => {
   return (
     <Page>
       <Header />
-      <ChallengeWidget />
+      <ChallengeWidget challengeId={challengeId} />
     </Page>
   );
 };
