@@ -1,12 +1,13 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import ChallengePage from './ChallengePage';
 import { LoginPage } from './LoginPage';
 import { AccountPage } from './AccountPage';
+import ProtectedRoute from '../feature/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <ChallengePage />,
+    element: <Navigate to="/account" />,
   },
   {
     path: '/login',
@@ -14,11 +15,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/account',
-    element: <AccountPage />,
+    element: <ProtectedRoute element={<AccountPage />} />,
   },
   {
     path: '/challenge/:challengeId',
-    element: <ChallengePage />,
+    element: <ProtectedRoute element={<ChallengePage />} />,
   },
 ]);
 

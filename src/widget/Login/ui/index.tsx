@@ -47,10 +47,6 @@ export const LoginWidget = () => {
 
   const isEmailSent = loginMutation.isSuccess && !!loginMutation.data;
 
-  console.log(`IsLoading: ${loginMutation.isPending}`);
-  console.log(`isSuccess: ${loginMutation.isSuccess}`);
-  console.log('data', loginMutation.data);
-
   const sendCodeForLogin = () => {
     const safeParse = emailSchema.safeParse(email);
 

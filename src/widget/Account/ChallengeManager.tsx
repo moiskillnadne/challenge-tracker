@@ -3,9 +3,12 @@ import { challengeService } from '../../shared/api/challenge.service';
 import { useCustomTranslation } from '../../feature/translation';
 import { ChallengeGridItem } from './ChallengeGridItem';
 import { mapChallengeToItem } from './lib/mappers';
+import { Loader } from '../../shared/ui/Loader';
+import { useNavigate } from 'react-router-dom';
 
 export const ChallengeManager = () => {
   const { t } = useCustomTranslation();
+  const navigate = useNavigate();
 
   const query = useQuery({
     queryKey: ['/protected/challenge/'],
@@ -14,9 +17,7 @@ export const ChallengeManager = () => {
   });
 
   if (query.isPending) {
-    return (
-      <div className="w-[50px] h-[50px] m-[8px] rounded-full border-[4px] border-transparent border-t-white animate-spin" />
-    );
+    return <Loader />;
   }
 
   return (
@@ -37,7 +38,7 @@ export const ChallengeManager = () => {
               isActive={item.isActive}
               daysLeft={item.daysLeft}
               onClick={() => {
-                console.log('item click');
+                return navigate(`/challenge/${item.id}`);
               }}
             />
           ))}
