@@ -1,14 +1,7 @@
 import { api } from './api';
+import { SuccessResponse } from './types';
 
-type SuccessResponse<T> = {
-  isSuccess: boolean;
-  message: string;
-  statusCode: number;
-  type: string;
-  details: T;
-};
-
-type User = {
+export type UserDTO = {
   id: string;
   createdAt: string;
   updatedAt: string;
@@ -18,7 +11,7 @@ type User = {
 function createAccountService() {
   return {
     getAccountInfo: () => {
-      return api.get<SuccessResponse<Record<'user', User>>>('/protected/user');
+      return api.get<SuccessResponse<Record<'user', UserDTO>>>('/protected/user');
     },
   };
 }
