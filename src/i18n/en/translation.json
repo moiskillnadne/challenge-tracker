@@ -20,6 +20,7 @@
     "sendCode": "Send code",
     "enterCodeFromEmail": "The email with the code has been sent. If the email does not arrive, then try again.",
     "home": "Home",
-    "account": "Account"
+    "account": "Account",
+    "createNewChallenge": "Create a new challenge"
   }
 }
