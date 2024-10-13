@@ -83,7 +83,7 @@ export const LoginWidget = () => {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-      <div className="absolute top-0 right-0">
+      <div className="absolute top-0 right-0 py-[12px] px-[24px]">
         <LanguageSwitcher />
       </div>
 
