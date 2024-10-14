@@ -1,0 +1,49 @@
+name: Deploy Prod
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout to repo
+        uses: actions/checkout@v4
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'v20.12.2'
+
+      - name: Corepack enable
+        run: corepack enable
+  
+      - name: Check yarn version
+        run: yarn -v
+
+      - name: Install deps
+        run: yarn
+
+      - name: Get current tag version
+        id: get_tag
+        run: echo "TAG_VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+    
+      - name: Run build
+        run: yarn build
+        env:
+          NODE_ENV: development
+          VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+          VITE_APP_VERSION: ${{ env.TAG_VERSION }}
+
+      - name: Copy files to VPS
+        uses: appleboy/scp-action@v0.1.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: './dist/'
+          target: ${{ secrets.BUILD_TARGET_LOCATION }}
