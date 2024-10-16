@@ -17,6 +17,12 @@ function createAuthService() {
     confirmLogin: (payload: ConfirmLogin) => {
       return api.post('/auth/confirm-login', payload);
     },
+    logout: () => {
+      return api.post('/auth/logout');
+    },
+    refreshToken: () => {
+      return api.post('/auth/refresh-token');
+    },
   };
 }
 
