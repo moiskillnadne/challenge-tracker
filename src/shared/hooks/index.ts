@@ -1,1 +1,1 @@
-export * from './useVisitorID';
+export * from './useVisitorId';
