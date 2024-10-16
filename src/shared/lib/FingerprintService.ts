@@ -2,7 +2,10 @@ interface Fingerprint {
   userAgent: string;
   maxTouchPoints: string;
   pixelRatio: string;
-  screen: string;
+  width: string;
+  height: string;
+  colorDepth: string;
+  pixelDepth: string;
   canvasFingerprint: string;
   webGLFingerprint: string;
 }
@@ -15,7 +18,10 @@ export class FingerprintService {
       userAgent: this.getUserAgent(),
       maxTouchPoints: this.getMaxTouchPoints(),
       pixelRatio: this.getPixelRatio(),
-      screen: this.getScreen(),
+      width: this.getScreenWidth(),
+      height: this.getScreenHeight(),
+      colorDepth: this.getColorDepth(),
+      pixelDepth: this.getPixelDepth(),
       canvasFingerprint: await this.getCanvasFingerprint(),
       webGLFingerprint: await this.getWebGLFingerprint(),
     };
@@ -33,8 +39,20 @@ export class FingerprintService {
     return window.devicePixelRatio.toString();
   }
 
-  private getScreen(): string {
-    return `${window.screen.width}x${window.screen.height}`;
+  private getScreenHeight(): string {
+    return window.screen.height.toString();
+  }
+
+  private getScreenWidth(): string {
+    return window.screen.width.toString();
+  }
+
+  private getColorDepth(): string {
+    return window.screen.colorDepth.toString();
+  }
+
+  private getPixelDepth(): string {
+    return window.screen.pixelDepth.toString();
   }
 
   private async getCanvasFingerprint(): Promise<string> {

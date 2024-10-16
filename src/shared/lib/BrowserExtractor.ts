@@ -1,11 +1,18 @@
-export class BrowserExtractor {
+import { IExtractor } from '../types';
+
+export interface BrowserMeta {
+  browser: string;
+  version: string;
+}
+
+export class BrowserExtractor implements IExtractor<BrowserMeta> {
   constructor(private userAgent: string) {}
 
-  public extract(): string {
+  public extract(): BrowserMeta {
     return this.getBrowserFromUserAgent(this.userAgent);
   }
 
-  private getBrowserFromUserAgent(userAgent: string): string {
+  private getBrowserFromUserAgent(userAgent: string): BrowserMeta {
     if (userAgent.includes('Chrome') && !userAgent.includes('Chromium')) {
       return this.extractChromeVersion(userAgent);
     }
@@ -26,31 +33,54 @@ export class BrowserExtractor {
       return this.extractOperaVersion(userAgent);
     }
 
-    return 'Unknown Browser';
+    return {
+      browser: 'Unknown Browser',
+      version: 'N/A',
+    };
   }
 
-  private extractChromeVersion(userAgent: string): string {
+  private extractChromeVersion(userAgent: string): BrowserMeta {
     const chromeVersion = userAgent.match(/Chrome\/(\d+\.\d+\.\d+\.\d+)/);
-    return chromeVersion ? `Chrome ${chromeVersion[1]}` : 'Chrome';
+
+    return {
+      browser: 'Chrome',
+      version: chromeVersion ? chromeVersion[1] : 'N/A',
+    };
   }
 
-  private extractFirefoxVersion(userAgent: string): string {
+  private extractFirefoxVersion(userAgent: string): BrowserMeta {
     const firefoxVersion = userAgent.match(/Firefox\/(\d+\.\d+)/);
-    return firefoxVersion ? `Firefox ${firefoxVersion[1]}` : 'Firefox';
+
+    return {
+      browser: 'Firefox',
+      version: firefoxVersion ? firefoxVersion[1] : 'N/A',
+    };
   }
 
-  private extractSafariVersion(userAgent: string): string {
+  private extractSafariVersion(userAgent: string): BrowserMeta {
     const safariVersion = userAgent.match(/Version\/(\d+\.\d+)/);
-    return safariVersion ? `Safari ${safariVersion[1]}` : 'Safari';
+
+    return {
+      browser: 'Safari',
+      version: safariVersion ? safariVersion[1] : 'N/A',
+    };
   }
 
-  private extractEdgeVersion(userAgent: string): string {
+  private extractEdgeVersion(userAgent: string): BrowserMeta {
     const edgeVersion = userAgent.match(/Edg\/(\d+\.\d+)/);
-    return edgeVersion ? `Edge ${edgeVersion[1]}` : 'Edge';
+
+    return {
+      browser: 'Edge',
+      version: edgeVersion ? edgeVersion[1] : 'N/A',
+    };
   }
 
-  private extractOperaVersion(userAgent: string): string {
+  private extractOperaVersion(userAgent: string): BrowserMeta {
     const operaVersion = userAgent.match(/OPR\/(\d+\.\d+)/);
-    return operaVersion ? `Opera ${operaVersion[1]}` : 'Opera';
+
+    return {
+      browser: 'Opera',
+      version: operaVersion ? operaVersion[1] : 'N/A',
+    };
   }
 }

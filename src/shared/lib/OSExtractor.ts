@@ -1,15 +1,20 @@
 import { IExtractor } from '../types';
 
-export class OSExtractor implements IExtractor<string> {
+export interface OSMeta {
+  platform: string;
+  version: string;
+}
+
+export class OSExtractor implements IExtractor<OSMeta> {
   constructor(private userAgent: string) {}
 
-  public extract(): string {
+  public extract(): OSMeta {
     return this.getOSFromUserAgent(this.userAgent);
   }
 
-  private getOSFromUserAgent(userAgent: string): string {
+  private getOSFromUserAgent(userAgent: string): OSMeta {
     if (userAgent.includes('Mac OS X')) {
-      return this.extractMacosVersion(userAgent);
+      return this.extractMacosMeta(userAgent);
     }
 
     if (userAgent.includes('Windows NT')) {
@@ -17,7 +22,10 @@ export class OSExtractor implements IExtractor<string> {
     }
 
     if (userAgent.includes('Linux')) {
-      return 'Linux';
+      return {
+        platform: 'Linux',
+        version: 'N/A',
+      };
     }
 
     if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
@@ -28,45 +36,45 @@ export class OSExtractor implements IExtractor<string> {
       return this.extractAndroidVersion(userAgent);
     }
 
-    return 'Unknown OS';
+    return {
+      platform: 'Unknown OS',
+      version: 'N/A',
+    };
   }
 
-  private extractMacosVersion(userAgent: string): string {
+  private extractMacosMeta(userAgent: string): OSMeta {
     const macVersion = userAgent.match(/Mac OS X (\d+[_\.]\d+[_\.]?\d*)/);
-    return macVersion ? `Mac OS X ${macVersion[1].replace(/_/g, '.')}` : 'Mac OS X';
+
+    return {
+      platform: 'Mac OS X',
+      version: macVersion ? macVersion[1].replace(/_/g, '.') : 'N/A',
+    };
   }
 
-  private extractWindowsVersion(userAgent: string): string {
+  private extractWindowsVersion(userAgent: string): OSMeta {
     const windowsVersion = userAgent.match(/Windows NT (\d+\.\d+)/);
-    if (windowsVersion) {
-      switch (windowsVersion[1]) {
-        case '10.0':
-          return 'Windows 10';
-        case '6.3':
-          return 'Windows 8.1';
-        case '6.2':
-          return 'Windows 8';
-        case '6.1':
-          return 'Windows 7';
-        case '6.0':
-          return 'Windows Vista';
-        case '5.1':
-          return 'Windows XP';
-        default:
-          return `Windows NT ${windowsVersion[1]}`;
-      }
-    }
 
-    return 'Windows';
+    return {
+      platform: 'Windows',
+      version: windowsVersion ? windowsVersion[1] : 'N/A',
+    };
   }
 
-  private extractIphoneVersion(userAgent: string): string {
+  private extractIphoneVersion(userAgent: string): OSMeta {
     const iosVersion = userAgent.match(/OS (\d+[_\.]\d+[_\.]?\d*) like Mac OS X/);
-    return iosVersion ? `iOS ${iosVersion[1].replace(/_/g, '.')}` : 'iOS';
+
+    return {
+      platform: 'iOS',
+      version: iosVersion ? iosVersion[1].replace(/_/g, '.') : 'N/A',
+    };
   }
 
-  private extractAndroidVersion(userAgent: string): string {
+  private extractAndroidVersion(userAgent: string): OSMeta {
     const androidVersion = userAgent.match(/Android (\d+[_\.]?\d*)/);
-    return androidVersion ? `Android ${androidVersion[1]}` : 'Android';
+
+    return {
+      platform: 'Android',
+      version: androidVersion ? androidVersion[1] : 'N/A',
+    };
   }
 }
