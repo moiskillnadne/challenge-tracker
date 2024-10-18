@@ -23,7 +23,10 @@ export const PasskeysManager = () => {
 
       options.user.displayName = 'Vitya Ryabkov';
 
+      delete options.attestation;
+
       try {
+        console.log(options);
         const attResult = await startRegistration({ optionsJSON: options });
 
         verifyChallenge.mutate(attResult);
