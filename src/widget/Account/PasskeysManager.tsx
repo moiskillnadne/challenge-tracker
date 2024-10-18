@@ -19,8 +19,12 @@ export const PasskeysManager = () => {
     onSuccess: async (result) => {
       console.info('[GenerateChallenge:onSuccess]', result);
 
+      const options = structuredClone(result.data);
+
+      options.user.displayName = 'Vitya Ryabkov';
+
       try {
-        const attResult = await startRegistration({ optionsJSON: result.data });
+        const attResult = await startRegistration({ optionsJSON: options });
 
         verifyChallenge.mutate(attResult);
       } catch (error: unknown) {
