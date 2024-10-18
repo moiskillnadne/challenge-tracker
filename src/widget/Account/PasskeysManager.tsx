@@ -21,13 +21,13 @@ export const PasskeysManager = () => {
 
       const options = structuredClone(result.data);
 
-      options.user.displayName = 'Vitya Ryabkov';
+      // options.user.displayName = 'Vitya Ryabkov';
 
-      delete options.attestation;
+      // delete options.attestation;
 
-      options.pubKeyCredParams = options.pubKeyCredParams.filter((param) => param.alg !== -8);
+      // options.pubKeyCredParams = options.pubKeyCredParams.filter((param) => param.alg !== -8);
 
-      options.authenticatorSelection!.requireResidentKey = undefined;
+      // options.authenticatorSelection!.requireResidentKey = undefined;
 
       try {
         console.log(options);
