@@ -1,23 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '../../shared/api/auth.service';
-import { arrayBufferToBase64, isPublicKeyCredentialSupported } from '../../shared/lib';
+import { isPublicKeyCredentialSupported } from '../../shared/lib';
 import { startRegistration } from '@simplewebauthn/browser';
-
-interface PublicKeyAuthCredential {
-  id: string;
-  item_uuid: string;
-  rawId: number[];
-  response: {
-    clientDataJSON: number[];
-    authenticatorData: number[];
-    signature: number[];
-    userHandle: number[];
-  };
-
-  authenticatorAttachment: 'platform';
-  credentials_id: string;
-  credentials_type: 'public-key';
-}
 
 export const PasskeysManager = () => {
   const verifyChallenge = useMutation({
@@ -48,25 +32,25 @@ export const PasskeysManager = () => {
     },
   });
 
-  const verifyLoginChallenge = useMutation({
-    mutationFn: authService.verifyLoginChallenge,
-    onSuccess: (data) => {
-      console.info('[VerifyLoginChallenge:onSuccess]', data);
-    },
-    onError: (err) => {
-      console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
-    },
-  });
+  // const verifyLoginChallenge = useMutation({
+  //   mutationFn: authService.verifyLoginChallenge,
+  //   onSuccess: (data) => {
+  //     console.info('[VerifyLoginChallenge:onSuccess]', data);
+  //   },
+  //   onError: (err) => {
+  //     console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
+  //   },
+  // });
 
-  const generateLoginChallenge = useMutation({
-    mutationFn: authService.generateLoginChallenge,
-    onSuccess: async (data) => {
-      console.info('[GenerateLoginChallenge:onSuccess]', data);
-    },
-    onError: (err) => {
-      console.info(`[GenerateLoginChallenge:onError]: ${JSON.stringify(err)}`);
-    },
-  });
+  // const generateLoginChallenge = useMutation({
+  //   mutationFn: authService.generateLoginChallenge,
+  //   onSuccess: async (data) => {
+  //     console.info('[GenerateLoginChallenge:onSuccess]', data);
+  //   },
+  //   onError: (err) => {
+  //     console.info(`[GenerateLoginChallenge:onError]: ${JSON.stringify(err)}`);
+  //   },
+  // });
 
   const createChallenge = async () => {
     const isSupported = await isPublicKeyCredentialSupported();
