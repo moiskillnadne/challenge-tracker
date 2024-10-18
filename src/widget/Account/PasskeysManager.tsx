@@ -25,6 +25,8 @@ export const PasskeysManager = () => {
 
       delete options.attestation;
 
+      options.pubKeyCredParams = options.pubKeyCredParams.filter((param) => param.alg !== -8);
+
       try {
         console.log(options);
         const attResult = await startRegistration({ optionsJSON: options });
