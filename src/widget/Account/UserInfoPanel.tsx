@@ -1,4 +1,5 @@
 import { UserDTO } from '../../shared/api/account.service';
+import { PasskeysManager } from './PasskeysManager';
 
 type Props = {
   isLoading: boolean;
@@ -13,5 +14,10 @@ export const UserInfoPanel = (props: Props) => {
     );
   }
 
-  return <div className="text-white">Hello, {props.user?.email}</div>;
+  return (
+    <div className="flex flex-col items-center gap-[8px]">
+      <div className="text-white">Hello, {props.user?.email}</div>;
+      <PasskeysManager />
+    </div>
+  );
 };
