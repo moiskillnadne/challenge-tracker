@@ -1,9 +1,9 @@
 import {
   PublicKeyCredentialCreationOptionsJSON,
+  PublicKeyCredentialRequestOptionsJSON,
   RegistrationResponseJSON,
 } from '@simplewebauthn/types';
 import { api } from './api';
-import { StartAuthenticationOpts } from '@simplewebauthn/browser/dist/types/methods/startAuthentication';
 
 type LoginPayload = {
   email: string;
@@ -33,7 +33,7 @@ export interface AuthVerifyRequest {
 
 export type GenerateLoginChallengeResponse = {
   success: boolean;
-  data: StartAuthenticationOpts;
+  data: PublicKeyCredentialRequestOptionsJSON;
 };
 
 function createAuthService() {

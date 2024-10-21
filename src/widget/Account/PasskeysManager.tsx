@@ -53,7 +53,8 @@ export const PasskeysManager = () => {
       const options = resp.data.data;
 
       try {
-        const result = await startAuthentication(options);
+        console.log('Passkey options', options);
+        const result = await startAuthentication({ optionsJSON: options });
 
         console.log(result);
       } catch (error: unknown) {
