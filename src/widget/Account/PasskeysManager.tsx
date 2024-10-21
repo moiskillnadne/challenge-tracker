@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '../../shared/api/auth.service';
 import { isPublicKeyCredentialSupported } from '../../shared/lib';
-import { startRegistration } from '@simplewebauthn/browser';
+import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
 
 export const PasskeysManager = () => {
   const verifyChallenge = useMutation({
@@ -47,8 +47,18 @@ export const PasskeysManager = () => {
 
   const generateLoginChallenge = useMutation({
     mutationFn: authService.generateLoginChallenge,
-    onSuccess: async (data) => {
-      console.info('[GenerateLoginChallenge:onSuccess]', data);
+    onSuccess: async (resp) => {
+      console.info('[GenerateLoginChallenge:onSuccess]', resp);
+
+      const options = resp.data.data;
+
+      try {
+        const result = await startAuthentication(options);
+
+        console.log(result);
+      } catch (error: unknown) {
+        console.error(error);
+      }
     },
     onError: (err) => {
       console.info(`[GenerateLoginChallenge:onError]: ${JSON.stringify(err)}`);

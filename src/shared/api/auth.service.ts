@@ -3,6 +3,7 @@ import {
   RegistrationResponseJSON,
 } from '@simplewebauthn/types';
 import { api } from './api';
+import { StartAuthenticationOpts } from '@simplewebauthn/browser/dist/types/methods/startAuthentication';
 
 type LoginPayload = {
   email: string;
@@ -30,6 +31,11 @@ export interface AuthVerifyRequest {
   };
 }
 
+export type GenerateLoginChallengeResponse = {
+  success: boolean;
+  data: StartAuthenticationOpts;
+};
+
 function createAuthService() {
   return {
     login: (payload: LoginPayload) => {
@@ -55,7 +61,7 @@ function createAuthService() {
       return api.post('/protected/passkeys/verify-registration', payload);
     },
     generateLoginChallenge: (email: string) => {
-      return api.post('/protected/passkeys/login', { email });
+      return api.post<GenerateLoginChallengeResponse>('/protected/passkeys/login', { email });
     },
     verifyLoginChallenge: (payload: AuthVerifyRequest) => {
       return api.post('/protected/passkeys/verify-login', payload);
