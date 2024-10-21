@@ -35,19 +35,19 @@ export const PasskeysManager = () => {
     },
   });
 
-  // const verifyLoginChallenge = useMutation({
-  //   mutationFn: authService.verifyLoginChallenge,
-  //   onSuccess: (data) => {
-  //     console.info('[VerifyLoginChallenge:onSuccess]', data);
-  //   },
-  //   onError: (err) => {
-  //     console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
-  //   },
-  // });
+  const verifyLoginChallenge = useMutation({
+    mutationFn: authService.verifyLoginChallenge,
+    onSuccess: (data) => {
+      console.info('[VerifyLoginChallenge:onSuccess]', data);
+    },
+    onError: (err) => {
+      console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
+    },
+  });
 
   const generateLoginChallenge = useMutation({
     mutationFn: authService.generateLoginChallenge,
-    onSuccess: async (resp) => {
+    onSuccess: async (resp, variables) => {
       console.info('[GenerateLoginChallenge:onSuccess]', resp);
 
       const options = resp.data.data;
@@ -57,6 +57,10 @@ export const PasskeysManager = () => {
         const result = await startAuthentication({ optionsJSON: options });
 
         console.log(result);
+        verifyLoginChallenge.mutate({
+          email: variables,
+          challengeResponse: result,
+        });
       } catch (error: unknown) {
         console.error(error);
       }

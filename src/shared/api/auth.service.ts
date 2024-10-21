@@ -1,4 +1,5 @@
 import {
+  AuthenticationResponseJSON,
   PublicKeyCredentialCreationOptionsJSON,
   PublicKeyCredentialRequestOptionsJSON,
   RegistrationResponseJSON,
@@ -21,14 +22,9 @@ type GenerateChallengeBody = {
   };
 };
 
-export interface AuthVerifyRequest {
+export interface VerifyLoginChallenge {
   email: string;
-  rawId: number[];
-  response: {
-    clientDataJSON: string;
-    authenticatorData: string;
-    signature: string;
-  };
+  challengeResponse: AuthenticationResponseJSON;
 }
 
 export type GenerateLoginChallengeResponse = {
@@ -63,7 +59,7 @@ function createAuthService() {
     generateLoginChallenge: (email: string) => {
       return api.post<GenerateLoginChallengeResponse>('/protected/passkeys/login', { email });
     },
-    verifyLoginChallenge: (payload: AuthVerifyRequest) => {
+    verifyLoginChallenge: (payload: VerifyLoginChallenge) => {
       return api.post('/protected/passkeys/verify-login', payload);
     },
   };
