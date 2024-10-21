@@ -45,15 +45,15 @@ export const PasskeysManager = () => {
   //   },
   // });
 
-  // const generateLoginChallenge = useMutation({
-  //   mutationFn: authService.generateLoginChallenge,
-  //   onSuccess: async (data) => {
-  //     console.info('[GenerateLoginChallenge:onSuccess]', data);
-  //   },
-  //   onError: (err) => {
-  //     console.info(`[GenerateLoginChallenge:onError]: ${JSON.stringify(err)}`);
-  //   },
-  // });
+  const generateLoginChallenge = useMutation({
+    mutationFn: authService.generateLoginChallenge,
+    onSuccess: async (data) => {
+      console.info('[GenerateLoginChallenge:onSuccess]', data);
+    },
+    onError: (err) => {
+      console.info(`[GenerateLoginChallenge:onError]: ${JSON.stringify(err)}`);
+    },
+  });
 
   const createChallenge = async () => {
     const isSupported = await isPublicKeyCredentialSupported();
@@ -70,15 +70,15 @@ export const PasskeysManager = () => {
     });
   };
 
-  // const loginChallenge = async () => {
-  //   const isSupported = await isPublicKeyCredentialSupported();
+  const loginChallenge = async () => {
+    const isSupported = await isPublicKeyCredentialSupported();
 
-  //   if (!isSupported) {
-  //     return console.error('WebAuthn is not supported');
-  //   }
+    if (!isSupported) {
+      return console.error('WebAuthn is not supported');
+    }
 
-  //   generateLoginChallenge.mutate('vitya.ryabkov@gmail.com');
-  // };
+    generateLoginChallenge.mutate('vitya.ryabkov@gmail.com');
+  };
 
   return (
     <div className="p-[12px]">
@@ -93,12 +93,12 @@ export const PasskeysManager = () => {
           Create passkey
         </button>
 
-        {/* <button
+        <button
           className="duration-300 bg-blue-500 text-white/50 rounded-full h-full hover:text-white/75"
           onClick={loginChallenge}
         >
           Login via passkey
-        </button> */}
+        </button>
       </div>
     </div>
   );
