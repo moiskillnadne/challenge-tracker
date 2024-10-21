@@ -21,14 +21,6 @@ export const PasskeysManager = () => {
 
       const options = structuredClone(result.data);
 
-      // options.user.displayName = 'Vitya Ryabkov';
-
-      // delete options.attestation;
-
-      // options.pubKeyCredParams = options.pubKeyCredParams.filter((param) => param.alg !== -8);
-
-      // options.authenticatorSelection!.requireResidentKey = undefined;
-
       try {
         console.log(options);
         const attResult = await startRegistration({ optionsJSON: options });

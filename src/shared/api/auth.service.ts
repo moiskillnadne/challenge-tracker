@@ -55,10 +55,10 @@ function createAuthService() {
       return api.post('/protected/passkeys/verify-registration', payload);
     },
     generateLoginChallenge: (email: string) => {
-      return api.post('/webauth/login-challenge', { email });
+      return api.post('/protected/passkeys/login', { email });
     },
     verifyLoginChallenge: (payload: AuthVerifyRequest) => {
-      return api.post('/webauth/login-verify', payload);
+      return api.post('/protected/passkeys/verify-login', payload);
     },
   };
 }
