@@ -92,8 +92,7 @@ export const PasskeysManager = () => {
 
   return (
     <div className="p-[12px]">
-      <h1>Passkeys Manager</h1>
-      <p>Manage your passkeys</p>
+      <h1 className="text-white mb-[12px]">Passkeys Manager</h1>
 
       <div className="flex flex-col gap-[12px]">
         <button
