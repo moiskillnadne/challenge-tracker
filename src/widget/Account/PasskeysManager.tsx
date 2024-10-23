@@ -50,7 +50,7 @@ export const PasskeysManager = () => {
     onSuccess: async (resp, variables) => {
       console.info('[GenerateLoginChallenge:onSuccess]', resp);
 
-      const options = resp.data.data;
+      const options = resp.data.options;
 
       try {
         console.log('Passkey options', options);

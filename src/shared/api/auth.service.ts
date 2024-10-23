@@ -22,7 +22,7 @@ export interface VerifyLoginChallenge {
 
 export type GenerateLoginChallengeResponse = {
   success: boolean;
-  data: PublicKeyCredentialRequestOptionsJSON;
+  options: PublicKeyCredentialRequestOptionsJSON;
 };
 
 function createAuthService() {
