@@ -6,26 +6,27 @@ import ProtectedRoute from '../feature/ProtectedRoute';
 import { ChallengeBuilderPage } from './ChallengeBuilderPage';
 import { AppVersion } from '../widget/AppVersion';
 import { Page } from '../shared/ui';
+import { Routes } from '../shared/constants';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/account" />,
+    element: <Navigate to={Routes.ACCOUNT} />,
   },
   {
-    path: '/login',
+    path: Routes.LOGIN,
     element: <LoginPage />,
   },
   {
-    path: '/account',
+    path: Routes.ACCOUNT,
     element: <ProtectedRoute element={<AccountPage />} />,
   },
   {
-    path: '/challenge/:challengeId',
+    path: Routes.CHALLENGE,
     element: <ProtectedRoute element={<ChallengePage />} />,
   },
   {
-    path: '/create-challenge',
+    path: Routes.CREATE_CHALLENGE,
     element: <ProtectedRoute element={<ChallengeBuilderPage />} />,
   },
 ]);
