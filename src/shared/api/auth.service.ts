@@ -15,13 +15,6 @@ type ConfirmLogin = {
   code: string;
 };
 
-type GenerateChallengeBody = {
-  user: {
-    id: string;
-    email: string;
-  };
-};
-
 export interface VerifyLoginChallenge {
   email: string;
   challengeResponse: AuthenticationResponseJSON;
@@ -47,20 +40,22 @@ function createAuthService() {
       return api.post('/auth/refresh-token');
     },
 
-    generateChallenge: (payload: GenerateChallengeBody) => {
+    registerKeys: () => {
       return api.post<PublicKeyCredentialCreationOptionsJSON>(
-        '/protected/passkeys/register',
-        payload,
+        '/protected/passkeys/generate-registration-options',
       );
     },
-    verifyChallenge: (payload: RegistrationResponseJSON) => {
+    verifyRegistration: (payload: RegistrationResponseJSON) => {
       return api.post('/protected/passkeys/verify-registration', payload);
     },
-    generateLoginChallenge: (email: string) => {
-      return api.post<GenerateLoginChallengeResponse>('/protected/passkeys/login', { email });
+    authenticateKeys: (email: string) => {
+      return api.post<GenerateLoginChallengeResponse>(
+        '/protected/passkeys/generate-authentication-options',
+        { email },
+      );
     },
-    verifyLoginChallenge: (payload: VerifyLoginChallenge) => {
-      return api.post('/protected/passkeys/verify-login', payload);
+    verifyAuthentication: (payload: VerifyLoginChallenge) => {
+      return api.post('/protected/passkeys/verify-authentication', payload);
     },
   };
 }

@@ -5,7 +5,7 @@ import { startAuthentication, startRegistration } from '@simplewebauthn/browser'
 
 export const PasskeysManager = () => {
   const verifyChallenge = useMutation({
-    mutationFn: authService.verifyChallenge,
+    mutationFn: authService.verifyRegistration,
     onSuccess: (data) => {
       console.info('[VerifyChallenge:onSuccess]', data);
     },
@@ -15,7 +15,7 @@ export const PasskeysManager = () => {
   });
 
   const generateChallengeMutation = useMutation({
-    mutationFn: authService.generateChallenge,
+    mutationFn: authService.registerKeys,
     onSuccess: async (result) => {
       console.info('[GenerateChallenge:onSuccess]', result);
 
@@ -36,7 +36,7 @@ export const PasskeysManager = () => {
   });
 
   const verifyLoginChallenge = useMutation({
-    mutationFn: authService.verifyLoginChallenge,
+    mutationFn: authService.verifyAuthentication,
     onSuccess: (data) => {
       console.info('[VerifyLoginChallenge:onSuccess]', data);
     },
@@ -46,7 +46,7 @@ export const PasskeysManager = () => {
   });
 
   const generateLoginChallenge = useMutation({
-    mutationFn: authService.generateLoginChallenge,
+    mutationFn: authService.authenticateKeys,
     onSuccess: async (resp, variables) => {
       console.info('[GenerateLoginChallenge:onSuccess]', resp);
 
@@ -77,12 +77,7 @@ export const PasskeysManager = () => {
       return console.error('WebAuthn is not supported');
     }
 
-    generateChallengeMutation.mutate({
-      user: {
-        id: '1',
-        email: 'vitya.ryabkov@gmail.com',
-      },
-    });
+    generateChallengeMutation.mutate();
   };
 
   const loginChallenge = async () => {
