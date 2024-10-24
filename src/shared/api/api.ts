@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { authService } from './auth.service';
+import { EventEmitter } from '../lib/EventEmitter';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type RequestConfig = AxiosRequestConfig<any> & {
@@ -24,6 +25,9 @@ api.interceptors.response.use(
       try {
         await authService.refreshToken();
       } catch (e) {
+        console.error('User authentication failed');
+        EventEmitter.emit('refreshTokenExpired');
+
         await Promise.reject(e);
       }
 

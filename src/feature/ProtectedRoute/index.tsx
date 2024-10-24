@@ -1,8 +1,9 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthenticated } from '../../entity/user';
 import { Page } from '../../shared/ui';
 import { Loader } from '../../shared/ui/Loader';
+import { EventEmitter } from '../../shared/lib/EventEmitter';
 
 type Props = {
   element: React.ReactNode;
@@ -10,6 +11,20 @@ type Props = {
 
 function ProtectedRoute({ element }: Props) {
   const { isAuthenticated, isLoading } = useAuthenticated();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleRefreshTokenExpired = () => {
+      return navigate('/login');
+    };
+
+    EventEmitter.on('refreshTokenExpired', handleRefreshTokenExpired);
+
+    return () => {
+      EventEmitter.off('refreshTokenExpired', handleRefreshTokenExpired);
+    };
+  }, []);
 
   if (isLoading) {
     return (
