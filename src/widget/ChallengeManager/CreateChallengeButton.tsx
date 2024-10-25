@@ -7,10 +7,12 @@ export const CreateChallengeButton = () => {
 
   return (
     <div
-      className="flex items-start h-[81px] border-2 border-dotted cursor-default px-[4px] py-[4px] hover:border-solid"
+      className="flex justify-center items-center h-[81px] w-[150px] border-2 border-dotted cursor-default px-[4px] py-[4px] hover:border-solid"
       onClick={() => navigate(Routes.CREATE_CHALLENGE)}
     >
-      <PlusIcon color="white" />
+      <div className="h-[75px] w-[75px]">
+        <PlusIcon color="white" />
+      </div>
     </div>
   );
 };

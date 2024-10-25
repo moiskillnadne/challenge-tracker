@@ -70,17 +70,17 @@ export const ChallengeGridItem = ({
   return (
     <>
       <div
-        className={`${pressedAnimationMap[`${isPressed}`]} duration-700  flex flex-col items-start w-[150px] border-2 border-dotted cursor-default px-[4px] py-[4px] hover:border-solid`}
+        className={`${pressedAnimationMap[`${isPressed}`]} duration-700  flex flex-col items-start w-[150px] border-2 border-dotted cursor-default px-[4px] py-[4px] hover:border-solid select-none`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onMouseDown={handleTouchStart}
         onMouseUp={handleTouchEnd}
       >
-        <div className="text-white font-bold text-[18px]">{goal}</div>
-        <div className="text-white text-[14px] text-white/75">
+        <div className="text-white font-bold text-[18px] cursor-default select-none">{goal}</div>
+        <div className="text-white text-[14px] text-white/75 cursor-default select-none">
           {isActive ? 'in progress' : 'completed'}
         </div>
-        <div className="text-white/75 text-[14px]">
+        <div className="text-white/75 text-[14px] cursor-default select-none">
           Days left: <span className="font-bold">{daysLeft}</span>
         </div>
       </div>
