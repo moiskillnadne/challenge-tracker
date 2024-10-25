@@ -1,6 +1,6 @@
 {
   "name": "Challenge Logger",
-  "short_name": "Challenge",
+  "short_name": "Challenge Logger",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -26,5 +26,5 @@
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
-  "start_url": "/login"
+  "start_url": "/"
 }

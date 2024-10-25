@@ -24,9 +24,10 @@ export default defineConfig({
       ],
       manifest: {
         name: 'Challenge Logger',
-        short_name: 'Challenge',
+        short_name: 'Challenge Logger',
         description: 'Build your habits',
         theme_color: '#ffffff',
+        start_url: '/',
         icons: [
           {
             src: '/web-app-manifest-192x192.png',
