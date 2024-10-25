@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { challengeService } from '../../shared/api/challenge.service';
-import { useCustomTranslation } from '../../feature/translation';
 import { ChallengeGridItem } from './ChallengeGridItem';
 import { mapChallengeToItem } from '../Account/lib/mappers';
 import { Loader } from '../../shared/ui/Loader';
+import { CreateChallengeButton } from './CreateChallengeButton';
 import { useNavigate } from 'react-router-dom';
+import { useCustomTranslation } from '../../feature/translation';
 
 export const ChallengeManager = () => {
-  const { t } = useCustomTranslation();
   const navigate = useNavigate();
+  const { t } = useCustomTranslation();
 
   const query = useQuery({
     queryKey: ['/protected/challenge/'],
@@ -16,24 +17,25 @@ export const ChallengeManager = () => {
     select: (data) => data.data.details,
   });
 
+  const challenges = query.data?.challenges;
+
   if (query.isPending) {
-    return <Loader />;
+    return (
+      <div className="flex flex-1 justify-center items-center">
+        <Loader />;
+      </div>
+    );
   }
 
   return (
     <div className="flex-1 mt-[36px] px-[12px]">
-      <div className="flex justify-center mb-[16px]">
-        <button
-          className="duration-300 text-white font-bold text-[26px] cursor-pointer border-2 rounded border-white/50 px-[16px] hover:border-white"
-          onClick={() => navigate('/create-challenge')}
-        >
-          {t('createNewChallenge')}
-        </button>
+      <div className="flex justify-center mb-[16px] text-white font-bold text-[24px] cursor-default">
+        {t('yourChallenges')}
       </div>
 
       <div className="flex gap-[8px] flex-wrap">
-        {query.data?.challenges &&
-          query.data?.challenges
+        {challenges &&
+          challenges
             .map((item) => mapChallengeToItem(item))
             .map((item) => (
               <ChallengeGridItem
@@ -46,6 +48,8 @@ export const ChallengeManager = () => {
                 }}
               />
             ))}
+
+        <CreateChallengeButton />
       </div>
     </div>
   );
