@@ -48,6 +48,9 @@ function createChallengeService() {
     createChallenge(payload: CreateChallengePayload) {
       return api.post('/protected/challenge/create', payload);
     },
+    deleteChallenge(challengeId: string) {
+      return api.delete(`/protected/challenge/${challengeId}`);
+    },
     checkin(payload: CheckinPayload) {
       return api.post('/protected/challenge/check-in', payload);
     },

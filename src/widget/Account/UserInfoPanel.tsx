@@ -18,8 +18,8 @@ export const UserInfoPanel = (props: Props) => {
   return (
     <div className="flex flex-col items-center gap-[8px]">
       <div className="text-white">Hello, {props.user?.email}</div>;
-      <LogoutButton />
       <PasskeysManager />
+      <LogoutButton />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { challengeService } from '../../shared/api/challenge.service';
 import { convertDate } from '../Challenge/lib/convertDate';
 import { getDaysInMonth } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../shared/constants';
 
 export const ChallengeBuilderWidget = () => {
   const [goal, setGoal] = useState<string>('');
@@ -21,7 +22,7 @@ export const ChallengeBuilderWidget = () => {
         queryKey: ['/challenge'],
       });
 
-      return navigate(`/account`);
+      return navigate(Routes.HOME);
     },
   });
 

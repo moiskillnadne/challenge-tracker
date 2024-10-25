@@ -22,6 +22,10 @@
     "enterCodeFromEmail": "Письмо с кодом было отправлено. Если письмо не приходит, то попробуйте еще раз.",
     "home": "Домой",
     "account": "Аккаунт",
-    "createNewChallenge": "Создать новый вызов"
+    "createNewChallenge": "Создать новый вызов",
+    "yourChallenges": "Ваши вызовы",
+    "doYouWantToRemoveChallenge": "Вы хотите удалить этот вызов?",
+    "yes": "Да",
+    "no": "Нет"
   }
 }
