@@ -21,7 +21,7 @@ export const ChallengeManager = () => {
   }
 
   return (
-    <div className="w-full px-[12px]">
+    <div className="flex-1 px-[12px] mt-[36px]">
       <div className="flex justify-center mb-[16px]">
         <button
           className="duration-300 text-white font-bold text-[26px] cursor-pointer border-2 rounded border-white/50 px-[16px] hover:border-white"

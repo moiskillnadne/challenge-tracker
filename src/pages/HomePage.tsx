@@ -1,6 +1,6 @@
 import { useCustomTranslation } from '../feature/translation';
 import { Routes } from '../shared/constants';
-import { Page } from '../shared/ui';
+import { Page, PageContent } from '../shared/ui';
 import { ChallengeManager } from '../widget/ChallengeManager/';
 import { Header } from '../widget/Header';
 
@@ -15,9 +15,9 @@ export const HomePage = () => {
         labelNavigationButton={t('account')}
       />
 
-      <div className="mt-[24px]">
+      <PageContent>
         <ChallengeManager />
-      </div>
+      </PageContent>
     </Page>
   );
 };

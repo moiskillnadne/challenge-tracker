@@ -12,7 +12,7 @@ export const AccountWidget = () => {
   });
 
   return (
-    <div className="flex flex-col items-center pt-[32px] gap-[64px]">
+    <div className="flex flex-1 flex-col items-center pt-[32px] gap-[64px]">
       <UserInfoPanel isLoading={query.isPending} user={query.data?.user} />
     </div>
   );

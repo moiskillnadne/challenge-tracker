@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Page } from '../shared/ui';
+import { Page, PageContent } from '../shared/ui';
 import { ChallengeWidget } from '../widget/Challenge';
 import { Header } from '../widget/Header';
 import { Routes } from '../shared/constants';
@@ -30,7 +30,10 @@ const ChallengePage = () => {
         navigateTo={Routes.HOME}
         labelNavigationButton={t('home')}
       />
-      <ChallengeWidget challengeId={challengeId} />
+
+      <PageContent>
+        <ChallengeWidget challengeId={challengeId} />
+      </PageContent>
     </Page>
   );
 };

@@ -17,7 +17,7 @@ export const ChallengeWidget = ({ challengeId }: Props) => {
   }
 
   return (
-    <div className="flex justify-center overflow-y-scroll">
+    <div className="flex flex-1 justify-center overflow-y-scroll">
       <div className="w-[500px] px-[16px]">
         <div className="flex justify-center items-center py-[18px] px-[24px]">
           <img className="w-[400px]" src={Logo} alt="" />

@@ -1,6 +1,6 @@
 import { useCustomTranslation } from '../feature/translation';
 import { Routes } from '../shared/constants';
-import { Page } from '../shared/ui';
+import { Page, PageContent } from '../shared/ui';
 import { AccountWidget } from '../widget/Account';
 import { Header } from '../widget/Header';
 
@@ -14,7 +14,10 @@ export const AccountPage = () => {
         navigateTo={Routes.HOME}
         labelNavigationButton={t('home')}
       />
-      <AccountWidget />
+
+      <PageContent>
+        <AccountWidget />
+      </PageContent>
     </Page>
   );
 };

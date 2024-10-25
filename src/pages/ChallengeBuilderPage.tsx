@@ -1,6 +1,6 @@
 import { useCustomTranslation } from '../feature/translation';
 import { Routes } from '../shared/constants';
-import { Page } from '../shared/ui';
+import { Page, PageContent } from '../shared/ui';
 import { ChallengeBuilderWidget } from '../widget/ChallengeBuilder';
 import { Header } from '../widget/Header';
 
@@ -15,7 +15,9 @@ export const ChallengeBuilderPage = () => {
         labelNavigationButton={t('home')}
       />
 
-      <ChallengeBuilderWidget />
+      <PageContent>
+        <ChallengeBuilderWidget />
+      </PageContent>
     </Page>
   );
 };

@@ -45,7 +45,7 @@ export const ChallengeBuilderWidget = () => {
   };
 
   return (
-    <div className="w-full px-[16px] my-[64px] flex justify-center">
+    <div className="flex-1 px-[16px] my-[64px] flex justify-center">
       <div className="flex flex-col gap-[12px] items-center">
         <div className="text-white font-bold text-[26px]">Create a new challenge</div>
 
