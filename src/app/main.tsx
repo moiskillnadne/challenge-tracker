@@ -6,7 +6,7 @@ import './index.css';
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('../service-worker.ts')
+      .register('/service-worker.js')
       .then((registration) => {
         console.log('Service Worker registered with scope:', registration.scope);
       })
