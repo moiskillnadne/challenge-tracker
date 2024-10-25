@@ -10,7 +10,7 @@ import { HomePage } from './HomePage';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to={Routes.ACCOUNT} />,
+    element: <Navigate to={Routes.HOME} />,
   },
   {
     path: Routes.LOGIN,
