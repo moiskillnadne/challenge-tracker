@@ -7,6 +7,7 @@ import { ChallengeBuilderPage } from './ChallengeBuilderPage';
 import { AppVersion } from '../widget/AppVersion';
 import { Page } from '../shared/ui';
 import { Routes } from '../shared/constants';
+import { HomePage } from './HomePage';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: Routes.LOGIN,
     element: <LoginPage />,
+  },
+  {
+    path: Routes.HOME,
+    element: <ProtectedRoute element={<HomePage />} />,
   },
   {
     path: Routes.ACCOUNT,
