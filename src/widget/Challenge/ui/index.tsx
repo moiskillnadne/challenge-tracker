@@ -13,7 +13,11 @@ export const ChallengeWidget = ({ challengeId }: Props) => {
   });
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className="flex flex-1 justify-center items-center">
+        <Loader />;
+      </div>
+    );
   }
 
   return (
