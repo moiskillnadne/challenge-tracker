@@ -83,7 +83,7 @@ export const LoginWidget = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
+    <div className="flex flex-1 flex-col justify-center items-center">
       <div className="flex flex-col items-center gap-[8px] mb-[64px]">
         <h2 className="text-white font-bold text-[32px]">{t('login')}</h2>
 

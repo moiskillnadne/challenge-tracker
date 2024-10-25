@@ -4,8 +4,6 @@ import { LoginPage } from './LoginPage';
 import { AccountPage } from './AccountPage';
 import ProtectedRoute from '../feature/ProtectedRoute';
 import { ChallengeBuilderPage } from './ChallengeBuilderPage';
-import { AppVersion } from '../widget/AppVersion';
-import { Page } from '../shared/ui';
 import { Routes } from '../shared/constants';
 import { HomePage } from './HomePage';
 
@@ -37,12 +35,7 @@ const router = createBrowserRouter([
 ]);
 
 const ApplicationRouter = () => {
-  return (
-    <Page>
-      <RouterProvider router={router} />
-      <AppVersion />
-    </Page>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default ApplicationRouter;
