@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { challengeService } from '../../shared/api/challenge.service';
 import { ChallengeGridItem } from './ChallengeGridItem';
 import { mapChallengeToItem } from '../Account/lib/mappers';
@@ -6,6 +6,7 @@ import { Loader } from '../../shared/ui/Loader';
 import { CreateChallengeButton } from './CreateChallengeButton';
 import { useNavigate } from 'react-router-dom';
 import { useCustomTranslation } from '../../feature/translation';
+import { useCallback } from 'react';
 
 export const ChallengeManager = () => {
   const navigate = useNavigate();
@@ -17,7 +18,19 @@ export const ChallengeManager = () => {
     select: (data) => data.data.details,
   });
 
+  const removeChallengeMutation = useMutation({
+    mutationFn: challengeService.deleteChallenge,
+    onSuccess(data, variables) {
+      console.log(`Challenge with id: ${variables} has been removed`);
+      query.refetch();
+    },
+  });
+
   const challenges = query.data?.challenges;
+
+  const removeChallenge = useCallback((id: string) => {
+    removeChallengeMutation.mutate(id);
+  }, []);
 
   if (query.isPending) {
     return (
@@ -46,6 +59,7 @@ export const ChallengeManager = () => {
                 onClick={() => {
                   return navigate(`/challenge/${item.id}`);
                 }}
+                onChallengeRemove={() => removeChallenge(item.id)}
               />
             ))}
 

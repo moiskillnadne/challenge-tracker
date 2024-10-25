@@ -23,6 +23,9 @@
     "home": "Домой",
     "account": "Аккаунт",
     "createNewChallenge": "Создать новый вызов",
-    "yourChallenges": "Ваши вызовы"
+    "yourChallenges": "Ваши вызовы",
+    "doYouWantToRemoveChallenge": "Вы хотите удалить этот вызов?",
+    "yes": "Да",
+    "no": "Нет"
   }
 }

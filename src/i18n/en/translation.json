@@ -23,6 +23,9 @@
     "home": "Home",
     "account": "Account",
     "createNewChallenge": "Create a new challenge",
-    "yourChallenges": "Your challenges"
+    "yourChallenges": "Your challenges",
+    "doYouWantToRemoveChallenge": "Do you want to remove this challenge?",
+    "yes": "Yes",
+    "no": "No"
   }
 }
