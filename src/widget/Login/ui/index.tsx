@@ -1,10 +1,11 @@
 import z from 'zod';
 import { useState } from 'react';
-import { LanguageSwitcher, useCustomTranslation } from '../../../feature/translation';
+import { useCustomTranslation } from '../../../feature/translation';
 import { useMutation } from '@tanstack/react-query';
 import { authService } from '../../../shared/api/auth.service';
 import { RightArrow } from '../../../shared/ui';
 import { useNavigate } from 'react-router-dom';
+import { Routes } from '../../../shared/constants';
 
 const emailSchema = z.string().email();
 
@@ -38,7 +39,7 @@ export const LoginWidget = () => {
     onSuccess: (data) => {
       console.info('[CodeMutation:onSuccess]', data);
 
-      return navigate('/account');
+      return navigate(Routes.HOME);
     },
     onError: (err) => {
       console.info(`[CodeMutation:onError]: ${JSON.stringify(err)}`);
@@ -83,10 +84,6 @@ export const LoginWidget = () => {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-      <div className="absolute top-0 right-0 py-[12px] px-[24px]">
-        <LanguageSwitcher />
-      </div>
-
       <div className="flex flex-col items-center gap-[8px] mb-[64px]">
         <h2 className="text-white font-bold text-[32px]">{t('login')}</h2>
 

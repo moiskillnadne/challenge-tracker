@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { challengeService } from '../../shared/api/challenge.service';
 import { useCustomTranslation } from '../../feature/translation';
 import { ChallengeGridItem } from './ChallengeGridItem';
-import { mapChallengeToItem } from './lib/mappers';
+import { mapChallengeToItem } from '../Account/lib/mappers';
 import { Loader } from '../../shared/ui/Loader';
 import { useNavigate } from 'react-router-dom';
 

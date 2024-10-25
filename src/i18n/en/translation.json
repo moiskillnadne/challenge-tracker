@@ -16,6 +16,7 @@
     "toCompleteChallenge": "to complete your daily challenge!",
     "youCanRestFor": "you can rest for",
     "login": "Login",
+    "logout": "Logout",
     "enterEmailForCode": "Enter your email. You will receive an email with an authorization code.",
     "sendCode": "Send code",
     "enterCodeFromEmail": "The email with the code has been sent. If the email does not arrive, then try again.",
