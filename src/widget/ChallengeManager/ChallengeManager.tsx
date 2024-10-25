@@ -20,7 +20,7 @@ export const ChallengeManager = () => {
 
   const removeChallengeMutation = useMutation({
     mutationFn: challengeService.deleteChallenge,
-    onSuccess(data, variables) {
+    onSuccess(_, variables) {
       console.log(`Challenge with id: ${variables} has been removed`);
       query.refetch();
     },
