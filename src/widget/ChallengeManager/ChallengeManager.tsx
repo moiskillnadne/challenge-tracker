@@ -21,7 +21,7 @@ export const ChallengeManager = () => {
   }
 
   return (
-    <div className="flex-1 px-[12px] mt-[36px]">
+    <div className="flex-1 mt-[36px] px-[12px]">
       <div className="flex justify-center mb-[16px]">
         <button
           className="duration-300 text-white font-bold text-[26px] cursor-pointer border-2 rounded border-white/50 px-[16px] hover:border-white"
@@ -31,7 +31,7 @@ export const ChallengeManager = () => {
         </button>
       </div>
 
-      <div className="flex gap-[8px]">
+      <div className="flex gap-[8px] flex-wrap">
         {query.data?.challenges &&
           query.data?.challenges
             .map((item) => mapChallengeToItem(item))

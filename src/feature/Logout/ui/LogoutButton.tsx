@@ -19,7 +19,7 @@ export const LogoutButton = () => {
   return (
     <div className="p-[12px]">
       <button
-        className="duration-300 bg-blue-500 text-white/50 rounded-full h-full hover:text-white/75"
+        className="duration-300 font-bold text-red/75 rounded-full h-full hover:text-red"
         onClick={logout}
       >
         {t('logout')}

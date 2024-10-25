@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useCustomTranslation } from '../../../feature/translation';
-import { ChallengeDTO, ChallengeProgressDTO } from '../../../shared/api/challenge.service';
+import { ChallengeDTO, ProgressDTO } from '../../../shared/api/challenge.service';
 import { MetaText } from './MetaText';
 import { convertDate } from '../lib/convertDate';
 import { Calendar } from './Calendar';
@@ -9,15 +9,25 @@ import { Timer } from './Timer';
 
 type Props = {
   challenge: ChallengeDTO;
-  progress: Array<ChallengeProgressDTO>;
+  progress: Array<ProgressDTO>;
 
   addDayInStreak: (day: number) => void;
+  removeDayFromStreak: (checkinId: string) => void;
 };
 
-export const CalendarManager = ({ challenge, progress, addDayInStreak }: Props) => {
+export const CalendarManager = ({
+  challenge,
+  progress,
+  addDayInStreak,
+  removeDayFromStreak,
+}: Props) => {
   const { t } = useCustomTranslation();
 
   const challengeBaseInfo = mapChallengeToItem(challenge);
+
+  console.dir(challenge);
+  console.dir(progress);
+  console.dir(challengeBaseInfo);
 
   const onDayClick = useCallback(
     (day: number) => {
@@ -27,9 +37,17 @@ export const CalendarManager = ({ challenge, progress, addDayInStreak }: Props) 
 
       if (!isDayAlreadyChecked) {
         addDayInStreak(day);
+        return;
+      }
+
+      const checkinId = progress.find((el) => el.checkpointDate === convertDate(day))?.id;
+
+      if (checkinId) {
+        removeDayFromStreak(checkinId);
+        return;
       }
     },
-    [addDayInStreak],
+    [addDayInStreak, progress],
   );
 
   return (
