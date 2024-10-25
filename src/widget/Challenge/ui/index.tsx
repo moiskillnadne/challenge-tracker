@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const ChallengeWidget = ({ challengeId }: Props) => {
-  const { challenge, challengeProgress, isLoading, addDayInStreak } = useStreakState({
+  const { challenge, isLoading, addDayInStreak, removeDayFromStreak } = useStreakState({
     challengeId,
   });
 
@@ -27,11 +27,12 @@ export const ChallengeWidget = ({ challengeId }: Props) => {
           <img className="w-[400px]" src={Logo} alt="" />
         </div>
 
-        {!!challenge && !!challengeProgress && (
+        {!!challenge && (
           <CalendarManager
             challenge={challenge}
-            progress={challengeProgress}
+            progress={challenge.progress}
             addDayInStreak={addDayInStreak}
+            removeDayFromStreak={removeDayFromStreak}
           />
         )}
       </div>

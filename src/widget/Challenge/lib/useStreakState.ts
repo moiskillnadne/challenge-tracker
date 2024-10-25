@@ -10,16 +10,8 @@ type Props = {
 
 export const useStreakState = ({ challengeId }: Props) => {
   const challengeQuery = useQuery({
-    queryKey: ['/challenge/base-info', challengeId],
+    queryKey: ['/challenge/', challengeId],
     queryFn: () => challengeService.getChallengeById(challengeId),
-    select(data) {
-      return data.data.details;
-    },
-  });
-
-  const progressQuery = useQuery({
-    queryKey: ['/challenge/progress', challengeId],
-    queryFn: () => challengeService.getChallengeProgressById(challengeId),
     select(data) {
       return data.data.details;
     },
@@ -31,7 +23,16 @@ export const useStreakState = ({ challengeId }: Props) => {
       return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] });
     },
     async onSuccess() {
-      progressQuery.refetch();
+      challengeQuery.refetch();
+    },
+  });
+
+  const removeProgressMutation = useMutation({
+    mutationFn: challengeService.removeCheckin,
+    onSettled: async () => {
+      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] });
+    },
+    async onSuccess() {
       challengeQuery.refetch();
     },
   });
@@ -40,12 +41,16 @@ export const useStreakState = ({ challengeId }: Props) => {
     progressMutation.mutate({ userChallengeId: challengeId, checkpointDate: convertDate(day) });
   }, []);
 
+  const removeDayFromStreak = useCallback((checkinId: string) => {
+    removeProgressMutation.mutate(checkinId);
+  }, []);
+
   return {
-    isLoading: challengeQuery.isLoading || progressQuery.isLoading,
+    isLoading: challengeQuery.isLoading,
 
     challenge: challengeQuery.data?.challenge ?? null,
-    challengeProgress: progressQuery.data?.challengeProgress ?? null,
 
     addDayInStreak,
+    removeDayFromStreak,
   };
 };
