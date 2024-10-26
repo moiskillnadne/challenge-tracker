@@ -40,6 +40,8 @@ export const LoginWidget = () => {
     mutationFn: authService.verifyAuthentication,
     onSuccess: (data) => {
       console.info('[VerifyLoginChallenge:onSuccess]', data);
+
+      return navigate(Routes.HOME);
     },
     onError: (err) => {
       console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
