@@ -40,11 +40,6 @@ export const LoginWidget = () => {
 
   const verifyLoginChallenge = useMutation({
     mutationFn: authService.verifyAuthentication,
-    onSuccess: (data) => {
-      console.info('[VerifyLoginChallenge:onSuccess]', data);
-
-      return navigate(Routes.HOME);
-    },
     onError: (err) => {
       console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
     },
@@ -52,6 +47,11 @@ export const LoginWidget = () => {
 
   const codeMutation = useMutation({
     mutationFn: authService.confirmLogin,
+    onSuccess: (data) => {
+      console.info('[CodeMutation:onSuccess]', data);
+
+      return navigate(Routes.HOME);
+    },
     onError: (err) => {
       console.info(`[CodeMutation:onError]: ${JSON.stringify(err)}`);
     },
