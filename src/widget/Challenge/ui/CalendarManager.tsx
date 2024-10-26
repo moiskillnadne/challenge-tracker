@@ -25,10 +25,6 @@ export const CalendarManager = ({
 
   const challengeBaseInfo = mapChallengeToItem(challenge);
 
-  console.dir(challenge);
-  console.dir(progress);
-  console.dir(challengeBaseInfo);
-
   const onDayClick = useCallback(
     (day: number) => {
       const isDayAlreadyChecked = progress
