@@ -47,7 +47,7 @@ export const RegisterPasskeys = () => {
 
   return (
     <button
-      className="duration-300 bg-blue-500 text-white/50 rounded-full h-full hover:text-white/75"
+      className="duration-300 bg-blue-500 text-black/50 rounded-full h-full hover:text-black/75"
       onClick={createChallenge}
     >
       Create passkey
