@@ -52,11 +52,9 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
       </div>
 
       <div className="grid grid-cols-7 gap-2 mt-[20px]">
-        {offset.map((index) => (
-          <div key={index}></div>
-        ))}
+        {offset?.map((index) => <div key={index}></div>)}
 
-        {daysInMonthArray.map((index) => (
+        {daysInMonthArray?.map((index) => (
           <CalendarDayItem
             key={index}
             label={index.toString()}

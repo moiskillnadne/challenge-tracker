@@ -61,13 +61,13 @@ export const CalendarManager = ({
       </div>
 
       <Calendar
-        streak={progress.map((el) => el.checkpointDate) ?? []}
+        streak={progress?.map((el) => el.checkpointDate) ?? []}
         onDayClick={onDayClick}
         isCompleted={!challengeBaseInfo.isActive}
       />
 
       {challengeBaseInfo.isActive ?? (
-        <Timer streak={progress.map((el) => el.checkpointDate) ?? []} />
+        <Timer streak={progress?.map((el) => el.checkpointDate) ?? []} />
       )}
     </div>
   );
