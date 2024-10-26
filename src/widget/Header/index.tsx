@@ -27,10 +27,7 @@ export const Header = (props: Props) => {
   return (
     <div className="relative py-[12px] px-[24px] flex justify-between">
       {props.navigationButtonShown ? (
-        <button
-          className="text-white font-bold text-[26px] cursor-pointer"
-          onClick={onNavigationClick}
-        >
+        <button className="font-bold text-[26px] cursor-pointer" onClick={onNavigationClick}>
           {props.labelNavigationButton}
         </button>
       ) : (

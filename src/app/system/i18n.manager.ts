@@ -20,6 +20,7 @@ const i18nManager = {
         interpolation: {
           escapeValue: false,
         },
+        joinArrays: '\n',
         debug: import.meta.env.NODE_ENV !== 'production',
       });
   },
