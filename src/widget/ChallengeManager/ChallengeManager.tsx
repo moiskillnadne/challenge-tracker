@@ -5,11 +5,10 @@ import { mapChallengeToItem } from '../Account/lib/mappers';
 import { Loader } from '../../shared/ui/Loader';
 import { CreateChallengeButton } from './CreateChallengeButton';
 import { useNavigate } from 'react-router-dom';
-import { useCustomTranslation } from '../../feature/translation';
+import { ChallengeManagerHeader } from './ChallengeManagerHeader';
 
 export const ChallengeManager = () => {
   const navigate = useNavigate();
-  const { t } = useCustomTranslation();
 
   const query = useQuery({
     queryKey: ['/protected/challenge/'],
@@ -29,9 +28,7 @@ export const ChallengeManager = () => {
 
   return (
     <div className="flex-1 mt-[36px] px-[12px]">
-      <div className="flex justify-center mb-[16px] font-bold text-[24px] cursor-default">
-        {t('yourChallenges')}
-      </div>
+      <ChallengeManagerHeader />
 
       <div className="flex flex-1 sm:justify-start justify-center gap-[14px] flex-wrap">
         {challenges &&

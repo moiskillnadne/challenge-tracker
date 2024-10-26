@@ -27,6 +27,7 @@
     "doYouWantToRemoveChallenge": "Do you want to remove this challenge?",
     "yes": "Yes",
     "no": "No",
-    "welcomeToChallengeLogger": ["Welcome to", "Challenge Logger"]
+    "welcomeToChallengeLogger": ["Welcome to", "Challenge Logger"],
+    "yourAccount": "Your account"
   }
 }
