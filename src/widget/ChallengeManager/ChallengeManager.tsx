@@ -29,7 +29,7 @@ export const ChallengeManager = () => {
 
   return (
     <div className="flex-1 mt-[36px] px-[12px]">
-      <div className="flex justify-center mb-[16px] text-white font-bold text-[24px] cursor-default">
+      <div className="flex justify-center mb-[16px] font-bold text-[24px] cursor-default">
         {t('yourChallenges')}
       </div>
 

@@ -48,14 +48,14 @@ export const ChallengeBuilderWidget = () => {
   return (
     <div className="flex-1 px-[16px] my-[64px] flex justify-center">
       <div className="flex flex-col gap-[12px] items-center">
-        <div className="text-white font-bold text-[26px]">Create a new challenge</div>
+        <div className="font-bold text-[26px]">Create a new challenge</div>
 
         <input
           type="text"
           name="goal"
           id="input-goal"
           placeholder="Goal"
-          className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-white/50 border-b-2 border-black hover:border-white/20 focus:border-white/50 text-white w-[300px]"
+          className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-white/50 border-b-2 border-black hover:border-white/20 focus:border-black/50 w-[300px]"
           onChange={(e) => setGoal(e.target.value)}
         />
         <input
@@ -63,17 +63,17 @@ export const ChallengeBuilderWidget = () => {
           name="description"
           id="input-description"
           placeholder="Description"
-          className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-white/50 border-b-2 border-black hover:border-white/20 focus:border-white/50 text-white w-[300px]"
+          className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-black/50 border-b-2 border-black hover:border-black/20 focus:border-black/50 w-[300px]"
           onChange={(e) => setDescription(e.target.value)}
         />
 
         <div className="h-[40px] flex gap-[6px] mt-[16px]">
           <button
-            className="duration-300 bg-blue-500 text-white/50 rounded-full h-full hover:text-white/75"
+            className="duration-300 bg-blue-500 text-black/50 rounded-full h-full hover:text-black/75"
             onClick={onCreateClick}
           >
             {mutation.isPending ? (
-              <div className="animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-white/50 border-t-white"></div>
+              <div className="animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-black/50 border-t-black"></div>
             ) : (
               <span className="flex items-center">
                 <p className="w-[150px]">Create</p>{' '}
