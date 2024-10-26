@@ -6,6 +6,8 @@ import { authService } from '../../../shared/api/auth.service';
 import { RightArrow } from '../../../shared/ui';
 import { useNavigate } from 'react-router-dom';
 import { Routes } from '../../../shared/constants';
+import { useAuthenticateViaPasskeys } from '../../../feature/AuthorizePasskeys/lib/useAuthenticateViaPasskeys';
+import { browserSupportsWebAuthn, startAuthentication } from '@simplewebauthn/browser';
 
 const emailSchema = z.string().email();
 
@@ -34,6 +36,16 @@ export const LoginWidget = () => {
     },
   });
 
+  const verifyLoginChallenge = useMutation({
+    mutationFn: authService.verifyAuthentication,
+    onSuccess: (data) => {
+      console.info('[VerifyLoginChallenge:onSuccess]', data);
+    },
+    onError: (err) => {
+      console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
+    },
+  });
+
   const codeMutation = useMutation({
     mutationFn: authService.confirmLogin,
     onSuccess: (data) => {
@@ -46,20 +58,65 @@ export const LoginWidget = () => {
     },
   });
 
+  const passkeysMutation = useAuthenticateViaPasskeys({
+    loginIfNoCredentials: (email: string) => {
+      console.info(`[LoginWidget:passkeysMutation] No credentials for: ${email}`);
+    },
+  });
+
   const isEmailSent = loginMutation.isSuccess && !!loginMutation.data;
 
-  const sendCodeForLogin = () => {
+  const authenticateViaOTP = () => {
     const safeParse = emailSchema.safeParse(email);
 
     if (safeParse.error) {
       throw new Error(JSON.stringify(safeParse.error));
     }
 
-    console.log(safeParse.data);
+    if (!browserSupportsWebAuthn()) {
+      throw new Error('WebAuthn is not supported');
+    }
 
+    console.info(`[LoginWidget:authentication] User: ${safeParse.data}`);
     loginMutation.mutate({
       email: safeParse.data,
     });
+  };
+
+  const authenticateViaPasskeys = async () => {
+    const safeParse = emailSchema.safeParse(email);
+
+    if (safeParse.error) {
+      throw new Error(JSON.stringify(safeParse.error));
+    }
+
+    if (!browserSupportsWebAuthn()) {
+      throw new Error('WebAuthn is not supported');
+    }
+
+    const response = await passkeysMutation.mutateAsync(safeParse.data);
+
+    console.log(`[LoginWidget:authenticateViaPasskeys] Response: ${JSON.stringify(response)}`);
+
+    const challengeOpts = response.data.options;
+
+    console.log(
+      `[LoginWidget:authenticateViaPasskeys] Challenge options: ${JSON.stringify(challengeOpts)}`,
+    );
+
+    const isCredentialExist =
+      challengeOpts.allowCredentials && challengeOpts.allowCredentials.length > 0;
+
+    if (isCredentialExist) {
+      const result = await startAuthentication({ optionsJSON: challengeOpts });
+
+      console.log(`[LoginWidget:authenticateViaPasskeys] Result: ${JSON.stringify(result)}`);
+
+      verifyLoginChallenge.mutate({
+        email: safeParse.data,
+        challengeResponse: result,
+      });
+    }
   };
 
   const confirmLogin = () => {
@@ -110,10 +167,10 @@ export const LoginWidget = () => {
           />
         </div>
 
-        <div className="h-[40px] flex gap-[6px]">
+        <div className="h-[40px] flex flex-col gap-[6px]">
           <button
             className="duration-300 bg-blue-500 text-white/50 rounded-full h-full hover:text-white/75"
-            onClick={isEmailSent ? confirmLogin : sendCodeForLogin}
+            onClick={isEmailSent ? confirmLogin : authenticateViaOTP}
           >
             {loginMutation.isPending || codeMutation.isPending ? (
               <div className="animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-white/50 border-t-white"></div>
@@ -126,6 +183,24 @@ export const LoginWidget = () => {
               </span>
             )}
           </button>
+
+          {browserSupportsWebAuthn() && localStorage.getItem('passkeys_debug') === 'enabled' && (
+            <button
+              className="duration-300 bg-blue-500 text-white/50 rounded-full h-full hover:text-white/75"
+              onClick={authenticateViaPasskeys}
+            >
+              {passkeysMutation.isPending ? (
+                <div className="animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-white/50 border-t-white"></div>
+              ) : (
+                <span className="flex items-center">
+                  <p className="w-[200px]">Login with passkeys</p>{' '}
+                  <div className="w-[32px] h-[32px]">
+                    <RightArrow />
+                  </div>
+                </span>
+              )}
+            </button>
+          )}
         </div>
       </div>
 
