@@ -26,6 +26,7 @@
     "yourChallenges": "Ваши вызовы",
     "doYouWantToRemoveChallenge": "Вы хотите удалить этот вызов?",
     "yes": "Да",
-    "no": "Нет"
+    "no": "Нет",
+    "welcomeToChallengeLogger": ["Добро пожаловать в", "Challenge Logger"]
   }
 }
