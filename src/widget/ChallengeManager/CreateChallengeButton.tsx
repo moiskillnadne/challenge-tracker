@@ -11,7 +11,7 @@ export const CreateChallengeButton = () => {
       onClick={() => navigate(Routes.CREATE_CHALLENGE)}
     >
       <div className="h-[75px] w-[75px]">
-        <PlusIcon color="white" />
+        <PlusIcon color="black" />
       </div>
     </div>
   );

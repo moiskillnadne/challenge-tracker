@@ -8,7 +8,7 @@ type Props = {
 export const ChallengeGridItem = ({ goal, isActive, daysLeft, onClick }: Props) => {
   return (
     <div
-      className={`duration-700  flex flex-col items-start w-[150px] border-2 border-dotted cursor-default px-[4px] py-[4px] hover:border-solid select-none`}
+      className={`duration-700  flex flex-col items-start w-[150px] border-2 border-dotted border-black cursor-default px-[4px] py-[4px] hover:border-solid select-none`}
       onClick={onClick}
     >
       <div className="font-bold text-[18px] cursor-default select-none">{goal}</div>
