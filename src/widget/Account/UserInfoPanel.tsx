@@ -1,5 +1,5 @@
 import { LogoutButton } from '~/feature/Logout'
-import { RegisterPasskeys } from '~/feature/RegisterPasskeys/RegisterPasskeys'
+import { RegisterPasskeys } from '~/feature/RegisterPasskeys'
 import { UserDTO } from '~/shared/api/account.service'
 
 type Props = {

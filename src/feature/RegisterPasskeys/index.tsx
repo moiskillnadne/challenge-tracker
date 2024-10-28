@@ -1,8 +1,7 @@
-import { startRegistration } from '@simplewebauthn/browser'
+import { browserSupportsWebAuthn, startRegistration } from '@simplewebauthn/browser'
 import { useMutation } from '@tanstack/react-query'
 
 import { authService } from '~/shared/api/auth.service'
-import { isPublicKeyCredentialSupported } from '~/shared/lib'
 
 export const RegisterPasskeys = () => {
   const verifyChallenge = useMutation({
@@ -37,9 +36,7 @@ export const RegisterPasskeys = () => {
   })
 
   const createChallenge = async () => {
-    const isSupported = await isPublicKeyCredentialSupported()
-
-    if (!isSupported) {
+    if (!browserSupportsWebAuthn()) {
       return console.error('WebAuthn is not supported')
     }
 

@@ -8,7 +8,7 @@ import z from 'zod'
 import { LoginButton } from './LoginButton'
 import { LoginHeader } from './LoginHeader'
 
-import { useAuthenticateViaPasskeys } from '~/feature/AuthorizePasskeys/lib/useAuthenticateViaPasskeys'
+import { useAuthenticateViaPasskeys } from '~/feature/AuthorizePasskeys/'
 import { useCustomTranslation } from '~/feature/translation'
 import { authService } from '~/shared/api/auth.service'
 import { Routes } from '~/shared/constants'
