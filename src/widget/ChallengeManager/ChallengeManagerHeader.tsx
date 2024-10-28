@@ -1,7 +1,7 @@
-import { useCustomTranslation } from '../../feature/translation';
+import { useCustomTranslation } from '../../feature/translation'
 
 export const ChallengeManagerHeader = () => {
-  const { t } = useCustomTranslation();
+  const { t } = useCustomTranslation()
 
   return (
     <div className="flex flex-col items-center">
@@ -12,5 +12,5 @@ export const ChallengeManagerHeader = () => {
         {t('yourChallenges')}
       </div>
     </div>
-  );
-};
+  )
+}

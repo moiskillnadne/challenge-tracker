@@ -1,21 +1,21 @@
 type ModalButtonProps = {
-  label: string;
-  onClick: () => void;
-  color: string;
-};
+  label: string
+  onClick: () => void
+  color: string
+}
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
+  isOpen: boolean
+  onClose: () => void
+  title: string
+  children: React.ReactNode
 
-  leftButton?: ModalButtonProps;
-  rightButton?: ModalButtonProps;
-};
+  leftButton?: ModalButtonProps
+  rightButton?: ModalButtonProps
+}
 
 export const Modal = ({ isOpen, onClose, title, children, leftButton, rightButton }: Props) => {
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 backdrop-blur">
@@ -51,5 +51,5 @@ export const Modal = ({ isOpen, onClose, title, children, leftButton, rightButto
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

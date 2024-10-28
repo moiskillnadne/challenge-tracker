@@ -38,6 +38,7 @@ export default [
       ...airbnb.rules,
       'prettier/prettier': 'warn', // Prettier as ESLint
       'react/react-in-jsx-scope': 'off',
+      'react-hooks/exhaustive-deps': 'warn',
     },
     settings: {
       react: {

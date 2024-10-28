@@ -1,18 +1,18 @@
-import { isPublicKeyCredentialSupported } from '../../shared/lib';
-import { useAuthenticateViaPasskeys } from './lib/useAuthenticateViaPasskeys';
+import { isPublicKeyCredentialSupported } from '../../shared/lib'
+import { useAuthenticateViaPasskeys } from './lib/useAuthenticateViaPasskeys'
 
 export const AuthorizePasskeys = () => {
-  const passkeysMutation = useAuthenticateViaPasskeys();
+  const passkeysMutation = useAuthenticateViaPasskeys()
 
   const loginChallenge = async () => {
-    const isSupported = await isPublicKeyCredentialSupported();
+    const isSupported = await isPublicKeyCredentialSupported()
 
     if (!isSupported) {
-      return console.error('WebAuthn is not supported');
+      return console.error('WebAuthn is not supported')
     }
 
-    passkeysMutation.mutate('vitya.ryabkov@gmail.com');
-  };
+    passkeysMutation.mutate('vitya.ryabkov@gmail.com')
+  }
 
   return (
     <button
@@ -21,5 +21,5 @@ export const AuthorizePasskeys = () => {
     >
       Login via passkey
     </button>
-  );
-};
+  )
+}

@@ -1,20 +1,20 @@
-import { useCallback } from 'react';
-import { useCustomTranslation } from '../../translation';
-import { useLogoutMutation } from '../lib/useLogoutMutation';
-import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react'
+import { useCustomTranslation } from '../../translation'
+import { useLogoutMutation } from '../lib/useLogoutMutation'
+import { useNavigate } from 'react-router-dom'
 
 export const LogoutButton = () => {
-  const { t } = useCustomTranslation();
+  const { t } = useCustomTranslation()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const mutation = useLogoutMutation({
     onSuccess: () => navigate('/login'),
-  });
+  })
 
   const logout = useCallback(() => {
-    mutation.mutate();
-  }, []);
+    mutation.mutate()
+  }, [mutation])
 
   return (
     <div className="p-[12px]">
@@ -25,5 +25,5 @@ export const LogoutButton = () => {
         {t('logout')}
       </button>
     </div>
-  );
-};
+  )
+}

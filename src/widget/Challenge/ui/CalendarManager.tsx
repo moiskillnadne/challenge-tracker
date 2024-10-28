@@ -1,19 +1,19 @@
-import { useCallback } from 'react';
-import { useCustomTranslation } from '../../../feature/translation';
-import { ChallengeDTO, ProgressDTO } from '../../../shared/api/challenge.service';
-import { MetaText } from './MetaText';
-import { convertDate } from '../lib/convertDate';
-import { Calendar } from './Calendar';
-import { mapChallengeToItem } from '../../Account/lib/mappers';
-import { Timer } from './Timer';
+import { useCallback } from 'react'
+import { useCustomTranslation } from '../../../feature/translation'
+import { ChallengeDTO, ProgressDTO } from '../../../shared/api/challenge.service'
+import { MetaText } from './MetaText'
+import { convertDate } from '../lib/convertDate'
+import { Calendar } from './Calendar'
+import { mapChallengeToItem } from '../../Account/lib/mappers'
+import { Timer } from './Timer'
 
 type Props = {
-  challenge: ChallengeDTO;
-  progress: Array<ProgressDTO>;
+  challenge: ChallengeDTO
+  progress: Array<ProgressDTO>
 
-  addDayInStreak: (day: number) => void;
-  removeDayFromStreak: (checkinId: string) => void;
-};
+  addDayInStreak: (day: number) => void
+  removeDayFromStreak: (checkinId: string) => void
+}
 
 export const CalendarManager = ({
   challenge,
@@ -21,30 +21,28 @@ export const CalendarManager = ({
   addDayInStreak,
   removeDayFromStreak,
 }: Props) => {
-  const { t } = useCustomTranslation();
+  const { t } = useCustomTranslation()
 
-  const challengeBaseInfo = mapChallengeToItem(challenge);
+  const challengeBaseInfo = mapChallengeToItem(challenge)
 
   const onDayClick = useCallback(
     (day: number) => {
-      const isDayAlreadyChecked = progress
-        .map((el) => el.checkpointDate)
-        .includes(convertDate(day));
+      const isDayAlreadyChecked = progress.map((el) => el.checkpointDate).includes(convertDate(day))
 
       if (!isDayAlreadyChecked) {
-        addDayInStreak(day);
-        return;
+        addDayInStreak(day)
+        return
       }
 
-      const checkinId = progress.find((el) => el.checkpointDate === convertDate(day))?.id;
+      const checkinId = progress.find((el) => el.checkpointDate === convertDate(day))?.id
 
       if (checkinId) {
-        removeDayFromStreak(checkinId);
-        return;
+        removeDayFromStreak(checkinId)
+        return
       }
     },
-    [addDayInStreak, progress],
-  );
+    [addDayInStreak, progress, removeDayFromStreak],
+  )
 
   return (
     <div>
@@ -66,5 +64,5 @@ export const CalendarManager = ({
         <Timer streak={progress?.map((el) => el.checkpointDate) ?? []} />
       )}
     </div>
-  );
-};
+  )
+}

@@ -9,5 +9,5 @@ export const RightArrow = () => {
     >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
     </svg>
-  );
-};
+  )
+}

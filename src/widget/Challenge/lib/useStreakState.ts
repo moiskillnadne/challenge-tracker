@@ -1,49 +1,55 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { challengeService } from '../../../shared/api/challenge.service';
-import { queryClient } from '../../../app/App';
-import { useCallback } from 'react';
-import { convertDate } from './convertDate';
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { challengeService } from '../../../shared/api/challenge.service'
+import { queryClient } from '../../../app/App'
+import { useCallback } from 'react'
+import { convertDate } from './convertDate'
 
 type Props = {
-  challengeId: string;
-};
+  challengeId: string
+}
 
 export const useStreakState = ({ challengeId }: Props) => {
   const challengeQuery = useQuery({
     queryKey: ['/challenge/', challengeId],
     queryFn: () => challengeService.getChallengeById(challengeId),
     select(data) {
-      return data.data.details;
+      return data.data.details
     },
-  });
+  })
 
   const progressMutation = useMutation({
     mutationFn: challengeService.checkin,
     onSettled: async () => {
-      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] });
+      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] })
     },
     async onSuccess() {
-      challengeQuery.refetch();
+      challengeQuery.refetch()
     },
-  });
+  })
 
   const removeProgressMutation = useMutation({
     mutationFn: challengeService.removeCheckin,
     onSettled: async () => {
-      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] });
+      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] })
     },
     async onSuccess() {
-      challengeQuery.refetch();
+      challengeQuery.refetch()
     },
-  });
+  })
 
-  const addDayInStreak = useCallback((day: number) => {
-    progressMutation.mutate({ userChallengeId: challengeId, checkpointDate: convertDate(day) });
-  }, []);
+  const addDayInStreak = useCallback(
+    (day: number) => {
+      progressMutation.mutate({ userChallengeId: challengeId, checkpointDate: convertDate(day) })
+    },
+    [challengeId, progressMutation],
+  )
 
-  const removeDayFromStreak = useCallback((checkinId: string) => {
-    removeProgressMutation.mutate(checkinId);
-  }, []);
+  const removeDayFromStreak = useCallback(
+    (checkinId: string) => {
+      removeProgressMutation.mutate(checkinId)
+    },
+    [removeProgressMutation],
+  )
 
   return {
     isLoading: challengeQuery.isLoading,
@@ -52,5 +58,5 @@ export const useStreakState = ({ challengeId }: Props) => {
 
     addDayInStreak,
     removeDayFromStreak,
-  };
-};
+  }
+}

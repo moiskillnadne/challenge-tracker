@@ -1,2 +1,2 @@
-export * from './useVisitorId';
-export * from './useLongPress';
+export * from './useVisitorId'
+export * from './useLongPress'

@@ -1,13 +1,13 @@
-import { useParams } from 'react-router-dom';
-import { Page, PageContent } from '../shared/ui';
-import { ChallengeWidget } from '../widget/Challenge';
-import { Header } from '../widget/Header';
-import { Routes } from '../shared/constants';
-import { useCustomTranslation } from '../feature/translation';
+import { useParams } from 'react-router-dom'
+import { Page, PageContent } from '../shared/ui'
+import { ChallengeWidget } from '../widget/Challenge'
+import { Header } from '../widget/Header'
+import { Routes } from '../shared/constants'
+import { useCustomTranslation } from '../feature/translation'
 
 const ChallengePage = () => {
-  const { challengeId } = useParams();
-  const { t } = useCustomTranslation();
+  const { challengeId } = useParams()
+  const { t } = useCustomTranslation()
 
   if (!challengeId) {
     return (
@@ -20,7 +20,7 @@ const ChallengePage = () => {
 
         <div>Sorry, something wrong with your URL.</div>
       </Page>
-    );
+    )
   }
 
   return (
@@ -35,7 +35,7 @@ const ChallengePage = () => {
         <ChallengeWidget challengeId={challengeId} />
       </PageContent>
     </Page>
-  );
-};
+  )
+}
 
-export default ChallengePage;
+export default ChallengePage

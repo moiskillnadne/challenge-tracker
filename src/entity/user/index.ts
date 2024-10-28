@@ -1,1 +1,1 @@
-export * from './lib/useAuthenticated';
+export * from './lib/useAuthenticated'

@@ -1,28 +1,28 @@
-import { getDay, getDaysInMonth, getMonth, startOfMonth } from 'date-fns';
+import { getDay, getDaysInMonth, getMonth, startOfMonth } from 'date-fns'
 
-import { CalendarDayItem } from './CalendarDayItem';
-import { CalendarHeaderItem } from './CalendarHeaderItem';
-import { useTranslation } from 'react-i18next';
-import { convertDate } from '../lib/convertDate';
+import { CalendarDayItem } from './CalendarDayItem'
+import { CalendarHeaderItem } from './CalendarHeaderItem'
+import { useTranslation } from 'react-i18next'
+import { convertDate } from '../lib/convertDate'
 
 type Props = {
-  streak: string[];
-  isCompleted: boolean;
-  onDayClick: (day: number) => void;
-};
+  streak: string[]
+  isCompleted: boolean
+  onDayClick: (day: number) => void
+}
 
 export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const now = new Date();
+  const now = new Date()
 
-  const month = getMonth(isCompleted ? new Date(streak[0]) : now);
+  const month = getMonth(isCompleted ? new Date(streak[0]) : now)
 
-  console.log(month);
+  console.log(month)
 
-  const daysInMonth = getDaysInMonth(isCompleted ? new Date(streak[0]) : now);
+  const daysInMonth = getDaysInMonth(isCompleted ? new Date(streak[0]) : now)
 
-  const firstDayOfMonth = getDay(startOfMonth(now));
+  const firstDayOfMonth = getDay(startOfMonth(now))
 
   const daysOffset: Record<number, number> = {
     0: 6,
@@ -32,12 +32,12 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
     4: 3,
     5: 4,
     6: 5,
-  };
+  }
 
-  console.log(streak);
+  console.log(streak)
 
-  const offset = Array.from({ length: daysOffset[firstDayOfMonth] }, (_, index) => index + 1);
-  const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1);
+  const offset = Array.from({ length: daysOffset[firstDayOfMonth] }, (_, index) => index + 1)
+  const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1)
 
   return (
     <div className="pt-[20px] pb-[12px]">
@@ -60,11 +60,11 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
             label={index.toString()}
             isChecked={streak.includes(convertDate(index, month))}
             onClick={() => {
-              onDayClick(index);
+              onDayClick(index)
             }}
           />
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

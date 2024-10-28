@@ -1,7 +1,7 @@
-import { useCustomTranslation } from '../../../feature/translation';
+import { useCustomTranslation } from '../../../feature/translation'
 
 export const LoginHeader = () => {
-  const { t } = useCustomTranslation();
+  const { t } = useCustomTranslation()
 
   return (
     <div className="flex flex-1 justify-center items-center">
@@ -14,5 +14,5 @@ export const LoginHeader = () => {
         </h2>
       </div>
     </div>
-  );
-};
+  )
+}

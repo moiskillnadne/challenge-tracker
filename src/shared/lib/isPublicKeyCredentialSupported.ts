@@ -8,14 +8,14 @@ export const isPublicKeyCredentialSupported = async (): Promise<boolean> => {
       const result = await Promise.all([
         PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable(),
         PublicKeyCredential.isConditionalMediationAvailable(),
-      ]);
+      ])
 
-      return result.every((r) => r === true);
+      return result.every((r) => r === true)
     }
 
-    return false;
+    return false
   } catch (error) {
-    console.error(error);
-    return false;
+    console.error(error)
+    return false
   }
-};
+}

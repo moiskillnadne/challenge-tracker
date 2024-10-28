@@ -1,30 +1,30 @@
-import React, { useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useAuthenticated } from '../../entity/user';
-import { Page } from '../../shared/ui';
-import { Loader } from '../../shared/ui/Loader';
-import { EventEmitter } from '../../shared/lib/EventEmitter';
+import React, { useEffect } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
+import { useAuthenticated } from '../../entity/user'
+import { Page } from '../../shared/ui'
+import { Loader } from '../../shared/ui/Loader'
+import { EventEmitter } from '../../shared/lib/EventEmitter'
 
 type Props = {
-  element: React.ReactNode;
-};
+  element: React.ReactNode
+}
 
 function ProtectedRoute({ element }: Props) {
-  const { isAuthenticated, isLoading } = useAuthenticated();
+  const { isAuthenticated, isLoading } = useAuthenticated()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleRefreshTokenExpired = () => {
-      return navigate('/login');
-    };
+      return navigate('/login')
+    }
 
-    EventEmitter.on('refreshTokenExpired', handleRefreshTokenExpired);
+    EventEmitter.on('refreshTokenExpired', handleRefreshTokenExpired)
 
     return () => {
-      EventEmitter.off('refreshTokenExpired', handleRefreshTokenExpired);
-    };
-  }, []);
+      EventEmitter.off('refreshTokenExpired', handleRefreshTokenExpired)
+    }
+  }, [navigate])
 
   if (isLoading) {
     return (
@@ -33,14 +33,14 @@ function ProtectedRoute({ element }: Props) {
           <Loader />;
         </div>
       </Page>
-    );
+    )
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" />
   }
 
-  return element;
+  return element
 }
 
-export default ProtectedRoute;
+export default ProtectedRoute

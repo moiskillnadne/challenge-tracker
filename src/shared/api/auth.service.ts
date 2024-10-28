@@ -3,61 +3,61 @@ import {
   PublicKeyCredentialCreationOptionsJSON,
   PublicKeyCredentialRequestOptionsJSON,
   RegistrationResponseJSON,
-} from '@simplewebauthn/types';
-import { api } from './api';
+} from '@simplewebauthn/types'
+import { api } from './api'
 
 type LoginPayload = {
-  email: string;
-};
+  email: string
+}
 
 type ConfirmLogin = {
-  email: string;
-  code: string;
-};
+  email: string
+  code: string
+}
 
 export interface VerifyLoginChallenge {
-  email: string;
-  challengeResponse: AuthenticationResponseJSON;
+  email: string
+  challengeResponse: AuthenticationResponseJSON
 }
 
 export type GenerateLoginChallengeResponse = {
-  success: boolean;
-  options: PublicKeyCredentialRequestOptionsJSON;
-};
+  success: boolean
+  options: PublicKeyCredentialRequestOptionsJSON
+}
 
 function createAuthService() {
   return {
     login: (payload: LoginPayload) => {
-      return api.post('/auth/login', payload);
+      return api.post('/auth/login', payload)
     },
     confirmLogin: (payload: ConfirmLogin) => {
-      return api.post('/auth/confirm-login', payload);
+      return api.post('/auth/confirm-login', payload)
     },
     logout: () => {
-      return api.post('/auth/logout');
+      return api.post('/auth/logout')
     },
     refreshToken: () => {
-      return api.post('/auth/refresh-token');
+      return api.post('/auth/refresh-token')
     },
 
     registerKeys: () => {
       return api.post<PublicKeyCredentialCreationOptionsJSON>(
         '/protected/passkeys/generate-registration-options',
-      );
+      )
     },
     verifyRegistration: (payload: RegistrationResponseJSON) => {
-      return api.post('/protected/passkeys/verify-registration', payload);
+      return api.post('/protected/passkeys/verify-registration', payload)
     },
     authenticateKeys: (email: string) => {
       return api.post<GenerateLoginChallengeResponse>(
         '/protected/passkeys/generate-authentication-options',
         { email },
-      );
+      )
     },
     verifyAuthentication: (payload: VerifyLoginChallenge) => {
-      return api.post('/protected/passkeys/verify-authentication', payload);
+      return api.post('/protected/passkeys/verify-authentication', payload)
     },
-  };
+  }
 }
 
-export const authService = createAuthService();
+export const authService = createAuthService()

@@ -1,94 +1,94 @@
-import { useMutation } from '@tanstack/react-query';
-import { authService } from '../../shared/api/auth.service';
-import { isPublicKeyCredentialSupported } from '../../shared/lib';
-import { startAuthentication, startRegistration } from '@simplewebauthn/browser';
+import { useMutation } from '@tanstack/react-query'
+import { authService } from '../../shared/api/auth.service'
+import { isPublicKeyCredentialSupported } from '../../shared/lib'
+import { startAuthentication, startRegistration } from '@simplewebauthn/browser'
 
 export const PasskeysManager = () => {
   const verifyChallenge = useMutation({
     mutationFn: authService.verifyRegistration,
     onSuccess: (data) => {
-      console.info('[VerifyChallenge:onSuccess]', data);
+      console.info('[VerifyChallenge:onSuccess]', data)
     },
     onError: (err) => {
-      console.info(`[VerifyChallenge:onError]: ${JSON.stringify(err)}`);
+      console.info(`[VerifyChallenge:onError]: ${JSON.stringify(err)}`)
     },
-  });
+  })
 
   const generateChallengeMutation = useMutation({
     mutationFn: authService.registerKeys,
     onSuccess: async (result) => {
-      console.info('[GenerateChallenge:onSuccess]', result);
+      console.info('[GenerateChallenge:onSuccess]', result)
 
-      const options = structuredClone(result.data);
+      const options = structuredClone(result.data)
 
       try {
-        console.log(options);
-        const attResult = await startRegistration({ optionsJSON: options });
+        console.log(options)
+        const attResult = await startRegistration({ optionsJSON: options })
 
-        verifyChallenge.mutate(attResult);
+        verifyChallenge.mutate(attResult)
       } catch (error: unknown) {
-        console.error(error);
+        console.error(error)
       }
     },
     onError: (err) => {
-      console.info(`[GenerateChallenge:onError]: ${JSON.stringify(err)}`);
+      console.info(`[GenerateChallenge:onError]: ${JSON.stringify(err)}`)
     },
-  });
+  })
 
   const verifyLoginChallenge = useMutation({
     mutationFn: authService.verifyAuthentication,
     onSuccess: (data) => {
-      console.info('[VerifyLoginChallenge:onSuccess]', data);
+      console.info('[VerifyLoginChallenge:onSuccess]', data)
     },
     onError: (err) => {
-      console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`);
+      console.info(`[VerifyLoginChallenge:onError]: ${JSON.stringify(err)}`)
     },
-  });
+  })
 
   const generateLoginChallenge = useMutation({
     mutationFn: authService.authenticateKeys,
     onSuccess: async (resp, variables) => {
-      console.info('[GenerateLoginChallenge:onSuccess]', resp);
+      console.info('[GenerateLoginChallenge:onSuccess]', resp)
 
-      const options = resp.data.options;
+      const options = resp.data.options
 
       try {
-        console.log('Passkey options', options);
-        const result = await startAuthentication({ optionsJSON: options });
+        console.log('Passkey options', options)
+        const result = await startAuthentication({ optionsJSON: options })
 
-        console.log(result);
+        console.log(result)
         verifyLoginChallenge.mutate({
           email: variables,
           challengeResponse: result,
-        });
+        })
       } catch (error: unknown) {
-        console.error(error);
+        console.error(error)
       }
     },
     onError: (err) => {
-      console.info(`[GenerateLoginChallenge:onError]: ${JSON.stringify(err)}`);
+      console.info(`[GenerateLoginChallenge:onError]: ${JSON.stringify(err)}`)
     },
-  });
+  })
 
   const createChallenge = async () => {
-    const isSupported = await isPublicKeyCredentialSupported();
+    const isSupported = await isPublicKeyCredentialSupported()
 
     if (!isSupported) {
-      return console.error('WebAuthn is not supported');
+      return console.error('WebAuthn is not supported')
     }
 
-    generateChallengeMutation.mutate();
-  };
+    generateChallengeMutation.mutate()
+  }
 
   const loginChallenge = async () => {
-    const isSupported = await isPublicKeyCredentialSupported();
+    const isSupported = await isPublicKeyCredentialSupported()
 
     if (!isSupported) {
-      return console.error('WebAuthn is not supported');
+      return console.error('WebAuthn is not supported')
     }
 
-    generateLoginChallenge.mutate('vitya.ryabkov@gmail.com');
-  };
+    generateLoginChallenge.mutate('vitya.ryabkov@gmail.com')
+  }
 
   return (
     <div className="p-[12px]">
@@ -110,5 +110,5 @@ export const PasskeysManager = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}

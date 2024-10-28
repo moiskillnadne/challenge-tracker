@@ -1,2 +1,2 @@
-export * from './Modal';
-export * from './useModalState';
+export * from './Modal'
+export * from './useModalState'

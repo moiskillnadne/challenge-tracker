@@ -1,23 +1,23 @@
-import Logo from '../../../assets/logo1.png';
-import { useStreakState } from '../lib/useStreakState';
-import { Loader } from '../../../shared/ui/Loader';
-import { CalendarManager } from './CalendarManager';
+import Logo from '../../../assets/logo1.png'
+import { useStreakState } from '../lib/useStreakState'
+import { Loader } from '../../../shared/ui/Loader'
+import { CalendarManager } from './CalendarManager'
 
 type Props = {
-  challengeId: string;
-};
+  challengeId: string
+}
 
 export const ChallengeWidget = ({ challengeId }: Props) => {
   const { challenge, isLoading, addDayInStreak, removeDayFromStreak } = useStreakState({
     challengeId,
-  });
+  })
 
   if (isLoading) {
     return (
       <div className="flex flex-1 justify-center items-center">
         <Loader />;
       </div>
-    );
+    )
   }
 
   return (
@@ -37,5 +37,5 @@ export const ChallengeWidget = ({ challengeId }: Props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}

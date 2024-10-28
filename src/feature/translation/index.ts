@@ -1,3 +1,3 @@
-export * from './ui/LanguageSwitcher';
+export * from './ui/LanguageSwitcher'
 
-export * from './lib/useCustomTranslation';
+export * from './lib/useCustomTranslation'

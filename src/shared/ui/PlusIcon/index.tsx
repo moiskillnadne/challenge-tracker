@@ -1,6 +1,6 @@
 type Props = {
-  color?: string;
-};
+  color?: string
+}
 
 export const PlusIcon = ({ color }: Props) => {
   return (
@@ -13,5 +13,5 @@ export const PlusIcon = ({ color }: Props) => {
       <path d="M12 5V19" stroke={color} strokeWidth="2" strokeLinecap="round" />
       <path d="M5 12H19" stroke={color} strokeWidth="2" strokeLinecap="round" />
     </svg>
-  );
-};
+  )
+}

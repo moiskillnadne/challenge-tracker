@@ -1,11 +1,11 @@
-import { useCustomTranslation } from '../feature/translation';
-import { Routes } from '../shared/constants';
-import { Page, PageContent } from '../shared/ui';
-import { ChallengeBuilderWidget } from '../widget/ChallengeBuilder';
-import { Header } from '../widget/Header';
+import { useCustomTranslation } from '../feature/translation'
+import { Routes } from '../shared/constants'
+import { Page, PageContent } from '../shared/ui'
+import { ChallengeBuilderWidget } from '../widget/ChallengeBuilder'
+import { Header } from '../widget/Header'
 
 export const ChallengeBuilderPage = () => {
-  const { t } = useCustomTranslation();
+  const { t } = useCustomTranslation()
 
   return (
     <Page>
@@ -19,5 +19,5 @@ export const ChallengeBuilderPage = () => {
         <ChallengeBuilderWidget />
       </PageContent>
     </Page>
-  );
-};
+  )
+}

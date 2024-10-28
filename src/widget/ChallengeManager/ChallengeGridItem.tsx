@@ -1,9 +1,9 @@
 type Props = {
-  goal: string;
-  isActive: boolean;
-  daysLeft: number;
-  onClick: () => void;
-};
+  goal: string
+  isActive: boolean
+  daysLeft: number
+  onClick: () => void
+}
 
 export const ChallengeGridItem = ({ goal, isActive, daysLeft, onClick }: Props) => {
   return (
@@ -19,5 +19,5 @@ export const ChallengeGridItem = ({ goal, isActive, daysLeft, onClick }: Props) 
         Days left: <span className="font-bold">{daysLeft}</span>
       </div>
     </div>
-  );
-};
+  )
+}

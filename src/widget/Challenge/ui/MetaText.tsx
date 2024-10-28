@@ -1,7 +1,7 @@
 type Props = {
-  leftLabel: string;
-  rightLabel: string;
-};
+  leftLabel: string
+  rightLabel: string
+}
 
 export const MetaText = ({ leftLabel, rightLabel }: Props) => {
   return (
@@ -9,5 +9,5 @@ export const MetaText = ({ leftLabel, rightLabel }: Props) => {
       <span className="text-green font-bold">{leftLabel}</span>
       <span className="text-red font-bold">{rightLabel}</span>
     </div>
-  );
-};
+  )
+}

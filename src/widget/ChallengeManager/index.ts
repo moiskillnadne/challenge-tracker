@@ -1,1 +1,1 @@
-export * from './ChallengeManager';
+export * from './ChallengeManager'
