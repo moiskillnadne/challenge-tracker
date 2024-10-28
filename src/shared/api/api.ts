@@ -1,7 +1,10 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+import i18n from 'i18next'
 
 import { authService } from './auth.service'
 import { EventEmitter } from '../lib/EventEmitter'
+
+import { LanguageMap, Languages } from '~/i18n/languageMap'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type RequestConfig = AxiosRequestConfig<any> & {
@@ -14,6 +17,14 @@ export const api = axios.create({
 
 api.defaults.headers.common['Content-Type'] = 'application/json'
 api.defaults.withCredentials = true
+
+api.interceptors.request.use((config) => {
+  const currentLanguage = i18n.language as Languages
+
+  config.headers['Accept-Language'] = LanguageMap[currentLanguage] ?? LanguageMap.en
+
+  return config
+})
 
 api.interceptors.response.use(
   (response) => response,
