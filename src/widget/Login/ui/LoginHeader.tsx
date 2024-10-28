@@ -5,8 +5,8 @@ export const LoginHeader = () => {
 
   return (
     <div className="flex flex-1 justify-center items-center">
-      <div className="w-[500px] px-[16px] flex flex-col items-center">
-        <div className="w-[250px]py-[18px] px-[24px]">
+      <div className="w-full px-[16px] flex flex-col items-center">
+        <div className="w-[250px] py-[18px] px-[24px]">
           <img className="w-[250px]" src="/web-app-manifest-512x512.png" alt="" />
         </div>
         <h2 className="font-bold text-[32px] whitespace-pre-wrap text-center">
