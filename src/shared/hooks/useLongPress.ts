@@ -8,7 +8,7 @@ export const useLongPress = () => {
 
   function startPressTimer() {
     isLongPress.current = false
-    timerRef.current = setTimeout(() => {
+    timerRef.current = window.setTimeout(() => {
       isLongPress.current = true
       setAction('longpress')
     }, 500)

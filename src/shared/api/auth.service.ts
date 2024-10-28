@@ -4,6 +4,7 @@ import {
   PublicKeyCredentialRequestOptionsJSON,
   RegistrationResponseJSON,
 } from '@simplewebauthn/types'
+
 import { api } from './api'
 
 type LoginPayload = {

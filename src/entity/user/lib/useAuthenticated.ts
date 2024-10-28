@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { accountService, UserDTO } from '../../../shared/api/account.service'
 import { AxiosError } from 'axios'
+
+import { accountService, UserDTO } from '~/shared/api/account.service'
 
 type Return = {
   isLoading: boolean

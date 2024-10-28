@@ -1,11 +1,13 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-import ChallengePage from './ChallengePage'
-import { LoginPage } from './LoginPage'
+
 import { AccountPage } from './AccountPage'
-import ProtectedRoute from '../feature/ProtectedRoute'
 import { ChallengeBuilderPage } from './ChallengeBuilderPage'
-import { Routes } from '../shared/constants'
+import ChallengePage from './ChallengePage'
 import { HomePage } from './HomePage'
+import { LoginPage } from './LoginPage'
+
+import ProtectedRoute from '~/feature/ProtectedRoute'
+import { Routes } from '~/shared/constants'
 
 const router = createBrowserRouter([
   {

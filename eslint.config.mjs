@@ -6,6 +6,7 @@ import tsParser from '@typescript-eslint/parser';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import airbnb from 'eslint-config-airbnb';
+import importPlugin from 'eslint-plugin-import';
 
 export default [
   {
@@ -31,6 +32,7 @@ export default [
       'react-hooks': reactHooks,
       '@typescript-eslint': ts,
       prettier,
+      import: importPlugin,
     },
     rules: {
       ...ts.configs.recommended.rules,
@@ -39,6 +41,32 @@ export default [
       'prettier/prettier': 'warn', // Prettier as ESLint
       'react/react-in-jsx-scope': 'off',
       'react-hooks/exhaustive-deps': 'warn',
+      'import/order': [
+        'error',
+        {
+          groups: [['external', 'builtin'], 'internal', ['sibling', 'parent'], 'index'],
+
+          pathGroups: [
+            {
+              pattern: '@(react)',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@(~app|~shared|~features|~pages|~entities)/**',
+              group: 'internal',
+            },
+          ],
+
+          pathGroupsExcludedImportTypes: ['internal', 'react'],
+          'newlines-between': 'always',
+
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
     settings: {
       react: {

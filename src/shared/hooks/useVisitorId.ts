@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+
 import LocalStorageService from '../lib/LocalStorage'
 
 export const useVisitorId = () => {

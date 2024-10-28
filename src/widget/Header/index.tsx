@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { LanguageSwitcher } from '../../feature/translation'
+
+import { LanguageSwitcher } from '~/feature/translation'
 
 type PropsWithNavidation = {
   navigationButtonShown: true

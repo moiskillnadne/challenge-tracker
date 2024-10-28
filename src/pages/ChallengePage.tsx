@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom'
-import { Page, PageContent } from '../shared/ui'
-import { ChallengeWidget } from '../widget/Challenge'
-import { Header } from '../widget/Header'
-import { Routes } from '../shared/constants'
-import { useCustomTranslation } from '../feature/translation'
+
+import { useCustomTranslation } from '~/feature/translation'
+import { Routes } from '~/shared/constants'
+import { Page, PageContent } from '~/shared/ui'
+import { ChallengeWidget } from '~/widget/Challenge'
+import { Header } from '~/widget/Header'
 
 const ChallengePage = () => {
   const { challengeId } = useParams()

@@ -1,6 +1,6 @@
-import { LogoutButton } from '../../feature/Logout'
-import { RegisterPasskeys } from '../../feature/RegisterPasskeys/RegisterPasskeys'
-import { UserDTO } from '../../shared/api/account.service'
+import { LogoutButton } from '~/feature/Logout'
+import { RegisterPasskeys } from '~/feature/RegisterPasskeys/RegisterPasskeys'
+import { UserDTO } from '~/shared/api/account.service'
 
 type Props = {
   isLoading: boolean

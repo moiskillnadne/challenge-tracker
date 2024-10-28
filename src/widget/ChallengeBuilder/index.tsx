@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { RightArrow } from '../../shared/ui'
+
 import { QueryClient, useMutation } from '@tanstack/react-query'
-import { challengeService } from '../../shared/api/challenge.service'
-import { convertDate } from '../Challenge/lib/convertDate'
 import { getDaysInMonth } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
-import { Routes } from '../../shared/constants'
+
+import { challengeService } from '~/shared/api/challenge.service'
+import { Routes } from '~/shared/constants'
+import { RightArrow } from '~/shared/ui'
+import { convertDate } from '~/widget/Challenge/lib/convertDate'
 
 export const ChallengeBuilderWidget = () => {
   const [goal, setGoal] = useState<string>('')

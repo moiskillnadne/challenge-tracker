@@ -1,8 +1,8 @@
 import { getDay, getDaysInMonth, getMonth, startOfMonth } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 
 import { CalendarDayItem } from './CalendarDayItem'
 import { CalendarHeaderItem } from './CalendarHeaderItem'
-import { useTranslation } from 'react-i18next'
 import { convertDate } from '../lib/convertDate'
 
 type Props = {

@@ -1,4 +1,4 @@
-import { useCustomTranslation } from '../../../feature/translation'
+import { useCustomTranslation } from '~/feature/translation'
 
 export const LoginHeader = () => {
   const { t } = useCustomTranslation()

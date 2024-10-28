@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
-import { authService } from '../../../shared/api/auth.service'
+
+import { authService } from '~/shared/api/auth.service'
 
 type Params = {
   onSuccess?: () => void

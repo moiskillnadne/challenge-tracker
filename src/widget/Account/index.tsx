@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { accountService } from '../../shared/api/account.service'
-import { UserInfoPanel } from './UserInfoPanel'
+
 import { AccountHeader } from './AccountHeader'
+import { UserInfoPanel } from './UserInfoPanel'
+
+import { accountService } from '~/shared/api/account.service'
 
 export const AccountWidget = () => {
   const query = useQuery({

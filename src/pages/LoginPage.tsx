@@ -1,6 +1,6 @@
-import { Page, PageContent } from '../shared/ui'
-import { Header } from '../widget/Header'
-import { LoginWidget } from '../widget/Login'
+import { Page, PageContent } from '~/shared/ui'
+import { Header } from '~/widget/Header'
+import { LoginWidget } from '~/widget/Login'
 
 export const LoginPage = () => {
   return (

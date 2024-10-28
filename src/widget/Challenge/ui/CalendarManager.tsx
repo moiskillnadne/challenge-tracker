@@ -1,11 +1,13 @@
 import { useCallback } from 'react'
-import { useCustomTranslation } from '../../../feature/translation'
-import { ChallengeDTO, ProgressDTO } from '../../../shared/api/challenge.service'
-import { MetaText } from './MetaText'
-import { convertDate } from '../lib/convertDate'
+
 import { Calendar } from './Calendar'
-import { mapChallengeToItem } from '../../Account/lib/mappers'
+import { MetaText } from './MetaText'
 import { Timer } from './Timer'
+import { convertDate } from '../lib/convertDate'
+
+import { useCustomTranslation } from '~/feature/translation'
+import { ChallengeDTO, ProgressDTO } from '~/shared/api/challenge.service'
+import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
 
 type Props = {
   challenge: ChallengeDTO

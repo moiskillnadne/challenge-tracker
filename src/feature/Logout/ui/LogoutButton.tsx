@@ -1,7 +1,10 @@
 import { useCallback } from 'react'
-import { useCustomTranslation } from '../../translation'
-import { useLogoutMutation } from '../lib/useLogoutMutation'
+
 import { useNavigate } from 'react-router-dom'
+
+import { useLogoutMutation } from '../lib/useLogoutMutation'
+
+import { useCustomTranslation } from '~/feature/translation'
 
 export const LogoutButton = () => {
   const { t } = useCustomTranslation()

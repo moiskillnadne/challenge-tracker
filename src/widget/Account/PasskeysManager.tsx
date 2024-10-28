@@ -1,7 +1,8 @@
-import { useMutation } from '@tanstack/react-query'
-import { authService } from '../../shared/api/auth.service'
-import { isPublicKeyCredentialSupported } from '../../shared/lib'
 import { startAuthentication, startRegistration } from '@simplewebauthn/browser'
+import { useMutation } from '@tanstack/react-query'
+
+import { authService } from '~/shared/api/auth.service'
+import { isPublicKeyCredentialSupported } from '~/shared/lib'
 
 export const PasskeysManager = () => {
   const verifyChallenge = useMutation({

@@ -1,11 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
-import { challengeService } from '../../shared/api/challenge.service'
-import { ChallengeGridItem } from './ChallengeGridItem'
-import { mapChallengeToItem } from '../Account/lib/mappers'
-import { Loader } from '../../shared/ui/Loader'
-import { CreateChallengeButton } from './CreateChallengeButton'
 import { useNavigate } from 'react-router-dom'
+
+import { ChallengeGridItem } from './ChallengeGridItem'
 import { ChallengeManagerHeader } from './ChallengeManagerHeader'
+import { CreateChallengeButton } from './CreateChallengeButton'
+
+
+import { challengeService } from '~/shared/api/challenge.service'
+import { Loader } from '~/shared/ui/Loader'
+import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
 
 export const ChallengeManager = () => {
   const navigate = useNavigate()

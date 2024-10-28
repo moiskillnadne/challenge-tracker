@@ -1,8 +1,11 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { challengeService } from '../../../shared/api/challenge.service'
-import { queryClient } from '../../../app/App'
 import { useCallback } from 'react'
+
+import { useMutation, useQuery } from '@tanstack/react-query'
+
 import { convertDate } from './convertDate'
+
+import { queryClient } from '~/app/App'
+import { challengeService } from '~/shared/api/challenge.service'
 
 type Props = {
   challengeId: string

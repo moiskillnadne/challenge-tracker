@@ -1,14 +1,17 @@
-import z from 'zod'
 import { useCallback, useState } from 'react'
-import { useCustomTranslation } from '../../../feature/translation'
-import { useMutation } from '@tanstack/react-query'
-import { authService } from '../../../shared/api/auth.service'
-import { useNavigate } from 'react-router-dom'
-import { Routes } from '../../../shared/constants'
-import { useAuthenticateViaPasskeys } from '../../../feature/AuthorizePasskeys/lib/useAuthenticateViaPasskeys'
+
 import { browserSupportsWebAuthn, startAuthentication } from '@simplewebauthn/browser'
-import { LoginHeader } from './LoginHeader'
+import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
+import z from 'zod'
+
 import { LoginButton } from './LoginButton'
+import { LoginHeader } from './LoginHeader'
+
+import { useAuthenticateViaPasskeys } from '~/feature/AuthorizePasskeys/lib/useAuthenticateViaPasskeys'
+import { useCustomTranslation } from '~/feature/translation'
+import { authService } from '~/shared/api/auth.service'
+import { Routes } from '~/shared/constants'
 
 const emailSchema = z.string().email()
 

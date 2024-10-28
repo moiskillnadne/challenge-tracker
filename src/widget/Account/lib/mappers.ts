@@ -1,4 +1,4 @@
-import { ChallengeDTO } from '../../../shared/api/challenge.service'
+import { ChallengeDTO } from '~/shared/api/challenge.service'
 
 type ChallengeItem = {
   id: string

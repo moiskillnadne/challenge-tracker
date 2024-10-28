@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
+
 import { Navigate, useNavigate } from 'react-router-dom'
-import { useAuthenticated } from '../../entity/user'
-import { Page } from '../../shared/ui'
-import { Loader } from '../../shared/ui/Loader'
-import { EventEmitter } from '../../shared/lib/EventEmitter'
+
+import { useAuthenticated } from '~/entity/user'
+import { EventEmitter } from '~/shared/lib/EventEmitter'
+import { Page } from '~/shared/ui'
+import { Loader } from '~/shared/ui/Loader'
 
 type Props = {
   element: React.ReactNode

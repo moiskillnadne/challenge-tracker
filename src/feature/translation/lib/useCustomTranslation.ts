@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react'
+
 import { useTranslation } from 'react-i18next'
-import { SupportableLanguage } from '../../../app/system/constant'
+
+import { SupportableLanguage } from '~/app/system/constant'
 
 export const useCustomTranslation = () => {
   const { i18n, t } = useTranslation()

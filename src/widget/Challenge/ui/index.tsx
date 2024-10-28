@@ -1,7 +1,8 @@
-import Logo from '../../../assets/logo1.png'
-import { useStreakState } from '../lib/useStreakState'
-import { Loader } from '../../../shared/ui/Loader'
 import { CalendarManager } from './CalendarManager'
+import { useStreakState } from '../lib/useStreakState'
+
+import Logo from '~/assets/logo1.png'
+import { Loader } from '~/shared/ui/Loader'
 
 type Props = {
   challengeId: string

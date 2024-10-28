@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
+
 import { authService } from './auth.service'
 import { EventEmitter } from '../lib/EventEmitter'
 

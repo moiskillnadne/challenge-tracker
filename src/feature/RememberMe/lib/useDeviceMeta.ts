@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
-import { BrowserExtractor, FingerprintService, OSExtractor } from '../../../shared/lib'
+
+import { BrowserExtractor, FingerprintService, OSExtractor } from '~/shared/lib'
 
 export const useDeviceMeta = () => {
   const process = useCallback(async () => {

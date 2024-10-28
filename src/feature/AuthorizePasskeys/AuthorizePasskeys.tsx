@@ -1,5 +1,6 @@
-import { isPublicKeyCredentialSupported } from '../../shared/lib'
 import { useAuthenticateViaPasskeys } from './lib/useAuthenticateViaPasskeys'
+
+import { isPublicKeyCredentialSupported } from '~/shared/lib'
 
 export const AuthorizePasskeys = () => {
   const passkeysMutation = useAuthenticateViaPasskeys()
