@@ -1,8 +1,8 @@
 type Props = {
-  label: string;
-  isChecked: boolean;
-  onClick: () => void;
-};
+  label: string
+  isChecked: boolean
+  onClick: () => void
+}
 
 export const CalendarDayItem = ({ label, isChecked, onClick }: Props) => {
   return (
@@ -35,5 +35,5 @@ export const CalendarDayItem = ({ label, isChecked, onClick }: Props) => {
         />
       </svg>
     </div>
-  );
-};
+  )
+}

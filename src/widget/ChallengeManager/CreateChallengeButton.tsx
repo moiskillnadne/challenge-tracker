@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import { PlusIcon } from '../../shared/ui';
-import { Routes } from '../../shared/constants';
+import { useNavigate } from 'react-router-dom'
+
+import { Routes } from '~/shared/constants'
+import { PlusIcon } from '~/shared/ui'
 
 export const CreateChallengeButton = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <div
@@ -14,5 +15,5 @@ export const CreateChallengeButton = () => {
         <PlusIcon color="black" />
       </div>
     </div>
-  );
-};
+  )
+}

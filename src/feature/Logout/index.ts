@@ -1,3 +1,3 @@
-export * from './lib/useLogoutMutation';
+export * from './lib/useLogoutMutation'
 
-export * from './ui/LogoutButton';
+export * from './ui/LogoutButton'

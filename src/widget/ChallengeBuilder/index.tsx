@@ -1,49 +1,51 @@
-import { useState } from 'react';
-import { RightArrow } from '../../shared/ui';
-import { QueryClient, useMutation } from '@tanstack/react-query';
-import { challengeService } from '../../shared/api/challenge.service';
-import { convertDate } from '../Challenge/lib/convertDate';
-import { getDaysInMonth } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
-import { Routes } from '../../shared/constants';
+import { useState } from 'react'
+
+import { QueryClient, useMutation } from '@tanstack/react-query'
+import { getDaysInMonth } from 'date-fns'
+import { useNavigate } from 'react-router-dom'
+
+import { challengeService } from '~/shared/api/challenge.service'
+import { Routes } from '~/shared/constants'
+import { RightArrow } from '~/shared/ui'
+import { convertDate } from '~/widget/Challenge/lib/convertDate'
 
 export const ChallengeBuilderWidget = () => {
-  const [goal, setGoal] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+  const [goal, setGoal] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const mutation = useMutation({
     mutationFn: challengeService.createChallenge,
     onSuccess() {
-      const queryClient = new QueryClient();
+      const queryClient = new QueryClient()
 
       queryClient.invalidateQueries({
         queryKey: ['/challenge'],
-      });
+      })
 
-      return navigate(Routes.HOME);
+      return navigate(Routes.HOME)
     },
-  });
+  })
 
   const onCreateClick = () => {
     if (goal.length < 1) {
-      throw new Error(`[ChallengeBuilderWidget:onCreate] Goal length should be more than 1`);
+      throw new Error(`[ChallengeBuilderWidget:onCreate] Goal length should be more than 1`)
     }
 
-    const now = new Date();
+    const now = new Date()
 
-    const daysInMonth = getDaysInMonth(now);
+    const daysInMonth = getDaysInMonth(now)
 
-    const startDate = convertDate(1);
+    const startDate = convertDate(1)
 
     mutation.mutate({
       goal,
       description,
       startedAtDate: startDate,
       duration: daysInMonth,
-    });
-  };
+    })
+  }
 
   return (
     <div className="flex-1 px-[16px] my-[64px] flex justify-center">
@@ -86,5 +88,5 @@ export const ChallengeBuilderWidget = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

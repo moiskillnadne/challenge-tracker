@@ -1,13 +1,13 @@
-import { useCustomTranslation } from '../../../feature/translation';
+import { useCustomTranslation } from '~/feature/translation'
 
 type Props = {
-  labelKey: string;
-  onClick: () => void;
-  isLoading: boolean;
-};
+  labelKey: string
+  onClick: () => void
+  isLoading: boolean
+}
 
 export const LoginButton = ({ onClick, isLoading, labelKey }: Props) => {
-  const { t } = useCustomTranslation();
+  const { t } = useCustomTranslation()
 
   return (
     <div className="w-[300px] h-[45px]">
@@ -22,5 +22,5 @@ export const LoginButton = ({ onClick, isLoading, labelKey }: Props) => {
         )}
       </button>
     </div>
-  );
-};
+  )
+}

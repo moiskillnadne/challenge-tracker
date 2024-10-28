@@ -4,4 +4,4 @@ export const Routes = {
   ACCOUNT: '/account',
   CHALLENGE: '/challenge/:challengeId',
   CREATE_CHALLENGE: '/create-challenge',
-};
+}

@@ -1,1 +1,1 @@
-export * from './lib/useDeviceMeta';
+export * from './lib/useDeviceMeta'

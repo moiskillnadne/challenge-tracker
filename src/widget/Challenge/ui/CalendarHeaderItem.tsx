@@ -1,6 +1,6 @@
 type Props = {
-  label: string;
-};
+  label: string
+}
 
 export const CalendarHeaderItem = ({ label }: Props) => {
   return (
@@ -10,5 +10,5 @@ export const CalendarHeaderItem = ({ label }: Props) => {
       <div className="absolute inset-[4px] rounded-full border-[5px] border-green"></div>
       <div className="absolute inset-[8px] rounded-full border-[4px] border-blue z-3"></div>
     </div>
-  );
-};
+  )
+}
