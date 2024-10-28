@@ -18,8 +18,6 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
 
   const month = getMonth(isCompleted ? new Date(streak[0]) : now)
 
-  console.log(month)
-
   const daysInMonth = getDaysInMonth(isCompleted ? new Date(streak[0]) : now)
 
   const firstDayOfMonth = getDay(startOfMonth(now))
@@ -33,8 +31,6 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
     5: 4,
     6: 5,
   }
-
-  console.log(streak)
 
   const offset = Array.from({ length: daysOffset[firstDayOfMonth] }, (_, index) => index + 1)
   const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1)

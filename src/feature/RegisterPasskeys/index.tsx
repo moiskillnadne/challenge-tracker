@@ -6,8 +6,8 @@ import { authService } from '~/shared/api/auth.service'
 export const RegisterPasskeys = () => {
   const verifyChallenge = useMutation({
     mutationFn: authService.verifyRegistration,
-    onSuccess: (data) => {
-      console.info('[VerifyChallenge:onSuccess]', data)
+    onSuccess: () => {
+      console.info('[VerifyChallenge:onSuccess]')
     },
     onError: (err) => {
       console.info(`[VerifyChallenge:onError]: ${JSON.stringify(err)}`)
@@ -17,12 +17,11 @@ export const RegisterPasskeys = () => {
   const generateChallengeMutation = useMutation({
     mutationFn: authService.registerKeys,
     onSuccess: async (result) => {
-      console.info('[GenerateChallenge:onSuccess]', result)
+      console.info('[GenerateChallenge:onSuccess]')
 
       const options = structuredClone(result.data)
 
       try {
-        console.log(options)
         const attResult = await startRegistration({ optionsJSON: options })
 
         verifyChallenge.mutate(attResult)
