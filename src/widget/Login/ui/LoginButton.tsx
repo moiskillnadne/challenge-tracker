@@ -4,15 +4,17 @@ type Props = {
   labelKey: string
   onClick: () => void
   isLoading: boolean
+  isDisabled?: boolean
 }
 
-export const LoginButton = ({ onClick, isLoading, labelKey }: Props) => {
+export const LoginButton = ({ onClick, isLoading, labelKey, isDisabled }: Props) => {
   const { t } = useCustomTranslation()
 
   return (
     <div className="w-[300px] h-[45px]">
       <button
         onClick={onClick}
+        disabled={isDisabled || isLoading}
         className="border-[1px] rounded-full bg-green border-black h-full w-full flex justify-center items-center"
       >
         {isLoading ? (

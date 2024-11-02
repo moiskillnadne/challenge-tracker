@@ -29,7 +29,6 @@ export const LoginWidget = () => {
 
   const [email, setEmail] = useState<string>('')
   const [code, setCode] = useState<string>('')
-  const [loginFlow, setLoginFlow] = useState<'otp' | 'passkeys' | null>(null)
 
   const loginMutation = useMutation({
     mutationFn: authService.login,
@@ -68,16 +67,28 @@ export const LoginWidget = () => {
 
   const isEmailSent = loginMutation.isSuccess && !!loginMutation.data
 
-  const confirmLogin = () => {
+  const processEmailValue = useCallback(() => {
+    const safeParse = emailSchema.safeParse(email)
+
+    if (safeParse.error) {
+      throw new Error(JSON.stringify(safeParse.error))
+    }
+
+    return safeParse.data
+  }, [email])
+
+  const loginOTP = useCallback(async () => {
+    const emailValue = processEmailValue()
+
+    await loginMutation.mutateAsync({ email: emailValue })
+  }, [loginMutation, processEmailValue])
+
+  const confirmLoginOTP = useCallback(() => {
     if (!isEmailSent) {
       throw new Error('Email should be sent first')
     }
 
-    const emailSafeParse = emailSchema.safeParse(email)
-
-    if (emailSafeParse.error) {
-      throw new Error(JSON.stringify(emailSafeParse.error))
-    }
+    const emailValue = processEmailValue()
 
     const codeSafeParse = codeSchema.safeParse(code)
 
@@ -85,24 +96,13 @@ export const LoginWidget = () => {
       throw new Error(JSON.stringify(codeSafeParse.error))
     }
 
-    codeMutation.mutate({ email, code })
-  }
+    codeMutation.mutate({ email: emailValue, code: codeSafeParse.data })
+  }, [code, codeMutation, isEmailSent, processEmailValue])
 
-  const handleLogin = useCallback(async () => {
-    const safeParse = emailSchema.safeParse(email)
+  const loginPasskeys = useCallback(async () => {
+    const emailValue = processEmailValue()
 
-    if (safeParse.error) {
-      throw new Error(JSON.stringify(safeParse.error))
-    }
-
-    if (!browserSupportsWebAuthn()) {
-      setLoginFlow('otp')
-      return loginMutation.mutate({
-        email: safeParse.data,
-      })
-    }
-
-    const response = await passkeysMutation.mutateAsync(safeParse.data)
+    const response = await passkeysMutation.mutateAsync(emailValue)
 
     const challengeOpts = response.data.options
 
@@ -110,24 +110,20 @@ export const LoginWidget = () => {
       challengeOpts.allowCredentials && challengeOpts.allowCredentials.length > 0
 
     if (!isCredentialExist) {
-      setLoginFlow('otp')
-      return loginMutation.mutate({
-        email: safeParse.data,
-      })
+      throw new Error('No credentials found')
     }
 
     const result = await startAuthentication({ optionsJSON: challengeOpts })
 
-    setLoginFlow('passkeys')
     const verifyResult = await verifyLoginChallenge.mutateAsync({
-      email: safeParse.data,
+      email: emailValue,
       challengeResponse: result,
     })
 
     if (verifyResult.data.success) {
       return navigate(Routes.HOME)
     }
-  }, [email, passkeysMutation, verifyLoginChallenge, loginMutation, navigate])
+  }, [navigate, passkeysMutation, processEmailValue, verifyLoginChallenge])
 
   return (
     <div className="flex flex-1 flex-col items-center">
@@ -146,7 +142,7 @@ export const LoginWidget = () => {
 
         <div
           className="overflow-hidden duration-300"
-          style={{ height: `${codeInputVisibility.get(loginFlow === 'otp')}` }}
+          style={{ height: `${codeInputVisibility.get(loginMutation.isSuccess)}` }}
         >
           <input
             type="text"
@@ -160,14 +156,19 @@ export const LoginWidget = () => {
 
         <LoginButton
           labelKey={'login'}
-          onClick={isEmailSent ? confirmLogin : handleLogin}
-          isLoading={
-            passkeysMutation.isPending ||
-            loginMutation.isPending ||
-            verifyLoginChallenge.isPending ||
-            codeMutation.isPending
-          }
+          onClick={isEmailSent ? confirmLoginOTP : loginOTP}
+          isDisabled={passkeysMutation.isPending || verifyLoginChallenge.isPending}
+          isLoading={loginMutation.isPending || codeMutation.isPending}
         />
+
+        {browserSupportsWebAuthn() && (
+          <LoginButton
+            labelKey={'fastLogin'}
+            onClick={loginPasskeys}
+            isDisabled={loginMutation.isPending || codeMutation.isPending}
+            isLoading={passkeysMutation.isPending || verifyLoginChallenge.isPending}
+          />
+        )}
       </div>
 
       <div className="w-[350px] px-[12px]">
