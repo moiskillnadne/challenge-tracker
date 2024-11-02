@@ -9,6 +9,7 @@ import { LoginButton } from './LoginButton'
 import { LoginHeader } from './LoginHeader'
 
 import { useAuthenticateViaPasskeys } from '~/feature/AuthorizePasskeys/'
+import { useOTPLogin } from '~/feature/LoginOTP'
 import { useCustomTranslation } from '~/feature/translation'
 import { authService } from '~/shared/api/auth.service'
 import { Routes } from '~/shared/constants'
@@ -30,13 +31,9 @@ export const LoginWidget = () => {
   const [email, setEmail] = useState<string>('')
   const [code, setCode] = useState<string>('')
 
-  const loginMutation = useMutation({
-    mutationFn: authService.login,
-    onSuccess: (data) => {
-      console.info('[LoginMutation:onSuccess]', data)
-    },
-    onError: (err) => {
-      console.error(`[LoginMutation:onError] ${JSON.stringify(err)}`)
+  const { tryLogin, confirmLogin, loadingState, mutationState } = useOTPLogin({
+    onCodeSuccess: () => {
+      return navigate(Routes.HOME)
     },
   })
 
@@ -47,25 +44,13 @@ export const LoginWidget = () => {
     },
   })
 
-  const codeMutation = useMutation({
-    mutationFn: authService.confirmLogin,
-    onSuccess: (data) => {
-      console.info('[CodeMutation:onSuccess]', data)
-
-      return navigate(Routes.HOME)
-    },
-    onError: (err) => {
-      console.info(`[CodeMutation:onError]: ${JSON.stringify(err)}`)
-    },
-  })
-
   const passkeysMutation = useAuthenticateViaPasskeys({
     loginIfNoCredentials: (email: string) => {
       console.info(`[LoginWidget:passkeysMutation] No credentials for: ${email}`)
     },
   })
 
-  const isEmailSent = loginMutation.isSuccess && !!loginMutation.data
+  const isEmailSent = mutationState.loginMutation.isSuccess && !!mutationState.loginMutation.data
 
   const processEmailValue = useCallback(() => {
     const safeParse = emailSchema.safeParse(email)
@@ -80,8 +65,8 @@ export const LoginWidget = () => {
   const loginOTP = useCallback(async () => {
     const emailValue = processEmailValue()
 
-    await loginMutation.mutateAsync({ email: emailValue })
-  }, [loginMutation, processEmailValue])
+    tryLogin(emailValue)
+  }, [tryLogin, processEmailValue])
 
   const confirmLoginOTP = useCallback(() => {
     if (!isEmailSent) {
@@ -96,8 +81,8 @@ export const LoginWidget = () => {
       throw new Error(JSON.stringify(codeSafeParse.error))
     }
 
-    codeMutation.mutate({ email: emailValue, code: codeSafeParse.data })
-  }, [code, codeMutation, isEmailSent, processEmailValue])
+    confirmLogin(emailValue, codeSafeParse.data)
+  }, [code, confirmLogin, isEmailSent, processEmailValue])
 
   const loginPasskeys = useCallback(async () => {
     const emailValue = processEmailValue()
@@ -142,7 +127,7 @@ export const LoginWidget = () => {
 
         <div
           className="overflow-hidden duration-300"
-          style={{ height: `${codeInputVisibility.get(loginMutation.isSuccess)}` }}
+          style={{ height: `${codeInputVisibility.get(mutationState.loginMutation.isSuccess)}` }}
         >
           <input
             type="text"
@@ -158,14 +143,14 @@ export const LoginWidget = () => {
           labelKey={'login'}
           onClick={isEmailSent ? confirmLoginOTP : loginOTP}
           isDisabled={passkeysMutation.isPending || verifyLoginChallenge.isPending}
-          isLoading={loginMutation.isPending || codeMutation.isPending}
+          isLoading={loadingState.isTryLoginLoading || loadingState.isConfirmLoginLoading}
         />
 
         {browserSupportsWebAuthn() && (
           <LoginButton
             labelKey={'fastLogin'}
             onClick={loginPasskeys}
-            isDisabled={loginMutation.isPending || codeMutation.isPending}
+            isDisabled={loadingState.isTryLoginLoading || loadingState.isConfirmLoginLoading}
             isLoading={passkeysMutation.isPending || verifyLoginChallenge.isPending}
           />
         )}
