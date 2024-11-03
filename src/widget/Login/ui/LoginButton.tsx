@@ -3,7 +3,7 @@ import { useCustomTranslation } from '~/feature/translation'
 type Props = {
   labelKey: string
   onClick: () => void
-  isLoading: boolean
+  isLoading?: boolean
   isDisabled?: boolean
 }
 

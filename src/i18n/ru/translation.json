@@ -29,6 +29,13 @@
     "yes": "Да",
     "no": "Нет",
     "welcomeToChallengeLogger": ["Добро пожаловать в", "Challenge Logger"],
-    "yourAccount": "Ваш аккаунт"
+    "yourAccount": "Ваш аккаунт",
+    "sendingEmail": "Отправка письма",
+    "sendingCode": "Отправка кода",
+    "emailSent": "Письмо отправлено",
+    "codeSent": "Код отправлен",
+    "failedToSendEmail": "Не удалось отправить письмо",
+    "failedToSendCode": "Не удалось отправить код",
+    "oopsSomethingWentWrong": "Упс, что-то пошло не так"
   }
 }

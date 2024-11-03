@@ -29,6 +29,13 @@
     "yes": "Yes",
     "no": "No",
     "welcomeToChallengeLogger": ["Welcome to", "Challenge Logger"],
-    "yourAccount": "Your account"
+    "yourAccount": "Your account",
+    "sendingEmail": "Sending email",
+    "sendingCode": "Sending code",
+    "emailSent": "Email sent",
+    "codeSent": "Code sent",
+    "failedToSendEmail": "Failed to send email",
+    "failedToSendCode": "Failed to send code",
+    "oopsSomethingWentWrong": "Oops, something went wrong"
   }
 }
