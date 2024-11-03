@@ -7,6 +7,7 @@ import z from 'zod'
 
 import { LoginButton } from './LoginButton'
 import { LoginHeader } from './LoginHeader'
+import { useToast } from '../../../shared/hooks'
 
 import { useAuthenticateViaPasskeys } from '~/feature/AuthorizePasskeys/'
 import { useOTPLogin } from '~/feature/LoginOTP'
@@ -23,6 +24,8 @@ export const LoginWidget = () => {
 
   const navigate = useNavigate()
 
+  const { showPromiseToast, dismissAllToasts, showErrorToast } = useToast()
+
   const codeInputVisibility = new Map([
     [true, '40px'],
     [false, '0px'],
@@ -31,9 +34,24 @@ export const LoginWidget = () => {
   const [email, setEmail] = useState<string>('')
   const [code, setCode] = useState<string>('')
 
-  const { tryLogin, confirmLogin, loadingState, mutationState } = useOTPLogin({
+  const { tryLoginPromise, confirmLoginPromise, loadingState, mutationState } = useOTPLogin({
     onCodeSuccess: () => {
-      return navigate(Routes.HOME)
+      setTimeout(() => {
+        dismissAllToasts()
+        return navigate(Routes.HOME)
+      }, 700)
+    },
+    onCodeError(error) {
+      if (error instanceof Error) {
+        return showErrorToast(error.message)
+      }
+      return showErrorToast(t('oopsSomethingWentWrong'))
+    },
+    onLoginError(error) {
+      if (error instanceof Error) {
+        return showErrorToast(error.message)
+      }
+      return showErrorToast(t('oopsSomethingWentWrong'))
     },
   })
 
@@ -65,8 +83,12 @@ export const LoginWidget = () => {
   const loginOTP = useCallback(async () => {
     const emailValue = processEmailValue()
 
-    tryLogin(emailValue)
-  }, [tryLogin, processEmailValue])
+    showPromiseToast(tryLoginPromise(emailValue), {
+      pending: t('sendingEmail'),
+      success: t('emailSent'),
+      error: t('failedToSendEmail'),
+    })
+  }, [processEmailValue, showPromiseToast, t, tryLoginPromise])
 
   const confirmLoginOTP = useCallback(() => {
     if (!isEmailSent) {
@@ -81,8 +103,12 @@ export const LoginWidget = () => {
       throw new Error(JSON.stringify(codeSafeParse.error))
     }
 
-    confirmLogin(emailValue, codeSafeParse.data)
-  }, [code, confirmLogin, isEmailSent, processEmailValue])
+    showPromiseToast(confirmLoginPromise(emailValue, codeSafeParse.data), {
+      pending: t('sendingCode'),
+      success: t('codeSent'),
+      error: t('failedToSendCode'),
+    })
+  }, [code, confirmLoginPromise, isEmailSent, processEmailValue, showPromiseToast, t])
 
   const loginPasskeys = useCallback(async () => {
     const emailValue = processEmailValue()
@@ -114,7 +140,6 @@ export const LoginWidget = () => {
     <div className="flex flex-1 flex-col items-center">
       <div className="flex flex-col items-center gap-[8px] mb-[64px]">
         <LoginHeader />
-
         <input
           type="email"
           name="email"
@@ -124,7 +149,6 @@ export const LoginWidget = () => {
           className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-black/50 border-b-2 border-black hover:border-black/20 focus:border-black/50 w-[300px]"
           onChange={(e) => setEmail(e.target.value)}
         />
-
         <div
           className="overflow-hidden duration-300"
           style={{ height: `${codeInputVisibility.get(mutationState.loginMutation.isSuccess)}` }}
@@ -138,7 +162,6 @@ export const LoginWidget = () => {
             onChange={(e) => setCode(e.target.value)}
           />
         </div>
-
         <LoginButton
           labelKey={'login'}
           onClick={isEmailSent ? confirmLoginOTP : loginOTP}

@@ -7,6 +7,9 @@ import { authService } from '~/shared/api/auth.service'
 type Props = {
   onLoginSuccess?: () => void
   onCodeSuccess?: () => void
+
+  onLoginError?: (error: unknown) => void
+  onCodeError?: (error: unknown) => void
 }
 
 export const useOTPLogin = (props?: Props) => {
@@ -21,6 +24,10 @@ export const useOTPLogin = (props?: Props) => {
     },
     onError: (err) => {
       console.error(`[LoginMutation:onError] ${JSON.stringify(err)}`)
+
+      if (props?.onLoginError) {
+        props.onLoginError(err)
+      }
     },
   })
 
@@ -35,12 +42,23 @@ export const useOTPLogin = (props?: Props) => {
     },
     onError: (err) => {
       console.info(`[CodeMutation:onError]: ${JSON.stringify(err)}`)
+
+      if (props?.onCodeError) {
+        props.onCodeError(err)
+      }
     },
   })
 
   const tryLogin = useCallback(
     (email: string) => {
       loginMutation.mutate({ email })
+    },
+    [loginMutation],
+  )
+
+  const tryLoginPromise = useCallback(
+    async (email: string) => {
+      return loginMutation.mutateAsync({ email })
     },
     [loginMutation],
   )
@@ -52,9 +70,18 @@ export const useOTPLogin = (props?: Props) => {
     [codeMutation],
   )
 
+  const confirmLoginPromise = useCallback(
+    async (email: string, code: string) => {
+      return codeMutation.mutateAsync({ email, code })
+    },
+    [codeMutation],
+  )
+
   return {
     tryLogin,
+    tryLoginPromise,
     confirmLogin,
+    confirmLoginPromise,
     loadingState: {
       isLoading: loginMutation.isPending || codeMutation.isPending,
       isTryLoginLoading: loginMutation.isPending,

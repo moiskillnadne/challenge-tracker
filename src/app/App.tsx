@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+import { AppToastContainer } from './system/AppToastContainer'
 import i18nManager from './system/i18n.manager'
 
 import ApplicationRouter from '~/pages'
@@ -15,6 +16,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ApplicationRouter />
+      <AppToastContainer />
     </QueryClientProvider>
   )
 }
