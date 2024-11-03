@@ -8,6 +8,10 @@ export default {
         red: '#FF2B6B',
         green: '#C1FF72',
         blue: '#37F0F7',
+        background: '#F1EBF5',
+        black: '#3A3341',
+        violet: '#B29BC7',
+        violet20: 'rgba(178, 155, 199, 0.2)',
       },
       fontFamily: {
         monospace: ['Source Code Pro', 'monospace'],

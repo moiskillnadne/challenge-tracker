@@ -1,19 +1,21 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 import { browserSupportsWebAuthn, startAuthentication } from '@simplewebauthn/browser'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 import z from 'zod'
 
 import { LoginButton } from './LoginButton'
 import { LoginHeader } from './LoginHeader'
-import { useToast } from '../../../shared/hooks'
 
 import { useAuthenticateViaPasskeys } from '~/feature/AuthorizePasskeys/'
 import { useOTPLogin } from '~/feature/LoginOTP'
 import { useCustomTranslation } from '~/feature/translation'
 import { authService } from '~/shared/api/auth.service'
 import { Routes } from '~/shared/constants'
+import { useToast } from '~/shared/hooks'
+import { Typography } from '~/shared/ui'
 
 const emailSchema = z.string().email()
 
@@ -23,6 +25,8 @@ export const LoginWidget = () => {
   const { t } = useCustomTranslation()
 
   const navigate = useNavigate()
+
+  const hintRef = useRef(null)
 
   const { showPromiseToast, dismissAllToasts, showErrorToast } = useToast()
 
@@ -163,27 +167,35 @@ export const LoginWidget = () => {
           />
         </div>
         <LoginButton
-          labelKey={'login'}
+          labelKey={'loginWithCode'}
           onClick={isEmailSent ? confirmLoginOTP : loginOTP}
           isDisabled={passkeysMutation.isPending || verifyLoginChallenge.isPending}
           isLoading={loadingState.isTryLoginLoading || loadingState.isConfirmLoginLoading}
+          classNames="bg-violet20 border-violet"
         />
 
-        {browserSupportsWebAuthn() && (
+        {!isEmailSent && browserSupportsWebAuthn() && (
           <LoginButton
             labelKey={'fastLogin'}
             onClick={loginPasskeys}
             isDisabled={loadingState.isTryLoginLoading || loadingState.isConfirmLoginLoading}
             isLoading={passkeysMutation.isPending || verifyLoginChallenge.isPending}
+            classNames="border-violet"
           />
         )}
       </div>
 
-      <div className="w-[350px] px-[12px]">
-        <p className="text-black/75 text-center">
-          {isEmailSent ? t('enterCodeFromEmail') : t('enterEmailForCode')}
-        </p>
-      </div>
+      <CSSTransition
+        in={isEmailSent}
+        nodeRef={hintRef}
+        timeout={1000}
+        classNames="node-opacity"
+        unmountOnExit
+      >
+        <div ref={hintRef} className="w-[350px] px-[12px]">
+          <Typography classNames="text-black/75 text-center">{t('loginViaCodeHint')}</Typography>
+        </div>
+      </CSSTransition>
     </div>
   )
 }

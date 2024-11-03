@@ -1,4 +1,5 @@
 import { useCustomTranslation } from '~/feature/translation'
+import { Typography } from '~/shared/ui'
 
 export const LoginHeader = () => {
   const { t } = useCustomTranslation()
@@ -9,9 +10,9 @@ export const LoginHeader = () => {
         <div className="w-[250px] py-[18px] px-[24px]">
           <img className="w-[250px]" src="/web-app-manifest-512x512.png" alt="" />
         </div>
-        <h2 className="font-bold text-[32px] whitespace-pre-wrap text-center">
+        <Typography classNames="font-bold text-[32px] whitespace-pre-wrap text-center text-black">
           {t('welcomeToChallengeLogger')}
-        </h2>
+        </Typography>
       </div>
     </div>
   )

@@ -20,14 +20,82 @@ span {
   cursor: default;
 }
 
+.text-ru {
+  font-family: sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.text-en {
+  font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset; 
-  box-shadow: 0 0 0px 1000px white inset;
-  -webkit-text-fill-color: black;
+  -webkit-box-shadow: 0 0 0px 1000px #F1EBF5 inset; 
+  box-shadow: 0 0 0px 1000px #F1EBF5 inset;
+  -webkit-text-fill-color: #3A3341;
 }
 
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px white inset; 
-  box-shadow: 0 0 0px 1000px white inset;
-  -webkit-text-fill-color: black;
+  -webkit-box-shadow: 0 0 0px 1000px #F1EBF5 inset; 
+  box-shadow: 0 0 0px 1000px #F1EBF5 inset;
+  -webkit-text-fill-color: #3A3341;
+}
+
+.node-opacity-enter {
+  opacity: 0;
+}
+.node-opacity-enter-active {
+  opacity: 1;
+  transition: opacity 500ms;
+}
+.node-opacity-exit {
+  opacity: 1;
+}
+.node-opacity-exit-active {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.node-height-and-opacity-enter {
+  opacity: 0;
+  height: 0%;
+}
+
+.node-height-and-opacity-enter-active {
+  opacity: 1;
+  height: 100%;
+  transition-property: opacity, height;
+  transition-duration: 300ms, 600ms;
+  transition-delay: 0ms, 400ms;
+}
+
+.node-height-and-opacity-exit {
+  opacity: 1;
+  height: 100%;
+}
+
+.node-height-and-opacity-exit-active {
+  opacity: 0;
+  height: 0%;
+  transition-property: opacity, height;
+  transition-duration: 300ms, 600ms;
+  transition-delay: 0ms, 400ms;
+}
+
+.node-height-enter {
+  height: 0%;
+}
+.node-height-enter-active {
+  height: 100%;
+  transition: height 750ms;
+}
+.node-height-exit {
+  height: 100%;
+}
+.node-height-exit-active {
+  height: 0%;
+  transition: height 750ms;
 }

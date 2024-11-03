@@ -1,28 +1,35 @@
+import { ForwardedRef, forwardRef } from 'react'
+
 import { useCustomTranslation } from '~/feature/translation'
+import { Button } from '~/shared/ui'
 
 type Props = {
   labelKey: string
   onClick: () => void
   isLoading?: boolean
   isDisabled?: boolean
+  classNames?: string
 }
 
-export const LoginButton = ({ onClick, isLoading, labelKey, isDisabled }: Props) => {
-  const { t } = useCustomTranslation()
+export const LoginButton = forwardRef(
+  (
+    { onClick, isLoading, labelKey, isDisabled, classNames }: Props,
+    ref: ForwardedRef<HTMLDivElement>,
+  ) => {
+    const { t } = useCustomTranslation()
 
-  return (
-    <div className="w-[300px] h-[45px]">
-      <button
-        onClick={onClick}
-        disabled={isDisabled || isLoading}
-        className="border-[1px] rounded-full bg-green border-black h-full w-full flex justify-center items-center"
-      >
-        {isLoading ? (
-          <div className="animate-spin h-[25px] w-[25px] border-[2px] rounded-full border-black/50 border-t-black"></div>
-        ) : (
-          t(labelKey)
-        )}
-      </button>
-    </div>
-  )
-}
+    return (
+      <div ref={ref} className="w-[300px] h-[45px]">
+        <Button
+          label={t(labelKey)}
+          onClick={onClick}
+          isLoading={isLoading}
+          isDisabled={isDisabled}
+          classNames={classNames}
+        />
+      </div>
+    )
+  },
+)
+
+LoginButton.displayName = 'LoginButton'
