@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { challengeService } from '~/shared/api/challenge.service'
 import { Routes } from '~/shared/constants'
-import { RightArrow } from '~/shared/ui'
+import { RightArrow } from '~/shared/icon'
 import { convertDate } from '~/widget/Challenge/lib/convertDate'
 
 export const ChallengeBuilderWidget = () => {

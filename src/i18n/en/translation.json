@@ -18,7 +18,12 @@
     "login": "Login",
     "loginWithCode": "Login with code",
     "fastLogin": "Fast login",
-    "logout": "Logout",
+    "logout": {
+      "title": "logout",
+      "pending": "See you soon! Logging out…",
+      "success": "You have been logged out.",
+      "error": "Failed to log out."
+    },
     "enterEmailForCode": "Enter your email. You will receive an email with an authorization code.",
     "sendCode": "Send code",
     "enterCodeFromEmail": "The email with the code has been sent. If the email does not arrive, then try again.",
@@ -30,7 +35,10 @@
     "yes": "Yes",
     "no": "No",
     "welcomeToChallengeLogger": ["Welcome to", "Challenge Logger"],
-    "loginViaCodeHint": ["The email with the code has been sent.","If the email does not arrive, then try again."],
+    "loginViaCodeHint": [
+      "The email with the code has been sent.",
+      "If the email does not arrive, then try again."
+    ],
     "yourAccount": "Your account",
     "sendingEmail": "Sending email",
     "sendingCode": "Sending code",
