@@ -1,6 +1,4 @@
 export * from './Page'
-export * from './RightArrow'
-export * from './PlusIcon'
 export * from './Modal'
 export * from './Typography'
 export * from './Button'
