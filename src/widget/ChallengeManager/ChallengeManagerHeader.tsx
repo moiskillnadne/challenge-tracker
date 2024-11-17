@@ -1,14 +1,19 @@
 import { useNavigate } from 'react-router-dom'
+import { useAuthenticated } from '~/entity/user'
+
 import { useLogoutMutation } from '~/feature/Logout'
 import { useCustomTranslation } from '~/feature/translation'
 import { Routes } from '~/shared/constants'
 import { useToast } from '~/shared/hooks'
 import { LogoutIcon, PlusIcon, SettingsIcon } from '~/shared/icon'
+import { Typography } from '~/shared/ui'
 
 export const ChallengeManagerHeader = () => {
   const { t } = useCustomTranslation()
   const navigate = useNavigate()
   const { showPromiseToast } = useToast()
+
+  const { user } = useAuthenticated()
 
   const { mutateAsync: logout } = useLogoutMutation({
     onSuccess: () => navigate(Routes.LOGIN),
@@ -81,9 +86,13 @@ export const ChallengeManagerHeader = () => {
                 alt="challengelogger-logo-pink"
               />
             </div>
-            <div className="flex justify-center mb-[16px] font-bold text-[24px] cursor-default">
-              {t('yourChallenges')}
-            </div>
+
+            {user && (
+              <div className="text-center mb-[16px] mt-[8px]">
+                <Typography text={t('profile')} classNames="font-bold text-[20px] uppercase" />
+                <Typography text={user.email} />
+              </div>
+            )}
           </div>
         </div>
       </div>
