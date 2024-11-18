@@ -89,8 +89,11 @@ export const ChallengeManagerHeader = () => {
 
             {user && (
               <div className="text-center mb-[16px] mt-[8px]">
-                <Typography text={t('profile')} classNames="font-bold text-[20px] uppercase" />
-                <Typography text={user.email} />
+                <Typography
+                  text={t('profile')}
+                  classNames="font-bold text-[20px] uppercase cursor-default"
+                />
+                <Typography text={user.email} classNames="italic cursor-default" />
               </div>
             )}
           </div>

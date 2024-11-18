@@ -23,25 +23,23 @@ span {
 .text-ru {
   font-family: sans-serif;
   font-optical-sizing: auto;
-  font-style: normal;
 }
 
 .text-en {
-  font-family: "Urbanist", sans-serif;
+  font-family: 'Urbanist', sans-serif;
   font-optical-sizing: auto;
-  font-style: normal;
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px #F1EBF5 inset; 
-  box-shadow: 0 0 0px 1000px #F1EBF5 inset;
-  -webkit-text-fill-color: #3A3341;
+  -webkit-box-shadow: 0 0 0px 1000px #f1ebf5 inset;
+  box-shadow: 0 0 0px 1000px #f1ebf5 inset;
+  -webkit-text-fill-color: #3a3341;
 }
 
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px #F1EBF5 inset; 
-  box-shadow: 0 0 0px 1000px #F1EBF5 inset;
-  -webkit-text-fill-color: #3A3341;
+  -webkit-box-shadow: 0 0 0px 1000px #f1ebf5 inset;
+  box-shadow: 0 0 0px 1000px #f1ebf5 inset;
+  -webkit-text-fill-color: #3a3341;
 }
 
 .node-opacity-enter {

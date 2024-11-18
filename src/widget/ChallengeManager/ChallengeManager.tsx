@@ -5,13 +5,15 @@ import { ChallengeGridItem } from './ChallengeGridItem'
 import { ChallengeManagerHeader } from './ChallengeManagerHeader'
 import { CreateChallengeButton } from './CreateChallengeButton'
 
-
 import { challengeService } from '~/shared/api/challenge.service'
 import { Loader } from '~/shared/ui/Loader'
 import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
+import { Typography } from '~/shared/ui'
+import { useCustomTranslation } from '~/feature/translation'
 
 export const ChallengeManager = () => {
   const navigate = useNavigate()
+  const { t } = useCustomTranslation()
 
   const query = useQuery({
     queryKey: ['/protected/challenge/'],
@@ -33,23 +35,26 @@ export const ChallengeManager = () => {
     <div className="flex-1 mt-[36px] px-[12px]">
       <ChallengeManagerHeader />
 
-      <div className="flex flex-1 sm:justify-start justify-center gap-[14px] flex-wrap">
-        {challenges &&
-          challenges
-            .map((item) => mapChallengeToItem(item))
-            .map((item) => (
-              <ChallengeGridItem
-                key={item.id}
-                goal={item.goal}
-                isActive={item.isActive}
-                daysLeft={item.daysLeft}
-                onClick={() => {
-                  return navigate(`/challenge/${item.id}`)
-                }}
-              />
-            ))}
+      <div className="w-full flex flex-col items-center">
+        <Typography
+          text={t('currentChallenges')}
+          classNames="text-center font-semibold text-[20px] italic cursor-default"
+        />
 
-        <CreateChallengeButton />
+        <div className="flex flex-col gap-[8px] mt-[24px]">
+          {challenges &&
+            challenges
+              .map((item) => mapChallengeToItem(item))
+              .map((item) => (
+                <ChallengeGridItem
+                  key={item.id}
+                  goal={item.goal}
+                  onClick={() => {
+                    return navigate(`/challenge/${item.id}`)
+                  }}
+                />
+              ))}
+        </div>
       </div>
     </div>
   )
