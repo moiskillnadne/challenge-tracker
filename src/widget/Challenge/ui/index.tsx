@@ -2,7 +2,6 @@ import { CalendarManager } from './CalendarManager'
 import { useStreakState } from '../lib/useStreakState'
 
 import Logo from '~/assets/logo1.png'
-import { Loader } from '~/shared/ui/Loader'
 import { PageLoader } from '~/shared/ui'
 
 type Props = {
