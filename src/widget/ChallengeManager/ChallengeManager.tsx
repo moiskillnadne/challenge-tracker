@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
 import { ChallengeGridItem } from './ChallengeGridItem'
@@ -25,12 +25,19 @@ export const ChallengeManager = () => {
     select: (data) => data.data.details,
   })
 
+  const removeChallengeMutation = useMutation({
+    mutationFn: challengeService.deleteChallenge,
+    onSuccess: () => {
+      query.refetch()
+    },
+  })
+
   const challenges = query.data?.challenges
 
   if (query.isPending) {
     return (
       <div className="flex flex-1 justify-center items-center">
-        <Loader />;
+        <Loader />
       </div>
     )
   }
@@ -61,17 +68,23 @@ export const ChallengeManager = () => {
           {challenges &&
             challenges
               .map((item) => mapChallengeToItem(item))
-              .map((item) => (
-                <ChallengeGridItem
-                  key={item.id}
-                  goal={item.goal}
-                  onClick={() => {
-                    return navigate(`/challenge/${item.id}`)
-                  }}
-                  isRemoveMode={isRemoveMode}
-                  onRemove={() => console.log('remove')}
-                />
-              ))}
+              .map((item) => {
+                const isInRemovingProcess = removeChallengeMutation.variables === item.id
+
+                return (
+                  <ChallengeGridItem
+                    key={item.id}
+                    goal={item.goal}
+                    onClick={() => {
+                      return navigate(`/challenge/${item.id}`)
+                    }}
+                    isRemoveMode={isRemoveMode}
+                    onRemove={() => removeChallengeMutation.mutate(item.id)}
+                    isLoading={isInRemovingProcess && removeChallengeMutation.isPending}
+                    isDisabled={removeChallengeMutation.isPending}
+                  />
+                )
+              })}
         </div>
 
         {isRemoveMode && (
