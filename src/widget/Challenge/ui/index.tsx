@@ -3,6 +3,7 @@ import { useStreakState } from '../lib/useStreakState'
 
 import Logo from '~/assets/logo1.png'
 import { Loader } from '~/shared/ui/Loader'
+import { PageLoader } from '~/shared/ui'
 
 type Props = {
   challengeId: string
@@ -14,11 +15,7 @@ export const ChallengeWidget = ({ challengeId }: Props) => {
   })
 
   if (isLoading) {
-    return (
-      <div className="flex flex-1 justify-center items-center">
-        <Loader />;
-      </div>
-    )
+    return <PageLoader />
   }
 
   return (

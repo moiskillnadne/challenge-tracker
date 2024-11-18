@@ -9,8 +9,7 @@ import { ChallengeManagerHeader } from './ChallengeManagerHeader'
 import { useCustomTranslation } from '~/feature/translation'
 import { challengeService } from '~/shared/api/challenge.service'
 import { EditIcon } from '~/shared/icon'
-import { Button, Typography } from '~/shared/ui'
-import { Loader } from '~/shared/ui/Loader'
+import { Button, PageLoader, Typography } from '~/shared/ui'
 import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
 
 export const ChallengeManager = () => {
@@ -35,11 +34,7 @@ export const ChallengeManager = () => {
   const challenges = query.data?.challenges
 
   if (query.isPending) {
-    return (
-      <div className="flex flex-1 justify-center items-center">
-        <Loader />
-      </div>
-    )
+    return <PageLoader />
   }
 
   return (

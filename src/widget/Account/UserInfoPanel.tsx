@@ -1,6 +1,7 @@
 import { LogoutButton } from '~/feature/Logout'
 import { RegisterPasskeys } from '~/feature/RegisterPasskeys'
 import { UserDTO } from '~/shared/api/account.service'
+import { PageLoader } from '~/shared/ui'
 
 type Props = {
   isLoading: boolean
@@ -10,9 +11,7 @@ type Props = {
 
 export const UserInfoPanel = (props: Props) => {
   if (props.isLoading) {
-    return (
-      <div className="w-[50px] h-[50px] m-[8px] rounded-full border-[4px] border-transparent border-t-white animate-spin" />
-    )
+    return <PageLoader />
   }
 
   return (
