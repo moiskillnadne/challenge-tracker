@@ -3,13 +3,11 @@ import { useNavigate } from 'react-router-dom'
 
 import { ChallengeGridItem } from './ChallengeGridItem'
 import { ChallengeManagerHeader } from './ChallengeManagerHeader'
-import { CreateChallengeButton } from './CreateChallengeButton'
 
+import { useCustomTranslation } from '~/feature/translation'
 import { challengeService } from '~/shared/api/challenge.service'
 import { Loader } from '~/shared/ui/Loader'
 import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
-import { Typography } from '~/shared/ui'
-import { useCustomTranslation } from '~/feature/translation'
 
 export const ChallengeManager = () => {
   const navigate = useNavigate()

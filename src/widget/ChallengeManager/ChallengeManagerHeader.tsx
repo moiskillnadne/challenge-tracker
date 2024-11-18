@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { useAuthenticated } from '~/entity/user'
 
+import { useAuthenticated } from '~/entity/user'
 import { useLogoutMutation } from '~/feature/Logout'
 import { useCustomTranslation } from '~/feature/translation'
 import { Routes } from '~/shared/constants'
