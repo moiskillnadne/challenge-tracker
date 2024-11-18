@@ -1,11 +1,12 @@
 type Props = {
   color?: string
+  classNames?: string
 }
 
-export const PlusIcon = ({ color }: Props) => {
+export const PlusIcon = ({ color, classNames }: Props) => {
   return (
     <svg
-      className="w-full h-full"
+      className={`w-full h-full ${classNames}`}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

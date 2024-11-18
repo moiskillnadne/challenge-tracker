@@ -25,7 +25,7 @@ export const LogoutButton = () => {
         className="duration-300 font-bold text-red/75 rounded-full h-full hover:text-red"
         onClick={logout}
       >
-        {t('logout')}
+        {t('logout.title')}
       </button>
     </div>
   )

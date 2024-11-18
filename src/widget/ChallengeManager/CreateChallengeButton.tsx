@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { Routes } from '~/shared/constants'
-import { PlusIcon } from '~/shared/ui'
+import { PlusIcon } from '~/shared/icon'
 
 export const CreateChallengeButton = () => {
   const navigate = useNavigate()

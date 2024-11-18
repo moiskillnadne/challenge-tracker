@@ -49,7 +49,7 @@ export const CalendarManager = ({
   return (
     <div>
       <div className="flex justify-between items-center">
-        <MetaText leftLabel={`${t('goal')}: `} rightLabel={t('dailySport')} />
+        <MetaText leftLabel={`${t('goal')}: `} rightLabel={challengeBaseInfo.goal} />
         <MetaText
           leftLabel={`${t('daysLeft')}: `}
           rightLabel={String(challengeBaseInfo.daysLeft)}
