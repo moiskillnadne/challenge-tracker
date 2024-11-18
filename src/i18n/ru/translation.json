@@ -48,6 +48,7 @@
     "codeSent": "Код отправлен",
     "failedToSendEmail": "Не удалось отправить письмо",
     "failedToSendCode": "Не удалось отправить код",
-    "oopsSomethingWentWrong": "Упс, что-то пошло не так"
+    "oopsSomethingWentWrong": "Упс, что-то пошло не так",
+    "done": "Готово"
   }
 }

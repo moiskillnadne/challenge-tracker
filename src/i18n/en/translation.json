@@ -48,6 +48,7 @@
     "codeSent": "Code sent",
     "failedToSendEmail": "Failed to send email",
     "failedToSendCode": "Failed to send code",
-    "oopsSomethingWentWrong": "Oops, something went wrong"
+    "oopsSomethingWentWrong": "Oops, something went wrong",
+    "done": "Done"
   }
 }
