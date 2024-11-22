@@ -6,15 +6,17 @@ import { useNavigate } from 'react-router-dom'
 import { ChallengeGridItem } from './ChallengeGridItem'
 import { ChallengeManagerHeader } from './ChallengeManagerHeader'
 
-import { useCustomTranslation } from '~/feature/translation'
 import { challengeService } from '~/shared/api/challenge.service'
-import { ArchiveIcon, EditIcon, RightArrow } from '~/shared/icon'
-import { Button, PageLoader, Typography } from '~/shared/ui'
+import { PageLoader } from '~/shared/ui'
 import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
+import { ChallengeListHeader } from '~/widget/ChallengeManager/ChallengeListHeader.tsx'
+import { CloseEditingModeButton } from '~/widget/ChallengeManager/CloseEditingModeButton.tsx'
+import { ListModeSwitcher } from '~/widget/ChallengeManager/ListModeSwitcher.tsx'
+import { ShowActiveChallengesButton } from '~/widget/ChallengeManager/ShowActiveChallengesButton.tsx'
+import { ShowArchiveChallengesButton } from '~/widget/ChallengeManager/ShowArchiveChallengesButton.tsx'
 
 export const ChallengeManager = () => {
   const navigate = useNavigate()
-  const { t } = useCustomTranslation()
 
   const [isRemoveMode, setIsRemoveMode] = useState<boolean>(false)
   const [isActiveChallengesShow, setIsActiveChallengesShow] = useState<boolean>(true)
@@ -39,6 +41,8 @@ export const ChallengeManager = () => {
     return challenges.map((item) => mapChallengeToItem(item)).filter((item) => item.isActive)
   }, [challenges])
 
+  const activeListCanBeExtended = activeChallenges.length > 3
+
   const filteredActiveChallenges = useMemo(() => {
     return isExtendedList ? activeChallenges : activeChallenges.slice(0, 3)
   }, [activeChallenges, isExtendedList])
@@ -47,9 +51,15 @@ export const ChallengeManager = () => {
     return challenges.map((item) => mapChallengeToItem(item)).filter((item) => !item.isActive)
   }, [challenges])
 
+  const completedListCanBeExtended = completedChallenges.length > 3
+
   const currentShownChallenges = isActiveChallengesShow
     ? filteredActiveChallenges
     : completedChallenges
+
+  const listCanBeExtended = isActiveChallengesShow
+    ? activeListCanBeExtended
+    : completedListCanBeExtended
 
   if (query.isPending) {
     return <PageLoader />
@@ -60,26 +70,15 @@ export const ChallengeManager = () => {
       <ChallengeManagerHeader />
 
       <div className="flex flex-1 flex-col items-center">
-        <div className="flex gap-[24px] items-center">
-          <Typography
-            text={isActiveChallengesShow ? t('currentChallenges') : t('completedChallenges')}
-            classNames="text-center font-semibold text-[20px] italic cursor-default flex-1"
-          />
-
-          {!isRemoveMode && isActiveChallengesShow && (
-            <button
-              type="button"
-              className="w-[22px] h-[22px] hover:scale-110 transition-all duration-300 ease-in-out"
-              onClick={() => setIsRemoveMode(true)}
-            >
-              <EditIcon classNames="stroke-black" />
-            </button>
-          )}
-        </div>
+        <ChallengeListHeader
+          isActiveChallengesShow={isActiveChallengesShow}
+          isRemoveMode={isRemoveMode}
+          onEditIconClick={() => setIsRemoveMode(true)}
+        />
 
         <div className={`flex flex-col gap-[8px] mt-[24px]`}>
           <div
-            className={`flex flex-col px-[16px] gap-[8px] ${isExtendedList ? 'overflow-y-scroll' : 'overflow-y-hidden'} ${isExtendedList ? 'h-[350px]' : 'h-[180px]'} ${isExtendedList ? 'custom-scrollbar custom-scrollbar-always' : ''}`}
+            className={`flex flex-col px-[16px] gap-[8px] transition-all duration-300 ease-in-out ${isExtendedList ? 'overflow-y-scroll' : 'overflow-y-hidden'} ${isExtendedList ? 'h-[350px]' : 'h-[180px]'} ${isExtendedList ? 'custom-scrollbar custom-scrollbar-always' : ''}`}
           >
             {currentShownChallenges.map((item) => {
               const isInRemovingProcess = removeChallengeMutation.variables === item.id
@@ -100,61 +99,23 @@ export const ChallengeManager = () => {
             })}
           </div>
 
-          <button
-            type="button"
-            className="flex items-center justify-center gap-[12px] transition-opacity duration-300 hover:cursor-pointer hover:opacity-50"
-            onClick={() => setIsExtendedList((prev) => !prev)}
-          >
-            <Typography
-              text={isExtendedList ? t('hide') : t('showMore')}
-              classNames="font-semibold text-[14px] italic lowercase"
+          {listCanBeExtended && (
+            <ListModeSwitcher
+              onClick={() => setIsExtendedList((prev) => !prev)}
+              isExtended={isExtendedList}
             />
-            <div className="h-[20px] w-[20px]">
-              <RightArrow
-                classNames={`stroke-black transition-rotate duration-300 easy-in-out  ${isExtendedList ? 'rotate-270' : 'rotate-90'}`}
-              />
-            </div>
-          </button>
+          )}
         </div>
 
-        {!isRemoveMode && isActiveChallengesShow && (
-          <button
-            type="button"
-            className="flex flex-col items-center opacity-50 mt-[64px] hover:opacity-75 cursor-pointer transition-opacity duration-300 ease-in-out"
-            onClick={() => setIsActiveChallengesShow(false)}
-          >
-            <div className="h-[20px] w-[20px]">
-              <ArchiveIcon classNames="stroke-black" />
-            </div>
-            <Typography
-              text={t('completedChallenges')}
-              classNames={'text-black font-semibold text-[14px] italic'}
-            />
-          </button>
+        {!isRemoveMode && isActiveChallengesShow && !isExtendedList && (
+          <ShowArchiveChallengesButton onClick={() => setIsActiveChallengesShow(false)} />
         )}
 
         {!isRemoveMode && !isActiveChallengesShow && (
-          <button
-            type="button"
-            className="flex flex-col items-center opacity-50 mt-[64px] hover:opacity-75 cursor-pointer transition-opacity duration-300 ease-in-out"
-            onClick={() => setIsActiveChallengesShow(true)}
-          >
-            <Typography
-              text={t('currentChallenges')}
-              classNames={'text-black font-semibold text-[14px] italic'}
-            />
-          </button>
+          <ShowActiveChallengesButton onClick={() => setIsActiveChallengesShow(true)} />
         )}
 
-        {isRemoveMode && (
-          <div>
-            <Button
-              label={t('done')}
-              onClick={() => setIsRemoveMode(false)}
-              classNames="mt-[24px] py-[8px] px-[16px] border-black uppercase text-[20px] font-semibold transition-all duration-300 ease-in-out hover:bg-black/10"
-            />
-          </div>
-        )}
+        {isRemoveMode && <CloseEditingModeButton onClick={() => setIsRemoveMode(false)} />}
       </div>
     </div>
   )
