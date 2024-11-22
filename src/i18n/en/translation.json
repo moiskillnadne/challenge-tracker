@@ -50,6 +50,8 @@
     "failedToSendEmail": "Failed to send email",
     "failedToSendCode": "Failed to send code",
     "oopsSomethingWentWrong": "Oops, something went wrong",
-    "done": "Done"
+    "done": "Done",
+    "showMore": "Show more",
+    "hide": "Hide"
   }
 }

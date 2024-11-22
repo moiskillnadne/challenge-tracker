@@ -97,3 +97,29 @@ input:-webkit-autofill:focus {
   height: 0%;
   transition: height 750ms;
 }
+
+@layer utilities {
+  .custom-scrollbar {
+    scrollbar-width: thin; /* Firefox: тонкий скролл */
+    scrollbar-color: #F574A3 rgba(245, 116, 163, 0.25); /* Ползунок (thumb) и трек (track) */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 10px; /* Ширина скролла */
+    height: 10px; /* Высота скролла (для горизонтального скролла) */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(245, 116, 163, 0.25); /* Цвет трека */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #F574A3; /* Цвет ползунка */
+    border-radius: 5px; /* Закругления */
+    border: 2px solid #ffffff; /* Если нужен отступ */
+  }
+
+  .custom-scrollbar-always {
+    overflow-y: scroll; /* Постоянно показывать скролл */
+  }
+}

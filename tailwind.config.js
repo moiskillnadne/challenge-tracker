@@ -15,6 +15,9 @@ export default {
         pink: '#F574A3',
         pink25: 'rgba(245, 116, 163, 0.25)',
       },
+      rotate: {
+        270: '270deg',
+      },
       fontFamily: {
         monospace: ['Source Code Pro', 'monospace'],
       },

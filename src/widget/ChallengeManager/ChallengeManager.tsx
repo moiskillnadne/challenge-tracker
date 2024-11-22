@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { ChallengeManagerHeader } from './ChallengeManagerHeader'
 
 import { useCustomTranslation } from '~/feature/translation'
 import { challengeService } from '~/shared/api/challenge.service'
-import { ArchiveIcon, EditIcon } from '~/shared/icon'
+import { ArchiveIcon, EditIcon, RightArrow } from '~/shared/icon'
 import { Button, PageLoader, Typography } from '~/shared/ui'
 import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
 
@@ -18,6 +18,7 @@ export const ChallengeManager = () => {
 
   const [isRemoveMode, setIsRemoveMode] = useState<boolean>(false)
   const [isActiveChallengesShow, setIsActiveChallengesShow] = useState<boolean>(true)
+  const [isExtendedList, setIsExtendedList] = useState<boolean>(false)
 
   const query = useQuery({
     queryKey: ['/protected/challenge/'],
@@ -32,7 +33,23 @@ export const ChallengeManager = () => {
     },
   })
 
-  const challenges = query.data?.challenges
+  const challenges = useMemo(() => query.data?.challenges ?? [], [query.data?.challenges])
+
+  const activeChallenges = useMemo(() => {
+    return challenges.map((item) => mapChallengeToItem(item)).filter((item) => item.isActive)
+  }, [challenges])
+
+  const filteredActiveChallenges = useMemo(() => {
+    return isExtendedList ? activeChallenges : activeChallenges.slice(0, 3)
+  }, [activeChallenges, isExtendedList])
+
+  const completedChallenges = useMemo(() => {
+    return challenges.map((item) => mapChallengeToItem(item)).filter((item) => !item.isActive)
+  }, [challenges])
+
+  const currentShownChallenges = isActiveChallengesShow
+    ? filteredActiveChallenges
+    : completedChallenges
 
   if (query.isPending) {
     return <PageLoader />
@@ -60,28 +77,44 @@ export const ChallengeManager = () => {
           )}
         </div>
 
-        <div className="flex flex-col gap-[8px] mt-[24px]">
-          {challenges &&
-            challenges
-              .map((item) => mapChallengeToItem(item))
-              .filter((item) => (isActiveChallengesShow ? item.isActive : !item.isActive))
-              .map((item) => {
-                const isInRemovingProcess = removeChallengeMutation.variables === item.id
+        <div className={`flex flex-col gap-[8px] mt-[24px]`}>
+          <div
+            className={`flex flex-col px-[16px] gap-[8px] ${isExtendedList ? 'overflow-y-scroll' : 'overflow-y-hidden'} ${isExtendedList ? 'h-[350px]' : 'h-[180px]'} ${isExtendedList ? 'custom-scrollbar custom-scrollbar-always' : ''}`}
+          >
+            {currentShownChallenges.map((item) => {
+              const isInRemovingProcess = removeChallengeMutation.variables === item.id
 
-                return (
-                  <ChallengeGridItem
-                    key={item.id}
-                    goal={item.goal}
-                    onClick={() => {
-                      return navigate(`/challenge/${item.id}`)
-                    }}
-                    isRemoveMode={isRemoveMode}
-                    onRemove={() => removeChallengeMutation.mutate(item.id)}
-                    isLoading={isInRemovingProcess && removeChallengeMutation.isPending}
-                    isDisabled={removeChallengeMutation.isPending}
-                  />
-                )
-              })}
+              return (
+                <ChallengeGridItem
+                  key={item.id}
+                  goal={item.goal}
+                  onClick={() => {
+                    return navigate(`/challenge/${item.id}`)
+                  }}
+                  isRemoveMode={isRemoveMode}
+                  onRemove={() => removeChallengeMutation.mutate(item.id)}
+                  isLoading={isInRemovingProcess && removeChallengeMutation.isPending}
+                  isDisabled={removeChallengeMutation.isPending}
+                />
+              )
+            })}
+          </div>
+
+          <button
+            type="button"
+            className="flex items-center justify-center gap-[12px] transition-opacity duration-300 hover:cursor-pointer hover:opacity-50"
+            onClick={() => setIsExtendedList((prev) => !prev)}
+          >
+            <Typography
+              text={isExtendedList ? t('hide') : t('showMore')}
+              classNames="font-semibold text-[14px] italic lowercase"
+            />
+            <div className="h-[20px] w-[20px]">
+              <RightArrow
+                classNames={`stroke-black transition-rotate duration-300 easy-in-out  ${isExtendedList ? 'rotate-270' : 'rotate-90'}`}
+              />
+            </div>
+          </button>
         </div>
 
         {!isRemoveMode && isActiveChallengesShow && (
