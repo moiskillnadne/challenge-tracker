@@ -8,7 +8,7 @@ import { ChallengeManagerHeader } from './ChallengeManagerHeader'
 
 import { useCustomTranslation } from '~/feature/translation'
 import { challengeService } from '~/shared/api/challenge.service'
-import { EditIcon } from '~/shared/icon'
+import { ArchiveIcon, EditIcon } from '~/shared/icon'
 import { Button, PageLoader, Typography } from '~/shared/ui'
 import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
 
@@ -17,6 +17,7 @@ export const ChallengeManager = () => {
   const { t } = useCustomTranslation()
 
   const [isRemoveMode, setIsRemoveMode] = useState<boolean>(false)
+  const [isActiveChallengesShow, setIsActiveChallengesShow] = useState<boolean>(true)
 
   const query = useQuery({
     queryKey: ['/protected/challenge/'],
@@ -41,14 +42,14 @@ export const ChallengeManager = () => {
     <div className="flex-1 mt-[36px] px-[12px]">
       <ChallengeManagerHeader />
 
-      <div className="w-full flex flex-col items-center">
+      <div className="flex flex-1 flex-col items-center">
         <div className="flex gap-[24px] items-center">
           <Typography
-            text={t('currentChallenges')}
+            text={isActiveChallengesShow ? t('currentChallenges') : t('completedChallenges')}
             classNames="text-center font-semibold text-[20px] italic cursor-default flex-1"
           />
 
-          {!isRemoveMode && (
+          {!isRemoveMode && isActiveChallengesShow && (
             <button
               type="button"
               className="w-[22px] h-[22px] hover:scale-110 transition-all duration-300 ease-in-out"
@@ -63,6 +64,7 @@ export const ChallengeManager = () => {
           {challenges &&
             challenges
               .map((item) => mapChallengeToItem(item))
+              .filter((item) => (isActiveChallengesShow ? item.isActive : !item.isActive))
               .map((item) => {
                 const isInRemovingProcess = removeChallengeMutation.variables === item.id
 
@@ -81,6 +83,35 @@ export const ChallengeManager = () => {
                 )
               })}
         </div>
+
+        {!isRemoveMode && isActiveChallengesShow && (
+          <button
+            type="button"
+            className="flex flex-col items-center opacity-50 mt-[64px] hover:opacity-75 cursor-pointer transition-opacity duration-300 ease-in-out"
+            onClick={() => setIsActiveChallengesShow(false)}
+          >
+            <div className="h-[20px] w-[20px]">
+              <ArchiveIcon classNames="stroke-black" />
+            </div>
+            <Typography
+              text={t('completedChallenges')}
+              classNames={'text-black font-semibold text-[14px] italic'}
+            />
+          </button>
+        )}
+
+        {!isRemoveMode && !isActiveChallengesShow && (
+          <button
+            type="button"
+            className="flex flex-col items-center opacity-50 mt-[64px] hover:opacity-75 cursor-pointer transition-opacity duration-300 ease-in-out"
+            onClick={() => setIsActiveChallengesShow(true)}
+          >
+            <Typography
+              text={t('currentChallenges')}
+              classNames={'text-black font-semibold text-[14px] italic'}
+            />
+          </button>
+        )}
 
         {isRemoveMode && (
           <div>
