@@ -50,6 +50,8 @@
     "failedToSendEmail": "Не удалось отправить письмо",
     "failedToSendCode": "Не удалось отправить код",
     "oopsSomethingWentWrong": "Упс, что-то пошло не так",
-    "done": "Готово"
+    "done": "Готово",
+    "showMore": "Показать больше",
+    "hide": "Скрыть"
   }
 }

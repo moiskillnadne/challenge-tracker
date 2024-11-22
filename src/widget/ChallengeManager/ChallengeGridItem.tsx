@@ -53,38 +53,39 @@ export const ChallengeGridItem = ({
 
   return (
     <div
-      className={`flex items-center justify-center w-[325px] h-[50px] px-[4px] py-[4px] rounded-3xl bg-pink25 ${cursorModeMap.get(isRemoveMode)} relative ${hoverEffectMap.get(isRemoveMode)} transition-all duration-300 ease-in-out ${disabledMap.get(isDisabled)}`}
-      onClick={handleClick}
+      className={`flex flex-shrink-0 w-[325px] h-[50px] px-[4px] py-[4px] bg-pink25 rounded-3xl transition-all duration-300 ease-in-out relative ${cursorModeMap.get(isRemoveMode)} ${hoverEffectMap.get(isRemoveMode)} ${disabledMap.get(isDisabled)}`}
     >
-      <div className="flex-1">
-        <Typography
-          text={goal}
-          classNames={`font-semibold text-[20px] ${cursorModeMap.get(isRemoveMode)} text-center`}
-        />
+      <div className={`flex-1 flex items-center justify-center`} onClick={handleClick}>
+        <div className="flex-1">
+          <Typography
+            text={goal}
+            classNames={`font-semibold text-[20px] ${cursorModeMap.get(isRemoveMode)} text-center`}
+          />
+        </div>
+
+        {isLoading && (
+          <span className="w-[36px] h-[36px]">
+            <Loader />
+          </span>
+        )}
+
+        {!isRemoveMode && !isLoading && (
+          <span className="w-[24px] h-[24px] cursor-pointer">
+            <RightArrow classNames="stroke-black" />
+          </span>
+        )}
+
+        {isRemoveMode && !isLoading && (
+          <button
+            type="button"
+            className={`w-[36px] h-[36px] cursor-pointer ${removeIconAnimationMap.get(!isDisabled)}`}
+            onClick={onRemove}
+            disabled={isDisabled}
+          >
+            <RemoveIcon classNames="stroke-pink" />
+          </button>
+        )}
       </div>
-
-      {isLoading && (
-        <span className="w-[36px] h-[36px]">
-          <Loader />
-        </span>
-      )}
-
-      {!isRemoveMode && !isLoading && (
-        <span className="w-[24px] h-[24px] cursor-pointer">
-          <RightArrow />
-        </span>
-      )}
-
-      {isRemoveMode && !isLoading && (
-        <button
-          type="button"
-          className={`w-[36px] h-[36px] cursor-pointer ${removeIconAnimationMap.get(!isDisabled)}`}
-          onClick={onRemove}
-          disabled={isDisabled}
-        >
-          <RemoveIcon classNames="stroke-pink" />
-        </button>
-      )}
     </div>
   )
 }
