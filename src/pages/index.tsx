@@ -8,6 +8,7 @@ import { LoginPage } from './LoginPage'
 import ProtectedRoute from '~/feature/ProtectedRoute'
 import { SettingsPage } from '~/pages/SettingsPage.tsx'
 import { Routes } from '~/shared/constants'
+import { FastLoginSetting } from '~/widget/FastLoginSetting'
 import { LanguageSetting } from '~/widget/LanguageSetting'
 import { SettingList } from '~/widget/SettingList'
 
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
           },
           {
             path: Routes.SETTINGS_FAST_LOGIN,
-            element: <div>fast login settings</div>,
+            element: <FastLoginSetting />,
           },
         ],
       },
