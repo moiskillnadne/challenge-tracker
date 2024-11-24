@@ -1,13 +1,15 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
-import { AccountPage } from './AccountPage'
 import { ChallengeBuilderPage } from './ChallengeBuilderPage'
 import ChallengePage from './ChallengePage'
 import { HomePage } from './HomePage'
 import { LoginPage } from './LoginPage'
 
 import ProtectedRoute from '~/feature/ProtectedRoute'
+import { SettingsPage } from '~/pages/SettingsPage.tsx'
 import { Routes } from '~/shared/constants'
+import { LanguageSetting } from '~/widget/LanguageSetting'
+import { SettingList } from '~/widget/SettingList'
 
 const router = createBrowserRouter([
   {
@@ -19,20 +21,44 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: Routes.HOME,
-    element: <ProtectedRoute element={<HomePage />} />,
-  },
-  {
-    path: Routes.ACCOUNT,
-    element: <ProtectedRoute element={<AccountPage />} />,
-  },
-  {
-    path: Routes.CHALLENGE,
-    element: <ProtectedRoute element={<ChallengePage />} />,
-  },
-  {
-    path: Routes.CREATE_CHALLENGE,
-    element: <ProtectedRoute element={<ChallengeBuilderPage />} />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: Routes.HOME,
+        element: <HomePage />,
+      },
+      {
+        path: Routes.SETTINGS,
+        element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <SettingList />,
+          },
+          {
+            path: Routes.SETTINGS_LANGUAGE,
+            element: <LanguageSetting />,
+          },
+          {
+            path: Routes.SETTINGS_FAST_LOGIN,
+            element: <div>fast login settings</div>,
+          },
+        ],
+      },
+      {
+        path: Routes.CHALLENGE,
+        element: <ChallengePage />,
+      },
+      {
+        path: Routes.CREATE_CHALLENGE,
+        element: <ChallengeBuilderPage />,
+      },
+
+      {
+        path: '*',
+        element: <Navigate to={Routes.HOME} />,
+      },
+    ],
   },
 ])
 

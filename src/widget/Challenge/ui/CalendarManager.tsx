@@ -7,7 +7,7 @@ import { convertDate } from '../lib/convertDate'
 
 import { useCustomTranslation } from '~/feature/translation'
 import { ChallengeDTO, ProgressDTO } from '~/shared/api/challenge.service'
-import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
+import { mapChallengeToItem } from '~/widget/ChallengeManager/lib/mappers.ts'
 
 type Props = {
   challenge: ChallengeDTO

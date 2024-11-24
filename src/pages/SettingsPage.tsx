@@ -1,0 +1,74 @@
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+
+import { useCustomTranslation } from '~/feature/translation'
+import { Routes } from '~/shared/constants'
+import { BackArrowIcon } from '~/shared/icon'
+import { Page, PageContent, Typography } from '~/shared/ui'
+import { AppVersion } from '~/widget/AppVersion'
+
+export const SettingsPage = () => {
+  const { t } = useCustomTranslation()
+  const navigate = useNavigate()
+
+  const location = useLocation()
+
+  const isRootSettings = location.pathname === Routes.SETTINGS
+
+  const goBack = () => {
+    if (isRootSettings) {
+      return navigate(Routes.HOME)
+    }
+
+    return navigate(Routes.SETTINGS)
+  }
+
+  return (
+    <Page>
+      <div className="flex-1 mt-[36px] px-[12px]">
+        <div className="w-full px-[24px] py-[12px] relative">
+          <div
+            id="challenge-manager-header-layer-1"
+            className="flex items-start z-10 absolute top-0 left-0 w-full px-[24px] py-[12px] justify-between"
+          >
+            <button
+              type="button"
+              className="cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out"
+              aria-label="back-button"
+              onClick={goBack}
+            >
+              <div className="w-[29px] h-[29px]">
+                <BackArrowIcon />
+              </div>
+            </button>
+          </div>
+
+          <div id="challenge-manager-header-layer-2" className="flex relative top-0 left-0">
+            <div className="flex-1">
+              <div className="flex flex-col items-center">
+                <div className="w-[100px]">
+                  <img
+                    className="w-[100px]"
+                    src="/web-app-manifest-512x512.png"
+                    alt="challengelogger-logo-pink"
+                  />
+                </div>
+
+                <div className="text-center mb-[16px] mt-[8px]">
+                  <Typography
+                    text={t('settings')}
+                    classNames="font-bold text-[20px] uppercase cursor-default"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <PageContent>
+          <Outlet />
+          <AppVersion />
+        </PageContent>
+      </div>
+    </Page>
+  )
+}

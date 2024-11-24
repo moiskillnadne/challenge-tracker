@@ -32,7 +32,7 @@ export const ChallengeManagerHeader = () => {
   }
 
   const onSettings = () => {
-    return navigate(Routes.ACCOUNT)
+    return navigate(Routes.SETTINGS)
   }
 
   return (
