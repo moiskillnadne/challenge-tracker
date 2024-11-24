@@ -3,7 +3,7 @@ export const Routes = {
   HOME: '/home',
   SETTINGS: '/settings',
   SETTINGS_LANGUAGE: '/settings/language',
-  SETTINGS_FAST_LOGIN: '/settings/fastlogin',
+  SETTINGS_FAST_LOGIN: '/settings/fast-login',
   CHALLENGE: '/challenge/:challengeId',
   CREATE_CHALLENGE: '/create-challenge',
 }

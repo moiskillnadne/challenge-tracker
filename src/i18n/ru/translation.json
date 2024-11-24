@@ -19,6 +19,11 @@
     "login": "Логин",
     "loginWithCode": "Войти с кодом",
     "fastLogin": "Быстрый вход",
+    "language": "Язык",
+    "languages": {
+      "russian": "Русский",
+      "english": "Английский"
+    },
     "logout": {
       "title": "Выйти",
       "pending": "До встречи! Выходим..",

@@ -20,9 +20,16 @@ export const useCustomTranslation = () => {
     await i18n.changeLanguage(lng)
   }, [i18n, language])
 
+  const changeLanguage = useCallback(async (lng: SupportableLanguage) => {
+    setLanguage(lng)
+
+    await i18n.changeLanguage(lng)
+  }, [])
+
   return {
     t,
     language,
     switchLanguage,
+    changeLanguage,
   }
 }

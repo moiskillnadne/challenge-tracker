@@ -8,6 +8,8 @@ import { LoginPage } from './LoginPage'
 import ProtectedRoute from '~/feature/ProtectedRoute'
 import { SettingsPage } from '~/pages/SettingsPage.tsx'
 import { Routes } from '~/shared/constants'
+import { LanguageSetting } from '~/widget/LanguageSetting'
+import { SettingList } from '~/widget/SettingList'
 
 const router = createBrowserRouter([
   {
@@ -28,14 +30,20 @@ const router = createBrowserRouter([
       {
         path: Routes.SETTINGS,
         element: <SettingsPage />,
-      },
-      {
-        path: Routes.SETTINGS_LANGUAGE,
-        element: <div>language settings</div>,
-      },
-      {
-        path: Routes.SETTINGS_FAST_LOGIN,
-        element: <div>fast login settings</div>,
+        children: [
+          {
+            index: true,
+            element: <SettingList />,
+          },
+          {
+            path: Routes.SETTINGS_LANGUAGE,
+            element: <LanguageSetting />,
+          },
+          {
+            path: Routes.SETTINGS_FAST_LOGIN,
+            element: <div>fast login settings</div>,
+          },
+        ],
       },
       {
         path: Routes.CHALLENGE,

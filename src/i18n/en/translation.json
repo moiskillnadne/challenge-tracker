@@ -19,6 +19,11 @@
     "login": "Login",
     "loginWithCode": "Login with code",
     "fastLogin": "Fast login",
+    "language": "Language",
+    "languages": {
+      "russian": "Russian",
+      "english": "English"
+    },
     "logout": {
       "title": "logout",
       "pending": "See you soon! Logging out…",
