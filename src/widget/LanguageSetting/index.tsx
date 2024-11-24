@@ -5,8 +5,6 @@ import { ListItem } from '~/shared/ui'
 export const LanguageSetting = () => {
   const { t, changeLanguage, language } = useCustomTranslation()
 
-  console.log(language)
-
   return (
     <div className="flex flex-1">
       <div className="flex flex-1 flex-col items-center gap-3">
