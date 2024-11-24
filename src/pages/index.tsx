@@ -19,20 +19,30 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: Routes.HOME,
-    element: <ProtectedRoute element={<HomePage />} />,
-  },
-  {
-    path: Routes.ACCOUNT,
-    element: <ProtectedRoute element={<AccountPage />} />,
-  },
-  {
-    path: Routes.CHALLENGE,
-    element: <ProtectedRoute element={<ChallengePage />} />,
-  },
-  {
-    path: Routes.CREATE_CHALLENGE,
-    element: <ProtectedRoute element={<ChallengeBuilderPage />} />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: Routes.HOME,
+        element: <HomePage />,
+      },
+      {
+        path: Routes.SETTINGS,
+        element: <AccountPage />,
+      },
+      {
+        path: Routes.CHALLENGE,
+        element: <ChallengePage />,
+      },
+      {
+        path: Routes.CREATE_CHALLENGE,
+        element: <ChallengeBuilderPage />,
+      },
+
+      {
+        path: '*',
+        element: <Navigate to={Routes.HOME} />,
+      },
+    ],
   },
 ])
 

@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 
 import { useAuthenticated } from '~/entity/user'
 import { EventEmitter } from '~/shared/lib/EventEmitter'
-import { Page } from '~/shared/ui'
-import { Loader } from '~/shared/ui/Loader'
+import { PageLoader } from '~/shared/ui'
 
 type Props = {
-  element: React.ReactNode
+  element?: React.ReactNode
 }
 
 function ProtectedRoute({ element }: Props) {
@@ -29,20 +28,14 @@ function ProtectedRoute({ element }: Props) {
   }, [navigate])
 
   if (isLoading) {
-    return (
-      <Page>
-        <div className="w-full h-full flex justify-center items-center">
-          <Loader />
-        </div>
-      </Page>
-    )
+    return <PageLoader />
   }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />
   }
 
-  return element
+  return element ?? <Outlet />
 }
 
 export default ProtectedRoute
