@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom'
 
 import { ChallengeGridItem } from './ChallengeGridItem'
 import { ChallengeManagerHeader } from './ChallengeManagerHeader'
+import { mapChallengeToItem } from './lib/mappers.ts'
 
 import { challengeService } from '~/shared/api/challenge.service'
 import { PageLoader } from '~/shared/ui'
-import { mapChallengeToItem } from '~/widget/Account/lib/mappers'
 import { ChallengeListHeader } from '~/widget/ChallengeManager/ChallengeListHeader.tsx'
 import { CloseEditingModeButton } from '~/widget/ChallengeManager/CloseEditingModeButton.tsx'
 import { ListModeSwitcher } from '~/widget/ChallengeManager/ListModeSwitcher.tsx'

@@ -1,12 +1,12 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
-import { AccountPage } from './AccountPage'
 import { ChallengeBuilderPage } from './ChallengeBuilderPage'
 import ChallengePage from './ChallengePage'
 import { HomePage } from './HomePage'
 import { LoginPage } from './LoginPage'
 
 import ProtectedRoute from '~/feature/ProtectedRoute'
+import { SettingsPage } from '~/pages/SettingsPage.tsx'
 import { Routes } from '~/shared/constants'
 
 const router = createBrowserRouter([
@@ -27,7 +27,15 @@ const router = createBrowserRouter([
       },
       {
         path: Routes.SETTINGS,
-        element: <AccountPage />,
+        element: <SettingsPage />,
+      },
+      {
+        path: Routes.SETTINGS_LANGUAGE,
+        element: <div>language settings</div>,
+      },
+      {
+        path: Routes.SETTINGS_FAST_LOGIN,
+        element: <div>fast login settings</div>,
       },
       {
         path: Routes.CHALLENGE,

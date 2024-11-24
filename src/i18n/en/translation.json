@@ -43,6 +43,7 @@
       "If the email does not arrive, then try again."
     ],
     "yourAccount": "Your account",
+    "settings": "Settings",
     "sendingEmail": "Sending email",
     "sendingCode": "Sending code",
     "emailSent": "Email sent",
