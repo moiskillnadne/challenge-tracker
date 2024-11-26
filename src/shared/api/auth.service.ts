@@ -16,6 +16,10 @@ type ConfirmLogin = {
   code: string
 }
 
+export interface RegisterKeyPayload {
+  deviceName: string
+}
+
 export interface VerifyLoginChallenge {
   email: string
   challengeResponse: AuthenticationResponseJSON
@@ -24,6 +28,12 @@ export interface VerifyLoginChallenge {
 export type GenerateLoginChallengeResponse = {
   success: boolean
   options: PublicKeyCredentialRequestOptionsJSON
+}
+
+export type FastLoginEntity = {
+  id: string
+  deviceName: string
+  counter: number
 }
 
 function createAuthService() {
@@ -41,9 +51,10 @@ function createAuthService() {
       return api.post('/auth/refresh-token')
     },
 
-    registerKeys: () => {
+    registerKeys: (payload: RegisterKeyPayload) => {
       return api.post<PublicKeyCredentialCreationOptionsJSON>(
         '/protected/passkeys/generate-registration-options',
+        payload,
       )
     },
     verifyRegistration: (payload: RegistrationResponseJSON) => {
@@ -57,6 +68,12 @@ function createAuthService() {
     },
     verifyAuthentication: (payload: VerifyLoginChallenge) => {
       return api.post('/protected/passkeys/verify-authentication', payload)
+    },
+    getPasskeyList: () => {
+      return api.get<Array<FastLoginEntity>>('/protected/passkeys/')
+    },
+    removePasskeyById: (id: string) => {
+      return api.delete(`/protected/passkeys/${id}`)
     },
   }
 }

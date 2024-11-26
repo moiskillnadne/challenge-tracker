@@ -2,8 +2,14 @@ import { browserSupportsWebAuthn, startRegistration } from '@simplewebauthn/brow
 import { useMutation } from '@tanstack/react-query'
 
 import { authService } from '~/shared/api/auth.service'
+import { Button, Typography } from '~/shared/ui'
 
-export const RegisterPasskeys = () => {
+type Props = {
+  label: string
+  deviceName: string
+}
+
+export const RegisterPasskeys = ({ label, deviceName }: Props) => {
   const verifyChallenge = useMutation({
     mutationFn: authService.verifyRegistration,
     onSuccess: () => {
@@ -39,15 +45,12 @@ export const RegisterPasskeys = () => {
       return console.error('WebAuthn is not supported')
     }
 
-    generateChallengeMutation.mutate()
+    generateChallengeMutation.mutate({ deviceName })
   }
 
   return (
-    <button
-      className="duration-300 bg-blue-500 text-black/50 rounded-full h-full hover:text-black/75"
-      onClick={createChallenge}
-    >
-      Create passkey
-    </button>
+    <Button onClick={createChallenge} classNames="bg-transparent border-black">
+      <Typography text={label} classNames="font-semibold text-[20px] italic" />
+    </Button>
   )
 }

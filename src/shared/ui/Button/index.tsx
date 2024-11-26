@@ -1,14 +1,13 @@
-import { Typography } from '../Typography'
+import { PropsWithChildren } from 'react'
 
-type Props = {
-  label: string
+type Props = PropsWithChildren<{
   onClick: () => void
   isLoading?: boolean
   isDisabled?: boolean
   classNames?: string
-}
+}>
 
-export const Button = ({ label, onClick, isDisabled, isLoading, classNames }: Props) => {
+export const Button = ({ children, onClick, isDisabled, isLoading, classNames }: Props) => {
   return (
     <button
       onClick={onClick}
@@ -18,7 +17,7 @@ export const Button = ({ label, onClick, isDisabled, isLoading, classNames }: Pr
       {isLoading ? (
         <div className="animate-spin h-[25px] w-[25px] border-[2px] rounded-full border-black/50 border-t-black"></div>
       ) : (
-        <Typography text={label} />
+        children
       )}
     </button>
   )

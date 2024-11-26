@@ -20,8 +20,10 @@
     "loginWithCode": "Login with code",
     "fastLogin": "Fast login",
     "addFastLogin": "Add Fast Log In",
+    "createFastLogin": "Create Fast Log In",
     "yourDevices": "Your Devices",
     "noDevicesYet": "No devices yet",
+    "create": "Create",
     "language": "Language",
     "languages": {
       "russian": "Russian",
