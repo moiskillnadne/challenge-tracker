@@ -23,6 +23,7 @@
     "createFastLogin": "Create Fast Log In",
     "yourDevices": "Your Devices",
     "noDevicesYet": "No devices yet",
+    "noAddedDeviceForFastLogin": "You don't have any added devices for 'Fast Login' yet",
     "create": "Create",
     "language": "Language",
     "languages": {

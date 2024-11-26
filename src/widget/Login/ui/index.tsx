@@ -28,7 +28,7 @@ export const LoginWidget = () => {
 
   const hintRef = useRef(null)
 
-  const { showPromiseToast, dismissAllToasts, showErrorToast } = useToast()
+  const { showPromiseToast, dismissAllToasts, showErrorToast, showInfoToast } = useToast()
 
   const codeInputVisibility = new Map([
     [true, '40px'],
@@ -125,7 +125,7 @@ export const LoginWidget = () => {
       challengeOpts.allowCredentials && challengeOpts.allowCredentials.length > 0
 
     if (!isCredentialExist) {
-      throw new Error('No credentials found')
+      return showInfoToast(t('noAddedDeviceForFastLogin'))
     }
 
     const result = await startAuthentication({ optionsJSON: challengeOpts })

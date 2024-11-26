@@ -23,6 +23,7 @@
     "createFastLogin": "Создать",
     "yourDevices": "Ваши устройства",
     "noDevicesYet": "У вас пока нет устройств",
+    "noAddedDeviceForFastLogin": "У вас пока нет добавленных устройств для быстрого входа",
     "create": "Создать",
     "language": "Язык",
     "languages": {
