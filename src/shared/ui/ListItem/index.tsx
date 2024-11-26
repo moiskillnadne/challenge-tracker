@@ -41,11 +41,19 @@ export const ListItem = ({
     [false, ''],
   ])
 
+  const handleClick = () => {
+    if (isDisabled) {
+      return
+    }
+
+    onClick()
+  }
+
   return (
     <button
       type="button"
       className={`flex flex-shrink-0 w-[325px] h-[50px] px-[4px] py-[4px] items-center ${isActive ? 'bg-pink50' : bgMap.get(isDanger)} ${hoverEffectMap.get(isDanger)} rounded-3xl transition-all duration-300 ease-in-out relative cursor-pointer ${disabledMap.get(isDisabled)}`}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={isDisabled}
     >
       <div className="flex-1">

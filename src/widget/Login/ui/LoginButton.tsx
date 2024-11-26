@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef } from 'react'
 
 import { useCustomTranslation } from '~/feature/translation'
-import { Button } from '~/shared/ui'
+import { Button, Typography } from '~/shared/ui'
 
 type Props = {
   labelKey: string
@@ -21,12 +21,13 @@ export const LoginButton = forwardRef(
     return (
       <div ref={ref} className="w-[300px] h-[45px]">
         <Button
-          label={t(labelKey)}
           onClick={onClick}
           isLoading={isLoading}
           isDisabled={isDisabled}
           classNames={classNames}
-        />
+        >
+          <Typography text={t(labelKey)} />
+        </Button>
       </div>
     )
   },

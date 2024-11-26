@@ -1,7 +1,6 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { useCustomTranslation } from '~/feature/translation'
-import { Routes } from '~/shared/constants'
 import { BackArrowIcon } from '~/shared/icon'
 import { Page, PageContent, Typography } from '~/shared/ui'
 import { AppVersion } from '~/widget/AppVersion'
@@ -10,16 +9,8 @@ export const SettingsPage = () => {
   const { t } = useCustomTranslation()
   const navigate = useNavigate()
 
-  const location = useLocation()
-
-  const isRootSettings = location.pathname === Routes.SETTINGS
-
   const goBack = () => {
-    if (isRootSettings) {
-      return navigate(Routes.HOME)
-    }
-
-    return navigate(Routes.SETTINGS)
+    return navigate(-1)
   }
 
   return (
