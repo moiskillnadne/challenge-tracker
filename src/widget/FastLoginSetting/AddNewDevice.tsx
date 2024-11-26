@@ -22,7 +22,7 @@ export const AddNewDevice = () => {
     onSuccess: () => {
       console.info('[VerifyChallenge:onSuccess]')
       showSuccessToast(t('deviceForFastLoginAdded'))
-      navigate(Routes.SETTINGS_FAST_LOGIN)
+      navigate(Routes.SETTINGS_FAST_LOGIN, { replace: true })
     },
     onError: (err) => {
       console.info(`[VerifyChallenge:onError]: ${JSON.stringify(err)}`)
