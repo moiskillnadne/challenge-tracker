@@ -63,6 +63,7 @@
     "oopsSomethingWentWrong": "Упс, что-то пошло не так",
     "done": "Готово",
     "showMore": "Показать больше",
-    "hide": "Скрыть"
+    "hide": "Скрыть",
+    "deviceForFastLoginAdded": "Устройство добавлено"
   }
 }

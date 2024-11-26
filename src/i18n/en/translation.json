@@ -63,6 +63,7 @@
     "oopsSomethingWentWrong": "Oops, something went wrong",
     "done": "Done",
     "showMore": "Show more",
-    "hide": "Hide"
+    "hide": "Hide",
+    "deviceForFastLoginAdded": "The device has been added"
   }
 }

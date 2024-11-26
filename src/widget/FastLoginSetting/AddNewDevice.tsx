@@ -2,16 +2,18 @@ import { useState } from 'react'
 
 import { browserSupportsWebAuthn, startRegistration } from '@simplewebauthn/browser'
 import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 import { useCustomTranslation } from '~/feature/translation'
 import { authService } from '~/shared/api/auth.service.ts'
+import { Routes } from '~/shared/constants'
 import { useToast } from '~/shared/hooks'
 import { Button, Typography } from '~/shared/ui'
 
 export const AddNewDevice = () => {
   const { t } = useCustomTranslation()
-
-  const {} = useToast()
+  const navigate = useNavigate()
+  const { showSuccessToast } = useToast()
 
   const [device, setDeviceName] = useState<string>('')
 
@@ -19,6 +21,8 @@ export const AddNewDevice = () => {
     mutationFn: authService.verifyRegistration,
     onSuccess: () => {
       console.info('[VerifyChallenge:onSuccess]')
+      showSuccessToast(t('deviceForFastLoginAdded'))
+      navigate(Routes.SETTINGS_FAST_LOGIN)
     },
     onError: (err) => {
       console.info(`[VerifyChallenge:onError]: ${JSON.stringify(err)}`)
