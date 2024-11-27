@@ -36,7 +36,7 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
   const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1)
 
   return (
-    <div className="pt-[20px] pb-[12px]">
+    <div className="pt-20 pb-12">
       <div className="grid grid-cols-7 gap-2">
         <CalendarHeaderItem label={t('days.monday')} />
         <CalendarHeaderItem label={t('days.tuesday')} />
@@ -47,7 +47,7 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
         <CalendarHeaderItem label={t('days.sunday')} />
       </div>
 
-      <div className="grid grid-cols-7 gap-2 mt-[20px]">
+      <div className="grid grid-cols-7 gap-2 mt-20">
         {offset?.map((index) => <div key={index}></div>)}
 
         {daysInMonthArray?.map((index) => (

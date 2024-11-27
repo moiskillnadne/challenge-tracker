@@ -13,12 +13,12 @@ export const ListModeSwitcher = ({ onClick, isExtended }: Props) => {
   return (
     <button
       type="button"
-      className="flex items-center justify-center gap-[12px] transition-opacity duration-300 hover:cursor-pointer hover:opacity-50"
+      className="flex items-center justify-center gap-M transition-opacity duration-300 hover:cursor-pointer hover:opacity-50"
       onClick={onClick}
     >
       <Typography
         text={isExtended ? t('hide') : t('showMore')}
-        classNames="font-semibold text-[14px] italic lowercase"
+        classNames="font-semibold text-S italic lowercase"
       />
       <div className="h-[20px] w-[20px]">
         <RightArrow

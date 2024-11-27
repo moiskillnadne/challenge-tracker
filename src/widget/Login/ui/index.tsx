@@ -142,7 +142,7 @@ export const LoginWidget = () => {
 
   return (
     <div className="flex flex-1 flex-col items-center">
-      <div className="flex flex-col items-center gap-[8px] mb-[64px]">
+      <div className="flex flex-col items-center gap-S mb-64">
         <LoginHeader />
         <input
           type="email"
@@ -192,7 +192,7 @@ export const LoginWidget = () => {
         classNames="node-opacity"
         unmountOnExit
       >
-        <div ref={hintRef} className="w-[350px] px-[12px]">
+        <div ref={hintRef} className="w-[350px] px-12">
           <Typography classNames="text-black/75 text-center">{t('loginViaCodeHint')}</Typography>
         </div>
       </CSSTransition>

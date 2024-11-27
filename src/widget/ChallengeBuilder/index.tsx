@@ -48,9 +48,9 @@ export const ChallengeBuilderWidget = () => {
   }
 
   return (
-    <div className="flex-1 px-[16px] my-[64px] flex justify-center">
-      <div className="flex flex-col gap-[12px] items-center">
-        <div className="font-bold text-[26px]">Create a new challenge</div>
+    <div className="flex-1 px-16 my-64 flex justify-center">
+      <div className="flex flex-col gap-M items-center">
+        <div className="font-bold text-XL">Create a new challenge</div>
 
         <input
           type="text"
@@ -69,7 +69,7 @@ export const ChallengeBuilderWidget = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <div className="h-[40px] flex gap-[6px] mt-[16px]">
+        <div className="h-[40px] flex gap-XS mt-16">
           <button
             className="duration-300 bg-blue-500 text-black/50 rounded-full h-full hover:text-black/75"
             onClick={onCreateClick}

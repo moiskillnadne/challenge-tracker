@@ -23,6 +23,33 @@ export default {
       fontFamily: {
         monospace: ['Source Code Pro', 'monospace'],
       },
+      fontSize: {
+        S: '14px',
+        M: '20px',
+        L: '24px',
+        XL: '26px',
+        XXL: '32px',
+      },
+      gap: {
+        XS: '6px',
+        S: '8px',
+        M: '12px',
+        L: '24px',
+      },
+      spacing: {
+        4: '4px',
+        6: '6px',
+        8: '8px',
+        12: '12px',
+        16: '16px',
+        20: '20px',
+        24: '24px',
+        32: '32px',
+        36: '36px',
+        48: '48px',
+        64: '64px',
+        96: '96px',
+      },
       keyframes: {
         shakes: {
           '0%': {

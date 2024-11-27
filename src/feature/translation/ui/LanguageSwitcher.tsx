@@ -1,10 +1,10 @@
-import { useCustomTranslation } from '../lib/useCustomTranslation'
+import { useCustomTranslation } from '~/feature/translation'
 
 export const LanguageSwitcher = () => {
   const { switchLanguage, language } = useCustomTranslation()
 
   return (
-    <button className="font-bold text-[26px] cursor-pointer text-black" onClick={switchLanguage}>
+    <button className="font-bold text-XL cursor-pointer text-black" onClick={switchLanguage}>
       {language.toUpperCase()}
     </button>
   )
