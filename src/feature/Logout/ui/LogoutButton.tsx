@@ -20,7 +20,7 @@ export const LogoutButton = () => {
   }, [mutation])
 
   return (
-    <div className="p-[12px]">
+    <div className="p-12">
       <button
         className="duration-300 font-bold text-red/75 rounded-full h-full hover:text-red"
         onClick={logout}

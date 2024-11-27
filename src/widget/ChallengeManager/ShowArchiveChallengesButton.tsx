@@ -12,7 +12,7 @@ export const ShowArchiveChallengesButton = ({ onClick }: Props) => {
   return (
     <button
       type="button"
-      className="flex flex-col items-center opacity-50 mt-[64px] hover:opacity-75 cursor-pointer transition-opacity duration-300 ease-in-out"
+      className="flex flex-col items-center opacity-50 mt-64 hover:opacity-75 cursor-pointer transition-opacity duration-300 ease-in-out"
       onClick={onClick}
     >
       <div className="h-[20px] w-[20px]">

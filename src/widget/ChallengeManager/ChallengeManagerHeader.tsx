@@ -36,10 +36,10 @@ export const ChallengeManagerHeader = () => {
   }
 
   return (
-    <div className="w-full px-[24px] py-[12px] relative">
+    <div className="w-full px-24 py-12 relative">
       <div
         id="challenge-manager-header-layer-1"
-        className="flex items-start z-10 absolute top-0 left-0 w-full px-[24px] py-[12px] justify-between"
+        className="flex items-start z-10 absolute top-0 left-0 w-full px-24 py-12 justify-between"
       >
         <button
           type="button"
@@ -88,7 +88,7 @@ export const ChallengeManagerHeader = () => {
             </div>
 
             {user && (
-              <div className="text-center mb-[16px] mt-[8px]">
+              <div className="text-center mb-16 mt-8">
                 <Typography
                   text={t('profile')}
                   classNames="font-bold text-M uppercase cursor-default"

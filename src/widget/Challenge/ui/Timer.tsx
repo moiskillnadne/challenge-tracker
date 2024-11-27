@@ -49,7 +49,7 @@ export const Timer = ({ streak }: Props) => {
   }, [])
 
   return (
-    <div className="flex flex-col items-center justify-center h-[65px] mb-[10px] text-center">
+    <div className="flex flex-col items-center justify-center h-[65px] mb-12 text-center">
       <div className={`${displayMap[isTodayCompleted ? 1 : 0]}`}>
         <p className="text-green font-bold">
           {t('youStillHave')}{' '}

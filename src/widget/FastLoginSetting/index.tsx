@@ -37,7 +37,7 @@ export const FastLoginSetting = () => {
         <button
           type="button"
           onClick={() => navigate(Routes.SETTINGS_FAST_LOGIN_CREATE)}
-          className={`flex flex-1 w-[225px] h-[50px] px-[4px] py-[4px] items-center justify-center gap-S bg-violet20 hover:bg-violet50  rounded-3xl transition-all duration-300 ease-in-out relative cursor-pointer`}
+          className={`flex flex-1 w-[225px] h-[50px] px-4 py-4 items-center justify-center gap-S bg-violet20 hover:bg-violet50  rounded-3xl transition-all duration-300 ease-in-out relative cursor-pointer`}
         >
           <span className="h-[28px] w-[28px]">
             <PlusIcon classNames="stroke-pink" />
@@ -45,7 +45,7 @@ export const FastLoginSetting = () => {
           <Typography text={t('addFastLogin')} classNames="font-semibold text-M italic" />
         </button>
 
-        <div className="flex flex-1 flex-col items-center mt-[16px]">
+        <div className="flex flex-1 flex-col items-center mt-16">
           <div className="flex gap-L">
             <div className="flex flex-1">
               <Typography
@@ -65,15 +65,15 @@ export const FastLoginSetting = () => {
             )}
           </div>
 
-          <div className="flex flex-1 flex-col justify-center mt-[24px]">
+          <div className="flex flex-1 flex-col justify-center mt-24">
             {devices.length === 0 && (
               <Typography
                 text={t('noDevicesYet')}
-                classNames="font-semibold text-S italic text-black/50 mt-[32px]"
+                classNames="font-semibold text-S italic text-black/50 mt-32"
               />
             )}
 
-            <div className="flex flex-col px-[16px] gap-S h-[350px] transition-all duration-300 ease-in-out overflow-y-scroll custom-scrollbar custom-scrollbar-always">
+            <div className="flex flex-col px-16 gap-S h-[350px] transition-all duration-300 ease-in-out overflow-y-scroll custom-scrollbar custom-scrollbar-always">
               {devices.length > 0 &&
                 devices.map((device) => {
                   const name = device.deviceName ?? 'N/A'

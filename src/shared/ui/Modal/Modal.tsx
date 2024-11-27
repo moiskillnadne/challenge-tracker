@@ -24,13 +24,13 @@ export const Modal = ({ isOpen, onClose, title, children, leftButton, rightButto
           <h2 className="text-xl font-semibold">{title}</h2>
           <button
             onClick={onClose}
-            className="text-[28px] text-gray-600 hover:text-gray-800 focus:outline-none"
+            className="text-26 text-gray-600 hover:text-gray-800 focus:outline-none"
           >
             &times;
           </button>
         </div>
         <div className="mt-4">{children}</div>
-        <div className="flex justify-end mt-[12px] gap-M">
+        <div className="flex justify-end mt-12 gap-M">
           {leftButton && (
             <button
               onClick={leftButton.onClick}
