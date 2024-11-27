@@ -142,7 +142,7 @@ export const LoginWidget = () => {
 
   return (
     <div className="flex flex-1 flex-col items-center">
-      <div className="flex flex-col items-center gap-[8px] mb-[64px]">
+      <div className="flex flex-col items-center gap-S mb-[64px]">
         <LoginHeader />
         <input
           type="email"

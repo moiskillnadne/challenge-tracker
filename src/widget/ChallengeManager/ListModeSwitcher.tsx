@@ -13,7 +13,7 @@ export const ListModeSwitcher = ({ onClick, isExtended }: Props) => {
   return (
     <button
       type="button"
-      className="flex items-center justify-center gap-[12px] transition-opacity duration-300 hover:cursor-pointer hover:opacity-50"
+      className="flex items-center justify-center gap-M transition-opacity duration-300 hover:cursor-pointer hover:opacity-50"
       onClick={onClick}
     >
       <Typography

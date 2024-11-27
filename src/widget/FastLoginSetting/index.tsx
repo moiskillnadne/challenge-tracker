@@ -37,7 +37,7 @@ export const FastLoginSetting = () => {
         <button
           type="button"
           onClick={() => navigate(Routes.SETTINGS_FAST_LOGIN_CREATE)}
-          className={`flex flex-1 w-[225px] h-[50px] px-[4px] py-[4px] items-center justify-center gap-[8px] bg-violet20 hover:bg-violet50  rounded-3xl transition-all duration-300 ease-in-out relative cursor-pointer`}
+          className={`flex flex-1 w-[225px] h-[50px] px-[4px] py-[4px] items-center justify-center gap-S bg-violet20 hover:bg-violet50  rounded-3xl transition-all duration-300 ease-in-out relative cursor-pointer`}
         >
           <span className="h-[28px] w-[28px]">
             <PlusIcon classNames="stroke-pink" />
@@ -46,7 +46,7 @@ export const FastLoginSetting = () => {
         </button>
 
         <div className="flex flex-1 flex-col items-center mt-[16px]">
-          <div className="flex gap-[24px]">
+          <div className="flex gap-L">
             <div className="flex flex-1">
               <Typography
                 text={t('yourDevices')}
@@ -73,7 +73,7 @@ export const FastLoginSetting = () => {
               />
             )}
 
-            <div className="flex flex-col px-[16px] gap-[8px] h-[350px] transition-all duration-300 ease-in-out overflow-y-scroll custom-scrollbar custom-scrollbar-always">
+            <div className="flex flex-col px-[16px] gap-S h-[350px] transition-all duration-300 ease-in-out overflow-y-scroll custom-scrollbar custom-scrollbar-always">
               {devices.length > 0 &&
                 devices.map((device) => {
                   const name = device.deviceName ?? 'N/A'

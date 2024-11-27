@@ -30,7 +30,7 @@ export const Modal = ({ isOpen, onClose, title, children, leftButton, rightButto
           </button>
         </div>
         <div className="mt-4">{children}</div>
-        <div className="flex justify-end mt-[12px] gap-[12px]">
+        <div className="flex justify-end mt-[12px] gap-M">
           {leftButton && (
             <button
               onClick={leftButton.onClick}

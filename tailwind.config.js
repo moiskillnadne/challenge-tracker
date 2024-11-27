@@ -30,6 +30,12 @@ export default {
         XL: '26px',
         XXL: '32px',
       },
+      gap: {
+        XS: '6px',
+        S: '8px',
+        M: '12px',
+        L: '24px',
+      },
       keyframes: {
         shakes: {
           '0%': {

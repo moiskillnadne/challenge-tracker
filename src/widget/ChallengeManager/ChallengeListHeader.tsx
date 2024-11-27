@@ -16,7 +16,7 @@ export const ChallengeListHeader = ({
   const { t } = useCustomTranslation()
 
   return (
-    <div className="flex gap-[24px] items-center">
+    <div className="flex gap-L items-center">
       <Typography
         text={isActiveChallengesShow ? t('currentChallenges') : t('completedChallenges')}
         classNames="text-center font-semibold text-M italic cursor-default flex-1"

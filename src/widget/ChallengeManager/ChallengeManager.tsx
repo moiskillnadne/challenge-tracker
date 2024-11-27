@@ -76,9 +76,9 @@ export const ChallengeManager = () => {
           onEditIconClick={() => setIsRemoveMode(true)}
         />
 
-        <div className={`flex flex-col gap-[8px] mt-[24px]`}>
+        <div className={`flex flex-col gap-S mt-[24px]`}>
           <div
-            className={`flex flex-col px-[16px] gap-[8px] transition-all duration-300 ease-in-out ${isExtendedList ? 'overflow-y-scroll' : 'overflow-y-hidden'} ${isExtendedList ? 'h-[350px]' : 'h-[180px]'} ${isExtendedList ? 'custom-scrollbar custom-scrollbar-always' : ''}`}
+            className={`flex flex-col px-[16px] gap-S transition-all duration-300 ease-in-out ${isExtendedList ? 'overflow-y-scroll' : 'overflow-y-hidden'} ${isExtendedList ? 'h-[350px]' : 'h-[180px]'} ${isExtendedList ? 'custom-scrollbar custom-scrollbar-always' : ''}`}
           >
             {currentShownChallenges.map((item) => {
               const isInRemovingProcess = removeChallengeMutation.variables === item.id

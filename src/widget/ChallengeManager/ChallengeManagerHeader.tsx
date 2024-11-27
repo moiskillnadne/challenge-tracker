@@ -52,7 +52,7 @@ export const ChallengeManagerHeader = () => {
           </div>
         </button>
 
-        <div className="flex gap-[12px]">
+        <div className="flex gap-M">
           <button
             type="button"
             className="cursor-pointer hover:scale-110 transition-all duration-300 ease-in-out"
