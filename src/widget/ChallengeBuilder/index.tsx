@@ -50,7 +50,7 @@ export const ChallengeBuilderWidget = () => {
   return (
     <div className="flex-1 px-[16px] my-[64px] flex justify-center">
       <div className="flex flex-col gap-[12px] items-center">
-        <div className="font-bold text-[26px]">Create a new challenge</div>
+        <div className="font-bold text-XL">Create a new challenge</div>
 
         <input
           type="text"

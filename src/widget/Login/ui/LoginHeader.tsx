@@ -10,7 +10,7 @@ export const LoginHeader = () => {
         <div className="w-[250px] py-[14px] px-[24px]">
           <img className="w-[250px]" src="/web-app-manifest-512x512.png" alt="" />
         </div>
-        <Typography classNames="font-bold text-[32px] whitespace-pre-wrap text-center text-black">
+        <Typography classNames="font-bold text-XXL whitespace-pre-wrap text-center text-black">
           {t('welcomeToChallengeLogger')}
         </Typography>
       </div>

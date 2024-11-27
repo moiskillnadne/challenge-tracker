@@ -20,7 +20,7 @@ export const ShowArchiveChallengesButton = ({ onClick }: Props) => {
       </div>
       <Typography
         text={t('completedChallenges')}
-        classNames={'text-black font-semibold text-[14px] italic'}
+        classNames={'text-black font-semibold text-S italic'}
       />
     </button>
   )

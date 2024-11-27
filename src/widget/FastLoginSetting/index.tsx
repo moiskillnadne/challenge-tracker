@@ -42,7 +42,7 @@ export const FastLoginSetting = () => {
           <span className="h-[28px] w-[28px]">
             <PlusIcon classNames="stroke-pink" />
           </span>
-          <Typography text={t('addFastLogin')} classNames="font-semibold text-[20px] italic" />
+          <Typography text={t('addFastLogin')} classNames="font-semibold text-M italic" />
         </button>
 
         <div className="flex flex-1 flex-col items-center mt-[16px]">
@@ -50,7 +50,7 @@ export const FastLoginSetting = () => {
             <div className="flex flex-1">
               <Typography
                 text={t('yourDevices')}
-                classNames="font-semibold text-[20px] italic text-center"
+                classNames="font-semibold text-M italic text-center"
               />
             </div>
 
@@ -69,7 +69,7 @@ export const FastLoginSetting = () => {
             {devices.length === 0 && (
               <Typography
                 text={t('noDevicesYet')}
-                classNames="font-semibold text-[14px] italic text-black/50 mt-[32px]"
+                classNames="font-semibold text-S italic text-black/50 mt-[32px]"
               />
             )}
 

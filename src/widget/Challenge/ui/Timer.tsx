@@ -53,7 +53,7 @@ export const Timer = ({ streak }: Props) => {
       <div className={`${displayMap[isTodayCompleted ? 1 : 0]}`}>
         <p className="text-green font-bold">
           {t('youStillHave')}{' '}
-          <span className="font-bold text-[24px] text-red">{formatTimeLeft(timeLeft)}</span>
+          <span className="font-bold text-L text-red">{formatTimeLeft(timeLeft)}</span>
         </p>
         <p className="text-green font-bold">{t('toCompleteChallenge')}</p>
       </div>
@@ -61,7 +61,7 @@ export const Timer = ({ streak }: Props) => {
       <div className={` ${displayMap[isTodayCompleted ? 0 : 1]}`}>
         <p className="text-green font-bold">
           {t('youCanRestFor')}{' '}
-          <span className="text-blue font-bold text-[24px]">{formatTimeLeft(timeLeft)}</span>
+          <span className="text-blue font-bold text-L">{formatTimeLeft(timeLeft)}</span>
         </p>
       </div>
     </div>

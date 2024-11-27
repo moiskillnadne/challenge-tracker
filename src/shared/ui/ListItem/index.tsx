@@ -59,7 +59,7 @@ export const ListItem = ({
       <div className="flex-1">
         <Typography
           text={label}
-          classNames={`font-semibold text-[20px] text-center cursor-pointer capitalize ${textColorMap.get(isDanger)}`}
+          classNames={`font-semibold text-M text-center cursor-pointer capitalize ${textColorMap.get(isDanger)}`}
         />
       </div>
 

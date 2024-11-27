@@ -59,7 +59,7 @@ export const ChallengeGridItem = ({
         <div className="flex-1">
           <Typography
             text={goal}
-            classNames={`font-semibold text-[20px] ${cursorModeMap.get(isRemoveMode)} text-center`}
+            classNames={`font-semibold text-M ${cursorModeMap.get(isRemoveMode)} text-center`}
           />
         </div>
 

@@ -18,7 +18,7 @@ export const ListModeSwitcher = ({ onClick, isExtended }: Props) => {
     >
       <Typography
         text={isExtended ? t('hide') : t('showMore')}
-        classNames="font-semibold text-[14px] italic lowercase"
+        classNames="font-semibold text-S italic lowercase"
       />
       <div className="h-[20px] w-[20px]">
         <RightArrow

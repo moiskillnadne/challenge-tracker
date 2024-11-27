@@ -79,7 +79,7 @@ export const AddNewDevice = () => {
             isLoading={isLoading}
             isDisabled={isLoading}
           >
-            <Typography text={t('createFastLogin')} classNames="font-semibold text-[20px] italic" />
+            <Typography text={t('createFastLogin')} classNames="font-semibold text-M italic" />
           </Button>
         </div>
       </div>

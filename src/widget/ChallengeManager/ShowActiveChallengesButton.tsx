@@ -16,7 +16,7 @@ export const ShowActiveChallengesButton = ({ onClick }: Props) => {
     >
       <Typography
         text={t('currentChallenges')}
-        classNames={'text-black font-semibold text-[14px] italic'}
+        classNames={'text-black font-semibold text-S italic'}
       />
     </button>
   )

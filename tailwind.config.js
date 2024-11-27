@@ -23,6 +23,13 @@ export default {
       fontFamily: {
         monospace: ['Source Code Pro', 'monospace'],
       },
+      fontSize: {
+        S: '14px',
+        M: '20px',
+        L: '24px',
+        XL: '26px',
+        XXL: '32px',
+      },
       keyframes: {
         shakes: {
           '0%': {
