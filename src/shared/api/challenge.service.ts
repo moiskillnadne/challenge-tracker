@@ -7,6 +7,7 @@ export type ChallengeDTO = {
   startedAtDate: string // "2024-09-01"
   duration: number // 30
   description: string | null
+  type: string
   userId: string
   createdAt: string // "2024-10-01T21:16:47.497Z"
   updatedAt: string // "2024-10-01T21:16:47.497Z"

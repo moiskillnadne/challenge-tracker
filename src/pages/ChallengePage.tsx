@@ -26,12 +26,6 @@ const ChallengePage = () => {
 
   return (
     <Page>
-      <Header
-        navigationButtonShown={true}
-        navigateTo={Routes.HOME}
-        labelNavigationButton={t('home')}
-      />
-
       <PageContent>
         <ChallengeWidget challengeId={challengeId} />
       </PageContent>
