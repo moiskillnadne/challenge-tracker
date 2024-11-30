@@ -25,6 +25,7 @@
     "noDevicesYet": "No devices yet",
     "noAddedDeviceForFastLogin": "You don't have any added devices for 'Fast Login' yet",
     "create": "Create",
+    "start": "Start",
     "language": "Language",
     "languages": {
       "russian": "Russian",
@@ -43,6 +44,24 @@
     "account": "Account",
     "profile": "Profile",
     "createNewChallenge": "Create a new challenge",
+    "newChallenge": "New challenge",
+    "createChallengeDescription": {
+      "theChallenge": "The challenge",
+      "willStartAtTheBeginning": "will start at the beginning",
+      "ofThisMonth": "of this month",
+      "youCanMarkYourProgress": "You can mark your progress",
+      "eachDayUntilTheMonthEnds": "each day until the month ends,",
+      "evenIfYouJoinedPartway": "even if you joined partway",
+      "through": "through."
+    },
+    "challengeTypes": {
+      "dailySport": "Daily sport",
+      "dailyLanguage": "Language",
+      "dailyNoSugar": "No sugar",
+      "dailyWater": "Water",
+      "dailySleep": "Sleep",
+      "other": "Other"
+    },
     "yourChallenges": "Your challenges",
     "currentChallenges": "Current challenges",
     "doYouWantToRemoveChallenge": "Do you want to remove this challenge?",

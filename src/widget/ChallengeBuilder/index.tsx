@@ -1,17 +1,28 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { QueryClient, useMutation } from '@tanstack/react-query'
 import { getDaysInMonth } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
+import { CSSTransition } from 'react-transition-group'
 
+import { useCustomTranslation } from '~/feature/translation'
 import { challengeService } from '~/shared/api/challenge.service'
 import { Routes } from '~/shared/constants'
-import { RightArrow } from '~/shared/icon'
+import { Typography } from '~/shared/ui'
 import { convertDate } from '~/widget/Challenge/lib/convertDate'
+import { ChallengeBuilderHeader } from '~/widget/ChallengeBuilder/ChallengeBuilderHeader.tsx'
+import {
+  ChallengeTypesMap,
+  ChallengeTypeTranslations,
+} from '~/widget/ChallengeBuilder/lib/constants.ts'
 
 export const ChallengeBuilderWidget = () => {
+  const { t } = useCustomTranslation()
+
+  const ref = useRef(null)
+
   const [goal, setGoal] = useState<string>('')
-  const [description, setDescription] = useState<string>('')
+  const [type, setType] = useState<string>('')
 
   const navigate = useNavigate()
 
@@ -28,8 +39,16 @@ export const ChallengeBuilderWidget = () => {
     },
   })
 
+  const isTypeSelected = type.length > 0
+
+  const isOtherType = type === 'OTHER'
+
+  const isGoalExist = goal.length > 0
+
+  const canBeCreated = isOtherType ? isGoalExist : isTypeSelected
+
   const onCreateClick = () => {
-    if (goal.length < 1) {
+    if (!canBeCreated) {
       throw new Error(`[ChallengeBuilderWidget:onCreate] Goal length should be more than 1`)
     }
 
@@ -40,52 +59,96 @@ export const ChallengeBuilderWidget = () => {
     const startDate = convertDate(1)
 
     mutation.mutate({
-      goal,
-      description,
+      goal: type === 'OTHER' ? goal : type,
+      description: 'N/A - Hardcoded on the client',
       startedAtDate: startDate,
       duration: daysInMonth,
+      type,
     })
   }
 
   return (
-    <div className="flex-1 px-16 my-64 flex justify-center">
+    <div className="flex-1 mt-36 px-12 pb-12 overflow-y-scroll">
+      <ChallengeBuilderHeader />
+
       <div className="flex flex-col gap-M items-center">
-        <div className="font-bold text-XL">Create a new challenge</div>
+        <Typography text={t('newChallenge')} classNames="uppercase font-black text-M text-pink" />
 
-        <input
-          type="text"
-          name="goal"
-          id="input-goal"
-          placeholder="Goal"
-          className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-white/50 border-b-2 border-black hover:border-white/20 focus:border-black/50 w-[300px]"
-          onChange={(e) => setGoal(e.target.value)}
-        />
-        <input
-          type="text"
-          name="description"
-          id="input-description"
-          placeholder="Description"
-          className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-black/50 border-b-2 border-black hover:border-black/20 focus:border-black/50 w-[300px]"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <div className="h-[40px] flex gap-XS mt-16">
-          <button
-            className="duration-300 bg-blue-500 text-black/50 rounded-full h-full hover:text-black/75"
-            onClick={onCreateClick}
-          >
-            {mutation.isPending ? (
-              <div className="animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-black/50 border-t-black"></div>
-            ) : (
-              <span className="flex items-center">
-                <p className="w-[150px]">Create</p>{' '}
-                <div className="w-[32px] h-[32px]">
-                  <RightArrow />
-                </div>
-              </span>
-            )}
-          </button>
+        <div className="text-center">
+          <Typography
+            text={t('createChallengeDescription.theChallenge')}
+            classNames="text-M italic"
+          />
+          <Typography
+            text={t('createChallengeDescription.willStartAtTheBeginning')}
+            classNames="text-M italic font-bold"
+          />
+          <Typography
+            text={t('createChallengeDescription.ofThisMonth')}
+            classNames="text-M italic"
+          />
         </div>
+
+        <div className="text-center">
+          <Typography
+            text={t('createChallengeDescription.youCanMarkYourProgress')}
+            classNames="text-M italic"
+          />
+          <Typography
+            text={t('createChallengeDescription.eachDayUntilTheMonthEnds')}
+            classNames="text-M italic"
+          />
+          <Typography
+            text={t('createChallengeDescription.evenIfYouJoinedPartway')}
+            classNames="text-M italic font-bold"
+          />
+          <Typography
+            text={t('createChallengeDescription.through')}
+            classNames="text-M italic font-bold"
+          />
+        </div>
+
+        <div className="flex gap-M my-12 flex-wrap">
+          {ChallengeTypeTranslations.map((challengeType) => (
+            <button key={challengeType} onClick={() => setType(ChallengeTypesMap[challengeType])}>
+              <Typography
+                text={t(challengeType)}
+                classNames={`text-pink hover:underline ${type === ChallengeTypesMap[challengeType] ? 'underline' : ''}`}
+              />
+            </button>
+          ))}
+        </div>
+
+        <CSSTransition
+          in={type === 'OTHER'}
+          nodeRef={ref}
+          timeout={1000}
+          classNames="node-opacity"
+          unmountOnExit
+        >
+          <div ref={ref} className="w-[350px] px-12 my-12">
+            <input
+              type="text"
+              name="type"
+              id="input-goal"
+              placeholder="Goal"
+              className="bg-transparent focus:outline-none duration-300 h-[40px] placeholder-black/50 border-b-2 border-black hover:border-white/20 focus:border-black/50 w-[300px]"
+              onChange={(e) => setGoal(e.target.value)}
+            />
+          </div>
+        </CSSTransition>
+
+        <button
+          className={`min-w-[100px] border duration-300 rounded-full border-black px-12 py-4 ${canBeCreated ? 'hover:opacity-75' : ''}  ${canBeCreated ? 'opacity-100' : 'opacity-50'}`}
+          onClick={onCreateClick}
+          disabled={!canBeCreated}
+        >
+          {mutation.isPending ? (
+            <div className="mx-auto animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-black/50 border-t-black"></div>
+          ) : (
+            <Typography text={t('start')} classNames="uppercase font-semibold italic text-M" />
+          )}
+        </button>
       </div>
     </div>
   )

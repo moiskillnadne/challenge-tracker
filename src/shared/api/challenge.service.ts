@@ -26,6 +26,7 @@ type CreateChallengePayload = {
   startedAtDate: string // "2024-09-01"
   duration: number // 30
   description: string | null
+  type: string
 }
 
 type CheckinPayload = {
