@@ -25,6 +25,7 @@
     "noDevicesYet": "У вас пока нет устройств",
     "noAddedDeviceForFastLogin": "У вас пока нет добавленных устройств для быстрого входа",
     "create": "Создать",
+    "start": "Начать",
     "language": "Язык",
     "languages": {
       "russian": "Русский",
@@ -43,6 +44,24 @@
     "account": "Аккаунт",
     "profile": "Профиль",
     "createNewChallenge": "Создать новый вызов",
+    "newChallenge": "Новый вызов",
+    "createChallengeDescription": {
+      "theChallenge": "Вызов",
+      "willStartAtTheBeginning": "начнется в начале",
+      "ofThisMonth": "этого месяца",
+      "youCanMarkYourProgress": "Вы можете отмечать свой прогресс",
+      "eachDayUntilTheMonthEnds": "каждый день до конца месяца,",
+      "evenIfYouJoinedPartway": "даже если вы присоединились в середине",
+      "through": "пути."
+    },
+    "challengeTypes": {
+      "dailySport": "Спорт",
+      "dailyLanguage": "Язык",
+      "dailyNoSugar": "Без сахара",
+      "dailyWater": "Вода",
+      "dailySleep": "Сон",
+      "other": "Другое"
+    },
     "yourChallenges": "Ваши вызовы",
     "currentChallenges": "Текущие вызовы",
     "doYouWantToRemoveChallenge": "Вы хотите удалить этот вызов?",
