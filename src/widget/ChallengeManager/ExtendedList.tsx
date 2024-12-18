@@ -1,10 +1,16 @@
 import { useNavigate } from 'react-router-dom'
 
+import { InfiniteScrollContainer } from '~/shared/ui'
 import { ChallengeGridItem } from '~/widget/ChallengeManager/ChallengeGridItem.tsx'
 import { ChallengeItem } from '~/widget/ChallengeManager/lib/mappers.ts'
 
 type Props = {
   list: Array<ChallengeItem>
+  scrollParams: {
+    dataLength: number
+    hasMore: boolean
+    fetchMore: () => void
+  }
 
   onRemove: (id: string) => void
   isRemoveMode: boolean
@@ -12,23 +18,36 @@ type Props = {
   isRemovingPending: boolean
 }
 
-export const PreviewList = ({
+export const ExtendedList = ({
+  scrollParams,
   list,
+  onRemove,
+  isRemovingPending,
   removingItemId,
   isRemoveMode,
-  isRemovingPending,
-  onRemove,
 }: Props) => {
   const navigate = useNavigate()
 
   const navigateToChallenge = (id: string) => {
-    console.log(`Navigating to /challenges/${id}`)
     return navigate(`/challenges/${id}`)
   }
 
   return (
-    <div
-      className={`flex flex-col px-16 gap-S transition-all duration-300 ease-in-out overflow-y-hidden h-[180px]`}
+    <InfiniteScrollContainer
+      scrollParentClassname="transition-all duration-300 ease-in-out h-[350px] px-16 custom-scrollbar custom-scrollbar-always"
+      scrollChildClassname="flex flex-col gap-S"
+      dataLength={scrollParams.dataLength}
+      hasMore={scrollParams.hasMore}
+      loader={
+        <div className="w-100 flex justify-center py-6">
+          <div className="w-[25px] h-[25px]">
+            <div
+              className={`w-full h-full rounded-full border-4 border-transparent animate-spin border-t-white`}
+            />
+          </div>
+        </div>
+      }
+      next={scrollParams.fetchMore}
     >
       {list.map((item) => {
         const isInRemovingProcess = removingItemId === item.id
@@ -45,6 +64,6 @@ export const PreviewList = ({
           />
         )
       })}
-    </div>
+    </InfiniteScrollContainer>
   )
 }
