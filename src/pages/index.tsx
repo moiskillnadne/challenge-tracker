@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: Routes.CHALLENGE,
+        path: Routes.CHALLENGE.path,
         element: <ChallengePage />,
       },
       {

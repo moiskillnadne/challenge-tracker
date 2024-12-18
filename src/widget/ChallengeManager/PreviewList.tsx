@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
+import { Routes } from '~/shared/constants'
 import { PageLoader } from '~/shared/ui'
 import { ChallengeGridItem } from '~/widget/ChallengeManager/ChallengeGridItem.tsx'
 import { ChallengeItem } from '~/widget/ChallengeManager/lib/mappers.ts'
@@ -25,8 +26,7 @@ export const PreviewList = ({
   const navigate = useNavigate()
 
   const navigateToChallenge = (id: string) => {
-    console.log(`Navigating to /challenges/${id}`)
-    return navigate(`/challenges/${id}`)
+    return navigate(Routes.CHALLENGE.navigateTo(id))
   }
 
   if (isLoading) {

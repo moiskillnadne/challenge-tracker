@@ -5,6 +5,9 @@ export const Routes = {
   SETTINGS_LANGUAGE: '/settings/language',
   SETTINGS_FAST_LOGIN: '/settings/fast-login',
   SETTINGS_FAST_LOGIN_CREATE: '/settings/fast-login/create',
-  CHALLENGE: '/challenge/:challengeId',
+  CHALLENGE: {
+    path: '/challenge/:challengeId',
+    navigateTo: (id: string) => `/challenge/${id}`,
+  },
   CREATE_CHALLENGE: '/create-challenge',
 }

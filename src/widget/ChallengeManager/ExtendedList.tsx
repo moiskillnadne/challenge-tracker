@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
+import { Routes } from '~/shared/constants'
 import { InfiniteScrollContainer, PageLoader } from '~/shared/ui'
 import { ChallengeGridItem } from '~/widget/ChallengeManager/ChallengeGridItem.tsx'
 import { ChallengeItem } from '~/widget/ChallengeManager/lib/mappers.ts'
@@ -31,7 +32,7 @@ export const ExtendedList = ({
   const navigate = useNavigate()
 
   const navigateToChallenge = (id: string) => {
-    return navigate(`/challenges/${id}`)
+    return navigate(Routes.CHALLENGE.navigateTo(id))
   }
 
   if (isLoading) {

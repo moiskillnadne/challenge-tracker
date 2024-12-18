@@ -3,7 +3,6 @@ import { useMemo, useState } from 'react'
 import { ChallengeManagerHeader } from './ChallengeManagerHeader'
 import { mapChallengeToItem } from './lib/mappers.ts'
 
-import { PageLoader } from '~/shared/ui'
 import { ChallengeListHeader } from '~/widget/ChallengeManager/ChallengeListHeader.tsx'
 import { CloseEditingModeButton } from '~/widget/ChallengeManager/CloseEditingModeButton.tsx'
 import { ExtendedList } from '~/widget/ChallengeManager/ExtendedList.tsx'
