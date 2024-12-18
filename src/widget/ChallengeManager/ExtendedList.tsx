@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 
-import { InfiniteScrollContainer } from '~/shared/ui'
+import { InfiniteScrollContainer, PageLoader } from '~/shared/ui'
 import { ChallengeGridItem } from '~/widget/ChallengeManager/ChallengeGridItem.tsx'
 import { ChallengeItem } from '~/widget/ChallengeManager/lib/mappers.ts'
 
 type Props = {
+  isLoading: boolean
   list: Array<ChallengeItem>
   scrollParams: {
     dataLength: number
@@ -19,6 +20,7 @@ type Props = {
 }
 
 export const ExtendedList = ({
+  isLoading,
   scrollParams,
   list,
   onRemove,
@@ -30,6 +32,16 @@ export const ExtendedList = ({
 
   const navigateToChallenge = (id: string) => {
     return navigate(`/challenges/${id}`)
+  }
+
+  if (isLoading) {
+    return (
+      <div
+        className={`flex flex-col px-16 gap-S transition-all duration-300 ease-in-out overflow-y-hidden h-[350px] custom-scrollbar custom-scrollbar-always`}
+      >
+        <PageLoader />
+      </div>
+    )
   }
 
   return (

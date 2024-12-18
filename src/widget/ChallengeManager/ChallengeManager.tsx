@@ -41,10 +41,6 @@ export const ChallengeManager = () => {
 
   const listCanBeExtended = challenges?.length > 3
 
-  if (query.isLoading) {
-    return <PageLoader />
-  }
-
   return (
     <div className="flex-1 mt-36 px-12">
       <ChallengeManagerHeader />
@@ -59,6 +55,7 @@ export const ChallengeManager = () => {
         <div className={`flex flex-col gap-S mt-24`}>
           {!isExtendedList && (
             <PreviewList
+              isLoading={query.isLoading}
               list={getFirst(3, challenges)}
               onRemove={removeChallengeMutation.manager.mutate}
               isRemoveMode={isRemoveMode}
@@ -77,6 +74,7 @@ export const ChallengeManager = () => {
                   query.fetchNextPage()
                 },
               }}
+              isLoading={query.isLoading}
               list={challenges}
               onRemove={removeChallengeMutation.manager.mutate}
               isRemoveMode={isRemoveMode}

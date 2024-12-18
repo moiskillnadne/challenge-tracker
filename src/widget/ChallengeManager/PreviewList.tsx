@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 
+import { PageLoader } from '~/shared/ui'
 import { ChallengeGridItem } from '~/widget/ChallengeManager/ChallengeGridItem.tsx'
 import { ChallengeItem } from '~/widget/ChallengeManager/lib/mappers.ts'
 
 type Props = {
+  isLoading: boolean
   list: Array<ChallengeItem>
 
   onRemove: (id: string) => void
@@ -13,6 +15,7 @@ type Props = {
 }
 
 export const PreviewList = ({
+  isLoading,
   list,
   removingItemId,
   isRemoveMode,
@@ -24,6 +27,16 @@ export const PreviewList = ({
   const navigateToChallenge = (id: string) => {
     console.log(`Navigating to /challenges/${id}`)
     return navigate(`/challenges/${id}`)
+  }
+
+  if (isLoading) {
+    return (
+      <div
+        className={`flex flex-col px-16 gap-S transition-all duration-300 ease-in-out overflow-y-hidden h-[180px]`}
+      >
+        <PageLoader />
+      </div>
+    )
   }
 
   return (
