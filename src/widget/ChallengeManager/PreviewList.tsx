@@ -25,8 +25,8 @@ export const PreviewList = ({
 }: Props) => {
   const navigate = useNavigate()
 
-  const navigateToChallenge = (id: string) => {
-    return navigate(Routes.CHALLENGE.navigateTo(id))
+  const navigateToChallenge = (id: string, type: string) => {
+    return navigate(Routes.CHALLENGE.navigateTo(id, type))
   }
 
   if (isLoading) {
@@ -50,7 +50,7 @@ export const PreviewList = ({
           <ChallengeGridItem
             key={item.id}
             goal={item.goal}
-            onClick={() => navigateToChallenge(item.id)}
+            onClick={() => navigateToChallenge(item.id, item.type)}
             isRemoveMode={isRemoveMode}
             onRemove={() => onRemove(item.id)}
             isLoading={isInRemovingProcess && isRemovingPending}
