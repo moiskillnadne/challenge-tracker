@@ -1,69 +1,44 @@
 import { useMemo, useState } from 'react'
 
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
-
-import { ChallengeGridItem } from './ChallengeGridItem'
 import { ChallengeManagerHeader } from './ChallengeManagerHeader'
 import { mapChallengeToItem } from './lib/mappers.ts'
 
-import { challengeService } from '~/shared/api/challenge.service'
-import { PageLoader } from '~/shared/ui'
 import { ChallengeListHeader } from '~/widget/ChallengeManager/ChallengeListHeader.tsx'
 import { CloseEditingModeButton } from '~/widget/ChallengeManager/CloseEditingModeButton.tsx'
+import { ExtendedList } from '~/widget/ChallengeManager/ExtendedList.tsx'
+import { getFirst } from '~/widget/ChallengeManager/lib/getFirst.ts'
+import { useChallengeListQuery } from '~/widget/ChallengeManager/lib/hooks/useChallengeListQuery.ts'
+import { useRemoveChallengeMutation } from '~/widget/ChallengeManager/lib/hooks/useRemoveChallengeMutation.ts'
 import { ListModeSwitcher } from '~/widget/ChallengeManager/ListModeSwitcher.tsx'
+import { PreviewList } from '~/widget/ChallengeManager/PreviewList.tsx'
 import { ShowActiveChallengesButton } from '~/widget/ChallengeManager/ShowActiveChallengesButton.tsx'
 import { ShowArchiveChallengesButton } from '~/widget/ChallengeManager/ShowArchiveChallengesButton.tsx'
 
 export const ChallengeManager = () => {
-  const navigate = useNavigate()
-
   const [isRemoveMode, setIsRemoveMode] = useState<boolean>(false)
-  const [isActiveChallengesShow, setIsActiveChallengesShow] = useState<boolean>(true)
   const [isExtendedList, setIsExtendedList] = useState<boolean>(false)
 
-  const query = useQuery({
-    queryKey: ['/protected/challenge/'],
-    queryFn: challengeService.getChallengeList,
-    select: (data) => data.data.details,
+  const [status, setStatus] = useState<'ACTIVE' | 'COMPLETED'>('ACTIVE')
+
+  const query = useChallengeListQuery({
+    status: status,
   })
 
-  const removeChallengeMutation = useMutation({
-    mutationFn: challengeService.deleteChallenge,
+  const removeChallengeMutation = useRemoveChallengeMutation({
     onSuccess: () => {
-      query.refetch()
+      query.manager.refetch()
     },
   })
 
-  const challenges = useMemo(() => query.data?.challenges ?? [], [query.data?.challenges])
+  const challenges = useMemo(() => {
+    if (query?.challengeList) {
+      return query.challengeList.map(mapChallengeToItem)
+    }
 
-  const activeChallenges = useMemo(() => {
-    return challenges.map((item) => mapChallengeToItem(item)).filter((item) => item.isActive)
-  }, [challenges])
+    return []
+  }, [query?.challengeList])
 
-  const activeListCanBeExtended = activeChallenges.length > 3
-
-  const filteredActiveChallenges = useMemo(() => {
-    return isExtendedList ? activeChallenges : activeChallenges.slice(0, 3)
-  }, [activeChallenges, isExtendedList])
-
-  const completedChallenges = useMemo(() => {
-    return challenges.map((item) => mapChallengeToItem(item)).filter((item) => !item.isActive)
-  }, [challenges])
-
-  const completedListCanBeExtended = completedChallenges.length > 3
-
-  const currentShownChallenges = isActiveChallengesShow
-    ? filteredActiveChallenges
-    : completedChallenges
-
-  const listCanBeExtended = isActiveChallengesShow
-    ? activeListCanBeExtended
-    : completedListCanBeExtended
-
-  if (query.isPending) {
-    return <PageLoader />
-  }
+  const listCanBeExtended = challenges?.length > 3
 
   return (
     <div className="flex-1 mt-36 px-12">
@@ -71,33 +46,41 @@ export const ChallengeManager = () => {
 
       <div className="flex flex-1 flex-col items-center">
         <ChallengeListHeader
-          isActiveChallengesShow={isActiveChallengesShow}
+          isActiveChallengesShow={status === 'ACTIVE'}
           isRemoveMode={isRemoveMode}
           onEditIconClick={() => setIsRemoveMode(true)}
         />
 
         <div className={`flex flex-col gap-S mt-24`}>
-          <div
-            className={`flex flex-col px-16 gap-S transition-all duration-300 ease-in-out ${isExtendedList ? 'overflow-y-scroll' : 'overflow-y-hidden'} ${isExtendedList ? 'h-[350px]' : 'h-[180px]'} ${isExtendedList ? 'custom-scrollbar custom-scrollbar-always' : ''}`}
-          >
-            {currentShownChallenges.map((item) => {
-              const isInRemovingProcess = removeChallengeMutation.variables === item.id
+          {!isExtendedList && (
+            <PreviewList
+              isLoading={query.isLoading}
+              list={getFirst(3, challenges)}
+              onRemove={removeChallengeMutation.manager.mutate}
+              isRemoveMode={isRemoveMode}
+              removingItemId={removeChallengeMutation.manager.variables ?? null}
+              isRemovingPending={removeChallengeMutation.isLoading}
+            />
+          )}
 
-              return (
-                <ChallengeGridItem
-                  key={item.id}
-                  goal={item.goal}
-                  onClick={() => {
-                    return navigate(`/challenge/${item.id}`)
-                  }}
-                  isRemoveMode={isRemoveMode}
-                  onRemove={() => removeChallengeMutation.mutate(item.id)}
-                  isLoading={isInRemovingProcess && removeChallengeMutation.isPending}
-                  isDisabled={removeChallengeMutation.isPending}
-                />
-              )
-            })}
-          </div>
+          {isExtendedList && (
+            <ExtendedList
+              scrollParams={{
+                dataLength: challenges.length,
+                hasMore: !!query?.pagination?.nextPage,
+                fetchMore: () => {
+                  console.log('Fetching next page')
+                  query.fetchNextPage()
+                },
+              }}
+              isLoading={query.isLoading}
+              list={challenges}
+              onRemove={removeChallengeMutation.manager.mutate}
+              isRemoveMode={isRemoveMode}
+              removingItemId={removeChallengeMutation.manager.variables ?? null}
+              isRemovingPending={removeChallengeMutation.isLoading}
+            />
+          )}
 
           {listCanBeExtended && (
             <ListModeSwitcher
@@ -107,15 +90,17 @@ export const ChallengeManager = () => {
           )}
         </div>
 
-        {!isRemoveMode && isActiveChallengesShow && !isExtendedList && (
-          <ShowArchiveChallengesButton onClick={() => setIsActiveChallengesShow(false)} />
+        {!isRemoveMode && status === 'ACTIVE' && !isExtendedList && (
+          <ShowArchiveChallengesButton onClick={() => setStatus('COMPLETED')} />
         )}
 
-        {!isRemoveMode && !isActiveChallengesShow && (
-          <ShowActiveChallengesButton onClick={() => setIsActiveChallengesShow(true)} />
+        {!isRemoveMode && status === 'COMPLETED' && (
+          <ShowActiveChallengesButton onClick={() => setStatus('ACTIVE')} />
         )}
 
-        {isRemoveMode && <CloseEditingModeButton onClick={() => setIsRemoveMode(false)} />}
+        {isRemoveMode && (
+          <CloseEditingModeButton onClick={() => setIsRemoveMode(false)} />
+        )}
       </div>
     </div>
   )

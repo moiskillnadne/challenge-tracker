@@ -1,16 +1,21 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
+import { ChallengeType } from '~/entity/challenge'
 import { useCustomTranslation } from '~/feature/translation'
 import { Routes } from '~/shared/constants'
 import { Page, PageContent } from '~/shared/ui'
 import { ChallengeWidget } from '~/widget/Challenge'
+import { getBackgroundColor } from '~/widget/Challenge/lib/theme-manager.ts'
 import { Header } from '~/widget/Header'
 
 const ChallengePage = () => {
   const { challengeId } = useParams()
+  const [searchParams] = useSearchParams()
   const { t } = useCustomTranslation()
 
-  if (!challengeId) {
+  const challengeType = searchParams.get('type') as ChallengeType
+
+  if (!challengeId || !challengeType) {
     return (
       <Page>
         <Header
@@ -25,9 +30,12 @@ const ChallengePage = () => {
   }
 
   return (
-    <Page>
+    <Page bgBackground={getBackgroundColor(challengeType)}>
       <PageContent>
-        <ChallengeWidget challengeId={challengeId} />
+        <ChallengeWidget
+          challengeId={challengeId}
+          challengeType={challengeType}
+        />
       </PageContent>
     </Page>
   )

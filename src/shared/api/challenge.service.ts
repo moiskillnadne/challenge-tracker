@@ -12,6 +12,18 @@ export type ChallengeDTO = {
   createdAt: string // "2024-10-01T21:16:47.497Z"
   updatedAt: string // "2024-10-01T21:16:47.497Z"
   progress: Array<ProgressDTO>
+  status: 'ACTIVE' | 'COMPLETED'
+}
+
+export type ChallengeListDTO = {
+  data: Array<ChallengeDTO>
+  meta: {
+    currentPage: number
+    nextPage: number | null
+    prevPage: number | null
+    totalPages: number
+    totalRecords: number
+  }
 }
 
 export type ProgressDTO = {
@@ -28,6 +40,7 @@ type CreateChallengePayload = {
   duration: number // 30
   description: string | null
   type: string
+  status: 'ACTIVE'
 }
 
 type CheckinPayload = {
@@ -35,11 +48,17 @@ type CheckinPayload = {
   userChallengeId: string
 }
 
+export type ChallengeListQueryParams = {
+  status: 'ACTIVE' | 'COMPLETED'
+  page: number
+  limit: number
+}
+
 function createChallengeService() {
   return {
-    getChallengeList() {
-      return api.get<SuccessResponse<Record<'challenges', Array<ChallengeDTO>>>>(
-        '/protected/challenge/',
+    getChallengeList(params: ChallengeListQueryParams) {
+      return api.get<SuccessResponse<ChallengeListDTO>>(
+        `/protected/challenge?status=${params.status}&page=${params.page}&limit=${params.limit}`,
       )
     },
     getChallengeById(challengeId: string) {

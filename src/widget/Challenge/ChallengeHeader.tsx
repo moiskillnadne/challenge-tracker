@@ -1,9 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 
+import { ChallengeType } from '~/entity/challenge'
 import { Routes } from '~/shared/constants'
 import { BackArrowIcon } from '~/shared/icon'
+import { getNavigationButtonColor } from '~/widget/Challenge/lib/theme-manager.ts'
 
-export const ChallengeHeader = () => {
+type Props = {
+  challengeType: ChallengeType
+}
+
+export const ChallengeHeader = ({ challengeType }: Props) => {
   const navigate = useNavigate()
 
   return (
@@ -19,7 +25,9 @@ export const ChallengeHeader = () => {
           onClick={() => navigate(Routes.HOME)}
         >
           <div className="w-[29px] h-[29px]">
-            <BackArrowIcon />
+            <BackArrowIcon
+              classNames={`${getNavigationButtonColor(challengeType)}`}
+            />
           </div>
         </button>
       </div>

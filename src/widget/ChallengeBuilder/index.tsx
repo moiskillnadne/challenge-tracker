@@ -32,7 +32,7 @@ export const ChallengeBuilderWidget = () => {
       const queryClient = new QueryClient()
 
       queryClient.invalidateQueries({
-        queryKey: ['/challenge'],
+        queryKey: ['/protected/challenge/'],
       })
 
       return navigate(Routes.HOME)
@@ -49,7 +49,9 @@ export const ChallengeBuilderWidget = () => {
 
   const onCreateClick = () => {
     if (!canBeCreated) {
-      throw new Error(`[ChallengeBuilderWidget:onCreate] Goal length should be more than 1`)
+      throw new Error(
+        `[ChallengeBuilderWidget:onCreate] Goal length should be more than 1`,
+      )
     }
 
     const now = new Date()
@@ -64,6 +66,7 @@ export const ChallengeBuilderWidget = () => {
       startedAtDate: startDate,
       duration: daysInMonth,
       type,
+      status: 'ACTIVE',
     })
   }
 
@@ -72,7 +75,10 @@ export const ChallengeBuilderWidget = () => {
       <ChallengeBuilderHeader />
 
       <div className="flex flex-col gap-M items-center">
-        <Typography text={t('newChallenge')} classNames="uppercase font-black text-M text-pink" />
+        <Typography
+          text={t('newChallenge')}
+          classNames="uppercase font-black text-M text-pink"
+        />
 
         <div className="text-center">
           <Typography
@@ -110,7 +116,10 @@ export const ChallengeBuilderWidget = () => {
 
         <div className="flex gap-M my-12 flex-wrap">
           {ChallengeTypeTranslations.map((challengeType) => (
-            <button key={challengeType} onClick={() => setType(ChallengeTypesMap[challengeType])}>
+            <button
+              key={challengeType}
+              onClick={() => setType(ChallengeTypesMap[challengeType])}
+            >
               <Typography
                 text={t(challengeType)}
                 classNames={`text-pink hover:underline ${type === ChallengeTypesMap[challengeType] ? 'underline' : ''}`}
@@ -146,7 +155,10 @@ export const ChallengeBuilderWidget = () => {
           {mutation.isPending ? (
             <div className="mx-auto animate-spin h-[32px] w-[32px] border-[2px] rounded-full border-black/50 border-t-black"></div>
           ) : (
-            <Typography text={t('start')} classNames="uppercase font-semibold italic text-M" />
+            <Typography
+              text={t('start')}
+              classNames="uppercase font-semibold italic text-M"
+            />
           )}
         </button>
       </div>
