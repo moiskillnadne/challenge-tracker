@@ -5,13 +5,21 @@ import { CalendarDayItem } from './CalendarDayItem'
 import { CalendarHeaderItem } from './CalendarHeaderItem'
 import { convertDate } from '../lib/convertDate'
 
+import { ChallengeType } from '~/entity/challenge'
+
 type Props = {
   streak: string[]
   isCompleted: boolean
   onDayClick: (day: number) => void
+  challengeType: ChallengeType
 }
 
-export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
+export const Calendar = ({
+  streak,
+  onDayClick,
+  isCompleted,
+  challengeType,
+}: Props) => {
   const { t } = useTranslation()
 
   const now = new Date()
@@ -32,19 +40,46 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
     6: 5,
   }
 
-  const offset = Array.from({ length: daysOffset[firstDayOfMonth] }, (_, index) => index + 1)
-  const daysInMonthArray = Array.from({ length: daysInMonth }, (_, index) => index + 1)
+  const offset = Array.from(
+    { length: daysOffset[firstDayOfMonth] },
+    (_, index) => index + 1,
+  )
+  const daysInMonthArray = Array.from(
+    { length: daysInMonth },
+    (_, index) => index + 1,
+  )
 
   return (
     <div className="pt-20 pb-12">
       <div className="grid grid-cols-7 gap-2">
-        <CalendarHeaderItem label={t('days.monday')} />
-        <CalendarHeaderItem label={t('days.tuesday')} />
-        <CalendarHeaderItem label={t('days.wednesday')} />
-        <CalendarHeaderItem label={t('days.thursday')} />
-        <CalendarHeaderItem label={t('days.friday')} />
-        <CalendarHeaderItem label={t('days.saturday')} />
-        <CalendarHeaderItem label={t('days.sunday')} />
+        <CalendarHeaderItem
+          label={t('days.monday')}
+          challengeType={challengeType}
+        />
+        <CalendarHeaderItem
+          label={t('days.tuesday')}
+          challengeType={challengeType}
+        />
+        <CalendarHeaderItem
+          label={t('days.wednesday')}
+          challengeType={challengeType}
+        />
+        <CalendarHeaderItem
+          label={t('days.thursday')}
+          challengeType={challengeType}
+        />
+        <CalendarHeaderItem
+          label={t('days.friday')}
+          challengeType={challengeType}
+        />
+        <CalendarHeaderItem
+          label={t('days.saturday')}
+          challengeType={challengeType}
+        />
+        <CalendarHeaderItem
+          label={t('days.sunday')}
+          challengeType={challengeType}
+        />
       </div>
 
       <div className="grid grid-cols-7 gap-2 mt-20">
@@ -53,6 +88,7 @@ export const Calendar = ({ streak, onDayClick, isCompleted }: Props) => {
         {daysInMonthArray?.map((index) => (
           <CalendarDayItem
             key={index}
+            challengeType={challengeType}
             label={index.toString()}
             isChecked={streak.includes(convertDate(index, month))}
             onClick={() => {

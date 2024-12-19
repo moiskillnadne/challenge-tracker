@@ -1,10 +1,16 @@
+import { ChallengeType } from '~/entity/challenge'
+import { getTextColor } from '~/widget/Challenge/lib/theme-manager.ts'
+
 type Props = {
   label: string
+  challengeType: ChallengeType
 }
 
-export const CalendarHeaderItem = ({ label }: Props) => {
+export const CalendarHeaderItem = ({ label, challengeType }: Props) => {
   return (
-    <div className="relative flex items-center justify-center w-[50px] md:w-[60px] h-[50px] md:h-[60px] rounded-full text-center font-bold text-[12px] md:text-S">
+    <div
+      className={`relative flex items-center justify-center w-[50px] md:w-[60px] h-[50px] md:h-[60px] rounded-full text-center font-bold text-[12px] md:text-S ${getTextColor(challengeType)}`}
+    >
       {label}
       <div className="absolute inset-0 rounded-full border-[4px] border-red"></div>
       <div className="absolute inset-[4px] rounded-full border-[5px] border-green"></div>

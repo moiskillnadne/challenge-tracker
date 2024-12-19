@@ -23,7 +23,9 @@ export const useStreakState = ({ challengeId }: Props) => {
   const progressMutation = useMutation({
     mutationFn: challengeService.checkin,
     onSettled: async () => {
-      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] })
+      return queryClient.invalidateQueries({
+        queryKey: ['/challenge/progress', challengeId],
+      })
     },
     async onSuccess() {
       challengeQuery.refetch()
@@ -33,7 +35,9 @@ export const useStreakState = ({ challengeId }: Props) => {
   const removeProgressMutation = useMutation({
     mutationFn: challengeService.removeCheckin,
     onSettled: async () => {
-      return queryClient.invalidateQueries({ queryKey: ['/challenge/progress', challengeId] })
+      return queryClient.invalidateQueries({
+        queryKey: ['/challenge/progress', challengeId],
+      })
     },
     async onSuccess() {
       challengeQuery.refetch()
@@ -42,7 +46,10 @@ export const useStreakState = ({ challengeId }: Props) => {
 
   const addDayInStreak = useCallback(
     (day: number) => {
-      progressMutation.mutate({ userChallengeId: challengeId, checkpointDate: convertDate(day) })
+      progressMutation.mutate({
+        userChallengeId: challengeId,
+        checkpointDate: convertDate(day),
+      })
     },
     [challengeId, progressMutation],
   )
@@ -57,7 +64,7 @@ export const useStreakState = ({ challengeId }: Props) => {
   return {
     isLoading: challengeQuery.isLoading,
 
-    challenge: challengeQuery.data?.challenge ?? null,
+    challengeDTO: challengeQuery.data?.challenge ?? null,
 
     addDayInStreak,
     removeDayFromStreak,

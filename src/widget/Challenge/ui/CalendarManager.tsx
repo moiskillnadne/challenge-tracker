@@ -1,16 +1,16 @@
 import { useCallback } from 'react'
 
 import { Calendar } from './Calendar'
-import { MetaText } from './MetaText'
 import { Timer } from './Timer'
 import { convertDate } from '../lib/convertDate'
 
-import { useCustomTranslation } from '~/feature/translation'
-import { ChallengeDTO, ProgressDTO } from '~/shared/api/challenge.service'
-import { mapChallengeToItem } from '~/widget/ChallengeManager/lib/mappers.ts'
+import { ChallengeType } from '~/entity/challenge'
+import { ProgressDTO } from '~/shared/api/challenge.service'
+import { ChallengeItem } from '~/widget/ChallengeManager/lib/mappers.ts'
 
 type Props = {
-  challenge: ChallengeDTO
+  challengeType: ChallengeType
+  challenge: ChallengeItem
   progress: Array<ProgressDTO>
 
   addDayInStreak: (day: number) => void
@@ -22,21 +22,22 @@ export const CalendarManager = ({
   progress,
   addDayInStreak,
   removeDayFromStreak,
+  challengeType,
 }: Props) => {
-  const { t } = useCustomTranslation()
-
-  const challengeBaseInfo = mapChallengeToItem(challenge)
-
   const onDayClick = useCallback(
     (day: number) => {
-      const isDayAlreadyChecked = progress.map((el) => el.checkpointDate).includes(convertDate(day))
+      const isDayAlreadyChecked = progress
+        .map((el) => el.checkpointDate)
+        .includes(convertDate(day))
 
       if (!isDayAlreadyChecked) {
         addDayInStreak(day)
         return
       }
 
-      const checkinId = progress.find((el) => el.checkpointDate === convertDate(day))?.id
+      const checkinId = progress.find(
+        (el) => el.checkpointDate === convertDate(day),
+      )?.id
 
       if (checkinId) {
         removeDayFromStreak(checkinId)
@@ -48,21 +49,14 @@ export const CalendarManager = ({
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <MetaText leftLabel={`${t('goal')}: `} rightLabel={challengeBaseInfo.goal} />
-        <MetaText
-          leftLabel={`${t('daysLeft')}: `}
-          rightLabel={String(challengeBaseInfo.daysLeft)}
-        />
-      </div>
-
       <Calendar
+        challengeType={challengeType}
         streak={progress?.map((el) => el.checkpointDate) ?? []}
         onDayClick={onDayClick}
-        isCompleted={!challengeBaseInfo.isActive}
+        isCompleted={!challenge.isActive}
       />
 
-      {challengeBaseInfo.isActive ?? (
+      {challenge.isActive ?? (
         <Timer streak={progress?.map((el) => el.checkpointDate) ?? []} />
       )}
     </div>

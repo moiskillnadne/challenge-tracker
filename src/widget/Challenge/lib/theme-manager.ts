@@ -25,25 +25,50 @@ export const getBackgroundColor = (type: ChallengeType) => {
   }
 }
 
+export const getHeaderTextColor = (type: ChallengeType) => {
+  switch (type) {
+    case 'SPORT':
+      return 'text-sport-headerText'
+
+    case 'SUGAR':
+      return 'text-sugar-headerText'
+
+    case 'SLEEP':
+      return 'text-sleep-headerText'
+
+    case 'WATER':
+      return 'text-water-headerText'
+
+    case 'LANGUAGE':
+      return 'text-language-headerText'
+
+    case 'OTHER':
+      return 'text-other-headerText'
+
+    default:
+      return 'text-other-headerText'
+  }
+}
+
 export const getTextColor = (type: ChallengeType) => {
   switch (type) {
     case 'SPORT':
-      return 'text-sport-daysLeftText'
+      return 'text-sport-defaultText'
 
     case 'SUGAR':
-      return 'text-sugar-daysLeftText'
+      return 'text-sugar-defaultText'
 
     case 'SLEEP':
-      return 'text-sleep-daysLeftText'
+      return 'text-sleep-defaultText'
 
     case 'WATER':
-      return 'text-water-daysLeftText'
+      return 'text-water-defaultText'
 
     case 'LANGUAGE':
-      return 'text-language-daysLeftText'
+      return 'text-language-defaultText'
 
     case 'OTHER':
-      return 'text-other-daysLeftText'
+      return 'text-other-defaultText'
 
     default:
       return 'text-other-daysLeftText'
@@ -72,5 +97,55 @@ export const getCircleColor = (type: ChallengeType) => {
 
     default:
       return 'stroke-other-dayCircles'
+  }
+}
+
+export const getMonthTextColor = (type: ChallengeType) => {
+  switch (type) {
+    case 'SPORT':
+      return 'text-sport-monthText'
+
+    case 'SUGAR':
+      return 'text-sugar-monthText'
+
+    case 'SLEEP':
+      return 'text-sleep-monthText'
+
+    case 'WATER':
+      return 'text-water-monthText'
+
+    case 'LANGUAGE':
+      return 'text-language-monthText'
+
+    case 'OTHER':
+      return 'text-other-monthText'
+
+    default:
+      return 'text-other-monthText'
+  }
+}
+
+export const getNavigationButtonColor = (type: ChallengeType) => {
+  switch (type) {
+    case 'SPORT':
+      return 'stroke-sport-navigationButton'
+
+    case 'SUGAR':
+      return 'stroke-sugar-navigationButton'
+
+    case 'SLEEP':
+      return 'stroke-sleep-navigationButton'
+
+    case 'WATER':
+      return 'stroke-water-navigationButton'
+
+    case 'LANGUAGE':
+      return 'stroke-language-navigationButton'
+
+    case 'OTHER':
+      return 'stroke-other-navigationButton'
+
+    default:
+      return 'stroke-other-navigationButton'
   }
 }

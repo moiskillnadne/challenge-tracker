@@ -1,16 +1,30 @@
+import { ChallengeType } from '~/entity/challenge'
+import {
+  getCircleColor,
+  getTextColor,
+} from '~/widget/Challenge/lib/theme-manager.ts'
+
 type Props = {
+  challengeType: ChallengeType
   label: string
   isChecked: boolean
   onClick: () => void
 }
 
-export const CalendarDayItem = ({ label, isChecked, onClick }: Props) => {
+export const CalendarDayItem = ({
+  label,
+  isChecked,
+  onClick,
+  challengeType,
+}: Props) => {
   return (
     <div
       className={`relative flex items-center justify-center w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-fulltext-center font-bold text-[16px]`}
       onClick={onClick}
     >
-      <span className={`${isChecked ? '' : 'opacity-30'} transition-all duration-1000`}>
+      <span
+        className={`${isChecked ? '' : 'opacity-30'} transition-all duration-1000 ${getTextColor(challengeType)}`}
+      >
         {label}
       </span>
 
@@ -23,7 +37,7 @@ export const CalendarDayItem = ({ label, isChecked, onClick }: Props) => {
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle
-          className="transition-all duration-1000"
+          className={`transition-all duration-1000 ${getCircleColor(challengeType)}`}
           cx="50"
           cy="50"
           r="45"
