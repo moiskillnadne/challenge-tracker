@@ -1,6 +1,9 @@
 import { useCallback, useRef, useState } from 'react'
 
-import { browserSupportsWebAuthn, startAuthentication } from '@simplewebauthn/browser'
+import {
+  browserSupportsWebAuthn,
+  startAuthentication,
+} from '@simplewebauthn/browser'
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -19,7 +22,9 @@ import { Typography } from '~/shared/ui'
 
 const emailSchema = z.string().email()
 
-const codeSchema = z.string().regex(/^\d{6}$/, { message: 'Код должен содержать ровно 6 цифр' })
+const codeSchema = z
+  .string()
+  .regex(/^\d{6}$/, { message: 'Код должен содержать ровно 6 цифр' })
 
 export const LoginWidget = () => {
   const { t } = useCustomTranslation()
@@ -28,9 +33,10 @@ export const LoginWidget = () => {
 
   const hintRef = useRef(null)
 
-  const { showPromiseToast, dismissAllToasts, showErrorToast, showInfoToast } = useToast()
+  const { showPromiseToast, dismissAllToasts, showErrorToast, showInfoToast } =
+    useToast()
 
-  const codeInputVisibility = new Map([
+  const codeInputHeight = new Map([
     [true, '40px'],
     [false, '0px'],
   ])
@@ -38,26 +44,27 @@ export const LoginWidget = () => {
   const [email, setEmail] = useState<string>('')
   const [code, setCode] = useState<string>('')
 
-  const { tryLoginPromise, confirmLoginPromise, loadingState, mutationState } = useOTPLogin({
-    onCodeSuccess: () => {
-      setTimeout(() => {
-        dismissAllToasts()
-        return navigate(Routes.HOME)
-      }, 700)
-    },
-    onCodeError(error) {
-      if (error instanceof Error) {
-        return showErrorToast(error.message)
-      }
-      return showErrorToast(t('oopsSomethingWentWrong'))
-    },
-    onLoginError(error) {
-      if (error instanceof Error) {
-        return showErrorToast(error.message)
-      }
-      return showErrorToast(t('oopsSomethingWentWrong'))
-    },
-  })
+  const { tryLoginPromise, confirmLoginPromise, loadingState, mutationState } =
+    useOTPLogin({
+      onCodeSuccess: () => {
+        setTimeout(() => {
+          dismissAllToasts()
+          return navigate(Routes.HOME)
+        }, 700)
+      },
+      onCodeError(error) {
+        if (error instanceof Error) {
+          return showErrorToast(error.message)
+        }
+        return showErrorToast(t('oopsSomethingWentWrong'))
+      },
+      onLoginError(error) {
+        if (error instanceof Error) {
+          return showErrorToast(error.message)
+        }
+        return showErrorToast(t('oopsSomethingWentWrong'))
+      },
+    })
 
   const verifyLoginChallenge = useMutation({
     mutationFn: authService.verifyAuthentication,
@@ -68,11 +75,24 @@ export const LoginWidget = () => {
 
   const passkeysMutation = useAuthenticateViaPasskeys({
     loginIfNoCredentials: (email: string) => {
-      console.info(`[LoginWidget:passkeysMutation] No credentials for: ${email}`)
+      console.info(
+        `[LoginWidget:passkeysMutation] No credentials for: ${email}`,
+      )
     },
   })
 
-  const isEmailSent = mutationState.loginMutation.isSuccess && !!mutationState.loginMutation.data
+  const isEmailSent =
+    mutationState.loginMutation.isSuccess && !!mutationState.loginMutation.data
+
+  const isEmailWasChangedSinceSending = mutationState.loginMutation.variables
+    ?.email
+    ? email !== mutationState.loginMutation.variables?.email
+    : false
+
+  const codeInputShouldBeShown = isEmailSent && !isEmailWasChangedSinceSending
+
+  console.log('Is email sent?', isEmailSent)
+  console.log('Is email changed since sending', isEmailWasChangedSinceSending)
 
   const processEmailValue = useCallback(() => {
     const safeParse = emailSchema.safeParse(email)
@@ -112,7 +132,14 @@ export const LoginWidget = () => {
       success: t('codeSent'),
       error: t('failedToSendCode'),
     })
-  }, [code, confirmLoginPromise, isEmailSent, processEmailValue, showPromiseToast, t])
+  }, [
+    code,
+    confirmLoginPromise,
+    isEmailSent,
+    processEmailValue,
+    showPromiseToast,
+    t,
+  ])
 
   const loginPasskeys = useCallback(async () => {
     const emailValue = processEmailValue()
@@ -122,7 +149,8 @@ export const LoginWidget = () => {
     const challengeOpts = response.data.options
 
     const isCredentialExist =
-      challengeOpts.allowCredentials && challengeOpts.allowCredentials.length > 0
+      challengeOpts.allowCredentials &&
+      challengeOpts.allowCredentials.length > 0
 
     if (!isCredentialExist) {
       return showInfoToast(t('noAddedDeviceForFastLogin'))
@@ -155,7 +183,9 @@ export const LoginWidget = () => {
         />
         <div
           className="overflow-hidden duration-300"
-          style={{ height: `${codeInputVisibility.get(mutationState.loginMutation.isSuccess)}` }}
+          style={{
+            height: `${codeInputHeight.get(codeInputShouldBeShown)}`,
+          }}
         >
           <input
             type="text"
@@ -168,9 +198,13 @@ export const LoginWidget = () => {
         </div>
         <LoginButton
           labelKey={'loginWithCode'}
-          onClick={isEmailSent ? confirmLoginOTP : loginOTP}
-          isDisabled={passkeysMutation.isPending || verifyLoginChallenge.isPending}
-          isLoading={loadingState.isTryLoginLoading || loadingState.isConfirmLoginLoading}
+          onClick={codeInputShouldBeShown ? confirmLoginOTP : loginOTP}
+          isDisabled={
+            passkeysMutation.isPending || verifyLoginChallenge.isPending
+          }
+          isLoading={
+            loadingState.isTryLoginLoading || loadingState.isConfirmLoginLoading
+          }
           classNames="bg-violet20 border-violet"
         />
 
@@ -178,8 +212,13 @@ export const LoginWidget = () => {
           <LoginButton
             labelKey={'fastLogin'}
             onClick={loginPasskeys}
-            isDisabled={loadingState.isTryLoginLoading || loadingState.isConfirmLoginLoading}
-            isLoading={passkeysMutation.isPending || verifyLoginChallenge.isPending}
+            isDisabled={
+              loadingState.isTryLoginLoading ||
+              loadingState.isConfirmLoginLoading
+            }
+            isLoading={
+              passkeysMutation.isPending || verifyLoginChallenge.isPending
+            }
             classNames="border-violet"
           />
         )}
@@ -193,7 +232,9 @@ export const LoginWidget = () => {
         unmountOnExit
       >
         <div ref={hintRef} className="w-[350px] px-12">
-          <Typography classNames="text-black/75 text-center">{t('loginViaCodeHint')}</Typography>
+          <Typography classNames="text-black/75 text-center">
+            {t('loginViaCodeHint')}
+          </Typography>
         </div>
       </CSSTransition>
     </div>
