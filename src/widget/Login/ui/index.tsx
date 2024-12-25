@@ -91,9 +91,6 @@ export const LoginWidget = () => {
 
   const codeInputShouldBeShown = isEmailSent && !isEmailWasChangedSinceSending
 
-  console.log('Is email sent?', isEmailSent)
-  console.log('Is email changed since sending', isEmailWasChangedSinceSending)
-
   const processEmailValue = useCallback(() => {
     const safeParse = emailSchema.safeParse(email)
 
