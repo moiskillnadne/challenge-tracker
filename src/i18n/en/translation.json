@@ -91,6 +91,7 @@
     "email": {
       "emailCannotBeEmpty": "Please enter your email address.",
       "invalidEmail": "Please enter a valid email address."
-    }
+    },
+    "letsGetStarted": "Let’s get started"
   }
 }

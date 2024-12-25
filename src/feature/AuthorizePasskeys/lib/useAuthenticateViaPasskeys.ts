@@ -5,8 +5,6 @@ import { authService } from '~/shared/api/auth.service'
 type Props = {
   onError?: (err: unknown) => void
   onSuccess?: (data: unknown) => void
-
-  loginIfNoCredentials?: (email: string) => void
 }
 
 export const useAuthenticateViaPasskeys = (props?: Props) => {
