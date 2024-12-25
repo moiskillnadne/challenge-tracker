@@ -84,6 +84,13 @@
     "done": "Done",
     "showMore": "Show more",
     "hide": "Hide",
-    "deviceForFastLoginAdded": "The device has been added"
+    "deviceForFastLoginAdded": "The device has been added",
+    "code": {
+      "shouldContainSixDigits": "The code must contain exactly 6 digits."
+    },
+    "email": {
+      "emailCannotBeEmpty": "Please enter your email address.",
+      "invalidEmail": "Please enter a valid email address."
+    }
   }
 }

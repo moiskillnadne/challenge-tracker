@@ -84,6 +84,13 @@
     "done": "Готово",
     "showMore": "Показать больше",
     "hide": "Скрыть",
-    "deviceForFastLoginAdded": "Устройство добавлено"
+    "deviceForFastLoginAdded": "Устройство добавлено",
+    "code": {
+      "shouldContainSixDigits": "Код должен содержать ровно 6 цифр"
+    },
+    "email": {
+      "emailCannotBeEmpty": "Пожалуйста, введите адрес электронной почты.",
+      "invalidEmail": "Пожалуйста, введите корректный адрес электронной почты."
+    }
   }
 }

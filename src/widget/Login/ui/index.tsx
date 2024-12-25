@@ -20,11 +20,14 @@ import { Routes } from '~/shared/constants'
 import { useToast } from '~/shared/hooks'
 import { Typography } from '~/shared/ui'
 
-const emailSchema = z.string().email()
+const emailSchema = z
+  .string()
+  .min(1, 'email.emailCannotBeEmpty')
+  .email('email.invalidEmail')
 
 const codeSchema = z
   .string()
-  .regex(/^\d{6}$/, { message: 'Код должен содержать ровно 6 цифр' })
+  .regex(/^\d{6}$/, { message: 'code.shouldContainSixDigits' })
 
 export const LoginWidget = () => {
   const { t } = useCustomTranslation()
@@ -33,8 +36,13 @@ export const LoginWidget = () => {
 
   const hintRef = useRef(null)
 
-  const { showPromiseToast, dismissAllToasts, showErrorToast, showInfoToast } =
-    useToast()
+  const {
+    showPromiseToast,
+    dismissAllToasts,
+    showErrorToast,
+    showInfoToast,
+    showWarningToast,
+  } = useToast()
 
   const codeInputHeight = new Map([
     [true, '40px'],
@@ -95,16 +103,17 @@ export const LoginWidget = () => {
     const safeParse = emailSchema.safeParse(email)
 
     if (safeParse.error) {
-      throw new Error(JSON.stringify(safeParse.error))
+      showWarningToast(t(safeParse.error.errors[0].message))
+      throw new Error(safeParse.error.errors[0].message)
     }
 
     return safeParse.data
-  }, [email])
+  }, [email, showWarningToast])
 
   const loginOTP = useCallback(async () => {
-    const emailValue = processEmailValue()
+    const safeEmail = processEmailValue()
 
-    showPromiseToast(tryLoginPromise(emailValue), {
+    return showPromiseToast(tryLoginPromise(safeEmail), {
       pending: t('sendingEmail'),
       success: t('emailSent'),
       error: t('failedToSendEmail'),
@@ -121,20 +130,24 @@ export const LoginWidget = () => {
     const codeSafeParse = codeSchema.safeParse(code)
 
     if (codeSafeParse.error) {
-      throw new Error(JSON.stringify(codeSafeParse.error))
+      return showWarningToast(t(codeSafeParse.error.errors[0].message))
     }
 
-    showPromiseToast(confirmLoginPromise(emailValue, codeSafeParse.data), {
-      pending: t('sendingCode'),
-      success: t('codeSent'),
-      error: t('failedToSendCode'),
-    })
+    return showPromiseToast(
+      confirmLoginPromise(emailValue, codeSafeParse.data),
+      {
+        pending: t('sendingCode'),
+        success: t('codeSent'),
+        error: t('failedToSendCode'),
+      },
+    )
   }, [
     code,
     confirmLoginPromise,
     isEmailSent,
     processEmailValue,
     showPromiseToast,
+    showWarningToast,
     t,
   ])
 
