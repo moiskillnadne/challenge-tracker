@@ -101,6 +101,9 @@ export default {
       borderWidth: {
         1: '1px',
       },
+      borderRadius: {
+        20: '20px',
+      },
       keyframes: {
         shakes: {
           '0%': {

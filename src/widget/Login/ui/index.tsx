@@ -5,6 +5,7 @@ import {
   startAuthentication,
 } from '@simplewebauthn/browser'
 import { useMutation } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 
@@ -19,6 +20,7 @@ import { Routes } from '~/shared/constants'
 import { useToast } from '~/shared/hooks'
 import { Typography } from '~/shared/ui'
 import { codeSchema, emailSchema } from '~/widget/Login/lib/schemas.ts'
+import { FastLoginUnavailableWarning } from '~/widget/Login/ui/FastLoginUnavailableWarning.tsx'
 import { LoginInput } from '~/widget/Login/ui/LoginInput.tsx'
 
 export const LoginWidget = () => {
@@ -27,6 +29,7 @@ export const LoginWidget = () => {
   const navigate = useNavigate()
 
   const hintRef = useRef(null)
+  const fastLoginUnavailableWarningRef = useRef(null)
 
   const { showErrorToast, showInfoToast, showWarningToast, showSuccessToast } =
     useToast()
@@ -62,13 +65,12 @@ export const LoginWidget = () => {
     },
   })
 
-  const passkeysMutation = useAuthenticateViaPasskeys({
-    loginIfNoCredentials: (email: string) => {
-      console.info(
-        `[LoginWidget:passkeysMutation] No credentials for: ${email}`,
-      )
-    },
-  })
+  const passkeysMutation = useAuthenticateViaPasskeys()
+
+  const isFastLoginUnavailable =
+    passkeysMutation.error instanceof AxiosError
+      ? passkeysMutation.error.status === 400
+      : false
 
   const isEmailSent =
     mutationState.loginMutation.isSuccess && !!mutationState.loginMutation.data
@@ -152,11 +154,23 @@ export const LoginWidget = () => {
       <div className="flex flex-col items-center gap-S mb-64">
         <LoginHeader />
 
+        <CSSTransition
+          in={isFastLoginUnavailable && !isEmailSent}
+          nodeRef={fastLoginUnavailableWarningRef}
+          timeout={1000}
+          classNames="node-opacity"
+          unmountOnExit
+        >
+          <div ref={fastLoginUnavailableWarningRef}>
+            <FastLoginUnavailableWarning />
+          </div>
+        </CSSTransition>
+
         <LoginInput
           type="email"
           name="email"
           id="input-email"
-          placeholder="Email"
+          placeholder="email"
           autoComplete="email"
           onChange={(value) => setEmail(value)}
         />
@@ -168,8 +182,8 @@ export const LoginWidget = () => {
             type="text"
             name="code"
             id="input-code"
-            placeholder="Code"
-            autoComplete="email"
+            placeholder="code"
+            autoComplete="code"
             onChange={(value) => setCode(value)}
           />
         </div>
