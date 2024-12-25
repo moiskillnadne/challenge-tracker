@@ -98,6 +98,9 @@ export default {
         64: '64px',
         96: '96px',
       },
+      borderWidth: {
+        1: '1px',
+      },
       keyframes: {
         shakes: {
           '0%': {

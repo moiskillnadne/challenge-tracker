@@ -26,7 +26,10 @@ export const LoginButton = forwardRef(
           isDisabled={isDisabled}
           classNames={classNames}
         >
-          <Typography text={t(labelKey)} />
+          <Typography
+            text={t(labelKey)}
+            classNames="font-bold text-S uppercase"
+          />
         </Button>
       </div>
     )

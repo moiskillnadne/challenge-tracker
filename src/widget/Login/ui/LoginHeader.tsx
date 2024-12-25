@@ -8,10 +8,17 @@ export const LoginHeader = () => {
     <div className="flex flex-1 justify-center items-center">
       <div className="w-full px-[16px] flex flex-col items-center">
         <div className="w-[250px] py-[14px] px-[24px]">
-          <img className="w-[250px]" src="/web-app-manifest-512x512.png" alt="" />
+          <img
+            className="w-[250px]"
+            src="/web-app-manifest-512x512.png"
+            alt=""
+          />
         </div>
-        <Typography classNames="font-bold text-XXL whitespace-pre-wrap text-center text-black">
+        <Typography classNames="font-regular text-XXL whitespace-pre-wrap text-center text-black leading-8 mb-24">
           {t('welcomeToChallengeLogger')}
+        </Typography>
+        <Typography classNames="font-bold text-S whitespace-pre-wrap text-center text-black">
+          {t('letsGetStarted')}
         </Typography>
       </div>
     </div>
