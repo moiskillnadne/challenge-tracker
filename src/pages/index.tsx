@@ -8,6 +8,10 @@ import { LoginPage } from './LoginPage'
 import ProtectedRoute from '~/feature/ProtectedRoute'
 import { SettingsPage } from '~/pages/SettingsPage.tsx'
 import { Routes } from '~/shared/constants'
+import { Counters } from '~/widget/Counters'
+import { AddNewCounter } from '~/widget/Counters/AddNewCounter.tsx'
+import { Counter } from '~/widget/Counters/Counter.tsx'
+import { ExperimentalFeatures } from '~/widget/ExperimentalFeatures'
 import { FastLoginSetting } from '~/widget/FastLoginSetting'
 import { AddNewDevice } from '~/widget/FastLoginSetting/AddNewDevice.tsx'
 import { LanguageSetting } from '~/widget/LanguageSetting'
@@ -40,6 +44,22 @@ const router = createBrowserRouter([
           {
             path: Routes.SETTINGS_LANGUAGE,
             element: <LanguageSetting />,
+          },
+          {
+            path: Routes.SETTINGS_EXPERIMENTAL_FEATURES,
+            element: <ExperimentalFeatures />,
+          },
+          {
+            path: Routes.COUNTERS,
+            element: <Counters />,
+          },
+          {
+            path: Routes.COUNTERS_CREATE,
+            element: <AddNewCounter />,
+          },
+          {
+            path: Routes.COUNTER.path,
+            element: <Counter />,
           },
           {
             path: Routes.SETTINGS_FAST_LOGIN,

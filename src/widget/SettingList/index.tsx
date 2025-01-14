@@ -39,6 +39,11 @@ export const SettingList = () => {
           isDisabled={isPending}
         />
         <SettingItem
+          label={t('experimentalFeatures')}
+          onClick={() => navigate(Routes.SETTINGS_EXPERIMENTAL_FEATURES)}
+          isDisabled={isPending}
+        />
+        <SettingItem
           label={t('logout.title')}
           onClick={onLogout}
           isDanger={true}
