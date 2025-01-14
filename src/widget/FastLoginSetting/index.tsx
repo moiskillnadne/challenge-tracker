@@ -42,7 +42,10 @@ export const FastLoginSetting = () => {
           <span className="h-[28px] w-[28px]">
             <PlusIcon classNames="stroke-pink" />
           </span>
-          <Typography text={t('addFastLogin')} classNames="font-semibold text-M italic" />
+          <Typography
+            text={t('addFastLogin')}
+            classNames="font-semibold text-M italic"
+          />
         </button>
 
         <div className="flex flex-1 flex-col items-center mt-16">
@@ -78,7 +81,8 @@ export const FastLoginSetting = () => {
                 devices.map((device) => {
                   const name = device.deviceName ?? 'N/A'
 
-                  const isLoading = passkeyRemoveMutation.variables === device.id
+                  const isLoading =
+                    passkeyRemoveMutation.variables === device.id
 
                   return (
                     <PasskeyListItem

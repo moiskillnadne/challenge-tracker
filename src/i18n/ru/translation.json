@@ -92,6 +92,12 @@
       "emailCannotBeEmpty": "Пожалуйста, введите адрес электронной почты.",
       "invalidEmail": "Пожалуйста, введите корректный адрес электронной почты."
     },
-    "letsGetStarted": "Давайте начнем"
+    "letsGetStarted": "Давайте начнем",
+    "experimentalFeatures": "Экспериментальные функции",
+    "counters": "Счетчики",
+    "yourCounters": "Ваши счетчики",
+    "createCounter": "Создать счетчик",
+    "counterCreated": "Счетчик создан!",
+    "incrementCounter": "Увеличить счетчик"
   }
 }
